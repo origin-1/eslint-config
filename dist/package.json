@@ -1,0 +1,26 @@
+{
+  "name": "@origin-1/eslint-config",
+  "version": "0.0.0",
+  "description": "ESLint configuration generator with origin-1 presets",
+  "license": "ISC",
+  "author": "Francesco Trotta <ft@fasttime.org> (https://github.com/fasttime)",
+  "dependencies": {
+    "@fasttime/eslint-plugin": "0.6",
+    "@types/eslint": "8",
+    "@typescript-eslint/eslint-plugin": "5.30",
+    "@typescript-eslint/parser": "5.30",
+    "eslint-plugin-n": "15.2",
+    "semver": "7"
+  },
+  "peerDependencies": {
+    "eslint": "8"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./no-parser": "./no-parser.js",
+    "./package.json": "./package.json"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "npm install && node dev/clean.js && node dev/coverage.js && node dev/compile.js && node dev/update-dist.js && npm run lint",
+    "clean": "node dev/clean.js",
+    "compile": "node dev/compile.js",
+    "lint": "eslint . --ignore-path .gitignore --ext .js,.cjs,.mjs,.ts,.cts,.mts",
+    "test": "node --loader ts-node/esm --test test/create-config.test.ts test/rules.spec.test.ts",
+    "update-dist": "node dev/update-dist.js"
+  },
+  "dependencies": {
+    "@fasttime/eslint-plugin": "0.6",
+    "@types/eslint": "8",
+    "@typescript-eslint/eslint-plugin": "5.30",
+    "@typescript-eslint/parser": "5.30",
+    "eslint-plugin-n": "15.2",
+    "semver": "7"
+  },
+  "devDependencies": {
+    "@origin-1/eslint-config": "file:./dist",
+    "@types/semver": "latest",
+    "c8js": "latest",
+    "eslint": "latest",
+    "fast-glob": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  },
+  "peerDependencies": {
+    "eslint": "8"
+  },
+  "engines": {
+    "node": ">=18.1"
+  },
+  "type": "module"
+}
