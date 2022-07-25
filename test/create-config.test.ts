@@ -178,18 +178,42 @@ void test
                 (): void =>
                 {
                     const { plugins } = createConfig();
-                    assert.deepEqual(plugins, ['@typescript-eslint', '@fasttime', 'n']);
+                    assert.deepEqual(plugins, ['@fasttime', 'n']);
                 },
             ),
             ctx.test
             (
                 'override plugins are set',
-                (): void =>
+                async (ctx): Promise<void> =>
                 {
-                    const { overrides } = createConfig({ files: 'foobar', plugins: ['barbaz'] });
-                    assert(overrides);
-                    const [{ plugins }] = overrides;
-                    assert.deepEqual(plugins, ['barbaz']);
+                    await allTests
+                    (
+                        ctx.test
+                        (
+                            'for JavaScript',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig({ files: 'foobar', plugins: ['barbaz'] });
+                                assert(overrides);
+                                const [{ plugins }] = overrides;
+                                assert.deepEqual(plugins, ['barbaz']);
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'for TypeScript',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig
+                                ({ files: 'foobar', plugins: ['barbaz'], tsVersion: 'latest' });
+                                assert(overrides);
+                                const [{ plugins }] = overrides;
+                                assert.deepEqual(plugins, ['barbaz', '@typescript-eslint']);
+                            },
+                        ),
+                    );
                 },
             ),
             ctx.test
@@ -273,10 +297,31 @@ void test
             ctx.test
             (
                 'plugins are set',
-                (): void =>
+                async (ctx): Promise<void> =>
                 {
-                    const { plugins } = createBaseConfig({ plugins: ['barbaz'] });
-                    assert.deepEqual(plugins, ['@typescript-eslint', '@fasttime', 'n', 'barbaz']);
+                    await allTests
+                    (
+                        ctx.test
+                        (
+                            'for JavaScript',
+                            (): void =>
+                            {
+                                const { plugins } = createBaseConfig({ plugins: ['barbaz'] });
+                                assert.deepEqual(plugins, ['@fasttime', 'n', 'barbaz']);
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'for TypeScript',
+                            (): void =>
+                            {
+                                const { plugins } =
+                                createBaseConfig({ plugins: ['barbaz'], tsVersion: 'latest' });
+                                assert.deepEqual
+                                (plugins, ['@fasttime', 'n', 'barbaz', '@typescript-eslint']);
+                            },
+                        ),
+                    );
                 },
             ),
             ctx.test

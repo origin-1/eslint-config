@@ -2,20 +2,29 @@ import type { Linter } from 'eslint';
 
 export interface JSTSEntry
 {
-    js: VersionedList<JSVersion> | Linter.RuleEntry | undefined;
-    ts: VersionedList<string> | Linter.RuleEntry | undefined;
+    js: RuleSettingsJS;
+    ts: RuleSettingsTS;
 }
 
 export type JSVersion = 5 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
 
-export type RuleSettings = Linter.RuleEntry | JSTSEntry;
+export const FOR_LANG: unique symbol = Symbol('For one language only');
+
+export type PluginSettingsAny       = Record<string, RuleSettingsAny>;
+export type PluginSettingsForLang   =
+(Record<string, RuleSettingsJS> & { [FOR_LANG]: 'js'; }) |
+(Record<string, RuleSettingsTS> & { [FOR_LANG]: 'ts'; });
+
+export type RuleSettingsAny = Linter.RuleEntry | JSTSEntry;
+export type RuleSettingsJS  = VersionedList<JSVersion> | Linter.RuleEntry;
+export type RuleSettingsTS  = VersionedList<string> | Linter.RuleEntry;
 
 export type RuleType = 'problem' | 'suggestion' | 'layout';
 
 interface VersionedEntry<VersionType extends JSVersion | string | undefined>
 {
     minVersion: VersionType;
-    ruleEntry: Linter.RuleEntry | undefined;
+    ruleEntry: Linter.RuleEntry;
 }
 
 export type VersionedList<VersionType extends JSVersion | string = JSVersion | string> =
@@ -26,7 +35,7 @@ export const HYBRID = Symbol('Hybrid rules');
 
 function beforeOrElse
 <VersionType extends JSVersion | string>
-(version: VersionType, before: Linter.RuleEntry | undefined, else_: Linter.RuleEntry | undefined):
+(version: VersionType, before: Linter.RuleEntry, else_: Linter.RuleEntry):
 VersionedList<VersionType>
 {
     const beforeEntry = { minVersion: undefined, ruleEntry: before };
@@ -43,31 +52,13 @@ export function getRulePrefix(pluginName: string): string
     return rulePrefix;
 }
 
-function jsts
-(
-    jsEntry: VersionedList<JSVersion> | Linter.RuleEntry | undefined,
-    tsEntry: VersionedList<string> | Linter.RuleEntry | undefined,
-):
-JSTSEntry
+function jsts(jsEntry: RuleSettingsJS, tsEntry: RuleSettingsTS): JSTSEntry
 {
     return { js: jsEntry, ts: tsEntry };
 }
 
-function tsOnly
-(input: Record<string, VersionedList<string> | Linter.RuleEntry>):
-Record<string, RuleSettings>
-{
-    const output =
-    Object.fromEntries
-    (
-        Object
-        .entries(input)
-        .map(([ruleName, tsEntry]): [string, JSTSEntry] => [ruleName, jsts(undefined, tsEntry)]),
-    );
-    return output;
-}
-
-export const RULES: Record<string | symbol, Record<string, RuleSettings>> =
+export const RULES:
+Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 {
     [UNIQUE]:
     {
@@ -406,9 +397,9 @@ export const RULES: Record<string | symbol, Record<string, RuleSettings>> =
         'space-infix-ops':                  jsts('error', 'off'),
     },
     '@typescript-eslint/eslint-plugin':
-    tsOnly
-    (
     {
+        [FOR_LANG]: 'ts',
+
         // Problem
         'await-thenable':                           'error',
         'ban-ts-comment':                           'off',
@@ -512,7 +503,6 @@ export const RULES: Record<string | symbol, Record<string, RuleSettings>> =
         // Layout
         'type-annotation-spacing':                  'error',
     },
-    ),
     '@fasttime/eslint-plugin':
     {
         // Layout

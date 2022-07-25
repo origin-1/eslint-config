@@ -1,7 +1,16 @@
-import { HYBRID, RULES, UNIQUE, getRulePrefix }                     from './rules.js';
-import type { JSTSEntry, JSVersion, RuleSettings, VersionedList }   from './rules.js';
-import type { Linter }                                              from 'eslint';
-import semver                                                       from 'semver';
+import { FOR_LANG, HYBRID, RULES, UNIQUE, getRulePrefix }   from './rules.js';
+import type
+{
+    JSTSEntry,
+    JSVersion,
+    PluginSettingsAny,
+    PluginSettingsForLang,
+    RuleSettingsAny,
+    VersionedList,
+}
+from './rules.js';
+import type { Linter }                                      from 'eslint';
+import semver                                               from 'semver';
 
 export interface ConfigData extends Linter.HasRules
 {
@@ -40,7 +49,7 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
 
 function createBaseOverride(configData: ConfigData): Linter.BaseConfig
 {
-    const { plugins } = configData;
+    const { plugins = [] } = configData;
     const lang = getLanguage(configData);
     let ecmaVersion: Linter.ParserOptions['ecmaVersion'];
     let envKey: string | undefined;
@@ -66,18 +75,14 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig
     const parserOptions = { ecmaVersion, ...configData.parserOptions };
     const rules: Record<string, Linter.RuleEntry> = { };
     const setOverrideRule =
-    (ruleName: string, ruleLangSettings: VersionedList | Linter.RuleEntry | undefined): void =>
+    (ruleName: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
     {
-        if (ruleLangSettings != null)
-        {
-            const ruleEntry =
-            isVersionedList(ruleLangSettings) ?
-            findRuleEntry(ruleLangSettings, jsVersion, tsVersion) : ruleLangSettings;
-            if (ruleEntry != null)
-                rules[ruleName] = cloneRuleEntry(ruleEntry);
-        }
+        const ruleEntry =
+        isVersionedList(ruleLangSettings) ?
+        findRuleEntry(ruleLangSettings, jsVersion, tsVersion)! : ruleLangSettings;
+        rules[ruleName] = cloneRuleEntry(ruleEntry);
     };
-    for (const [ruleName, ruleDef] of Object.entries(RULES[UNIQUE]))
+    for (const [ruleName, ruleDef] of Object.entries(RULES[UNIQUE] as PluginSettingsAny))
     {
         if (isJSTSEntry(ruleDef))
         {
@@ -85,7 +90,7 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig
             setOverrideRule(ruleName, ruleLangSettings);
         }
     }
-    for (const [ruleName, ruleDef] of Object.entries(RULES[HYBRID]))
+    for (const [ruleName, ruleDef] of Object.entries(RULES[HYBRID] as PluginSettingsAny))
     {
         if (isRuleEntry(ruleDef))
         {
@@ -108,15 +113,31 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig
                 setOverrideRule(ruleName, ruleDef.js);
         }
     }
-    for (const [pluginName, definedPluginRules] of Object.entries(RULES))
+    for (const [pluginName, pluginSettings] of Object.entries(RULES))
     {
-        const rulePrefix = getRulePrefix(pluginName);
-        for (const [ruleName, ruleDef] of Object.entries(definedPluginRules))
+        if (isPluginSettingsForLang(pluginSettings))
         {
-            if (isJSTSEntry(ruleDef))
+            if (lang !== pluginSettings[FOR_LANG])
+                continue;
+            const rulePrefix = getRulePrefix(pluginName);
+            plugins.push(rulePrefix);
+            for
+            (
+                const [ruleName, ruleDef] of
+                Object.entries(pluginSettings as Record<string, VersionedList | Linter.RuleEntry>)
+            )
+                setOverrideRule(`${rulePrefix}/${ruleName}`, ruleDef);
+        }
+        else
+        {
+            const rulePrefix = getRulePrefix(pluginName);
+            for (const [ruleName, ruleDef] of Object.entries(pluginSettings))
             {
-                const ruleLangSettings = ruleDef[lang];
-                setOverrideRule(`${rulePrefix}/${ruleName}`, ruleLangSettings);
+                if (isJSTSEntry(ruleDef))
+                {
+                    const ruleLangSettings = ruleDef[lang];
+                    setOverrideRule(`${rulePrefix}/${ruleName}`, ruleLangSettings);
+                }
             }
         }
     }
@@ -129,16 +150,18 @@ function createCommonEntries(): { plugins: string[]; rules: Record<string, Linte
 {
     const plugins: string[] = [];
     const rules: Record<string, Linter.RuleEntry> = { };
-    for (const [ruleName, ruleDef] of Object.entries(RULES[UNIQUE]))
+    for (const [ruleName, ruleDef] of Object.entries(RULES[UNIQUE] as PluginSettingsAny))
     {
         if (isRuleEntry(ruleDef))
             rules[ruleName] = cloneRuleEntry(ruleDef);
     }
-    for (const [pluginName, definedPluginRules] of Object.entries(RULES))
+    for (const [pluginName, pluginSettings] of Object.entries(RULES))
     {
+        if (isPluginSettingsForLang(pluginSettings))
+            continue;
         const rulePrefix = getRulePrefix(pluginName);
         plugins.push(rulePrefix);
-        for (const [ruleName, ruleDef] of Object.entries(definedPluginRules))
+        for (const [ruleName, ruleDef] of Object.entries(pluginSettings))
         {
             if (isRuleEntry(ruleDef))
                 rules[`${rulePrefix}/${ruleName}`] = cloneRuleEntry(ruleDef);
@@ -219,12 +242,18 @@ function getTSVersion(configData: ConfigData): string
     return 'latest';
 }
 
-function isJSTSEntry(ruleSettings: RuleSettings): ruleSettings is JSTSEntry
+function isJSTSEntry(ruleSettings: RuleSettingsAny): ruleSettings is JSTSEntry
 {
     return typeof ruleSettings === 'object' && 'js' in ruleSettings && 'ts' in ruleSettings;
 }
 
-function isRuleEntry(ruleSettings: RuleSettings): ruleSettings is Linter.RuleEntry
+function isPluginSettingsForLang
+(pluginSettings: PluginSettingsAny | PluginSettingsForLang): pluginSettings is PluginSettingsForLang
+{
+    return FOR_LANG in pluginSettings;
+}
+
+function isRuleEntry(ruleSettings: RuleSettingsAny): ruleSettings is Linter.RuleEntry
 {
     return typeof ruleSettings === 'string' || Array.isArray(ruleSettings);
 }
