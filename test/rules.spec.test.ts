@@ -1,10 +1,10 @@
-import assert               from 'node:assert/strict';
-import { createRequire }    from 'node:module';
-import { test }             from 'node:test';
-import { pathToFileURL }    from 'node:url';
-import { getRulePrefix }    from '../src/rules.js';
-import type { RuleType }    from '../src/rules.js';
-import type { Rule }        from 'eslint';
+import assert                           from 'node:assert/strict';
+import { createRequire }                from 'node:module';
+import { test }                         from 'node:test';
+import { pathToFileURL }                from 'node:url';
+import { getRuleKey, getRulePrefix }    from '../src/rules.js';
+import type { RuleType }                from '../src/rules.js';
+import type { Rule }                    from 'eslint';
 
 async function getBuiltInRules(): Promise<Map<string, Rule.RuleModule>>
 {
@@ -34,7 +34,7 @@ void test
         const builtInRules = await getBuiltInRules();
         const definedHybridRules = RULES[HYBRID];
         const definedUniqueRules = RULES[UNIQUE];
-        const missingRuleNames: string[] = [];
+        const missingRules: string[] = [];
         for (const [ruleName, ruleModule] of builtInRules)
         {
             if
@@ -43,14 +43,14 @@ void test
                 !Object.hasOwn(definedHybridRules, ruleName) &&
                 !Object.hasOwn(definedUniqueRules, ruleName)
             )
-                missingRuleNames.push(ruleName);
+                missingRules.push(ruleName);
         }
-        if (missingRuleNames.length)
+        if (missingRules.length)
         {
             assert.fail
             (
-                `${missingRuleNames.length} rule(s) are not defined:\n${
-                missingRuleNames.map((name): string => `\n• ${name}`).join('')}`,
+                `${missingRules.length} rule(s) are not defined:\n${
+                missingRules.map((name): string => `\n• ${name}`).join('')}`,
             );
         }
     },
@@ -64,7 +64,7 @@ void test
         const builtInRules = await getBuiltInRules();
         const { default: { rules: tsRules } } = await import('@typescript-eslint/eslint-plugin');
         const definedHybridRules = RULES[HYBRID];
-        const missingRuleNames: string[] = [];
+        const missingRules: string[] = [];
         for (const [ruleName, ruleModule] of builtInRules)
         {
             if
@@ -73,14 +73,14 @@ void test
                 (Object.hasOwn(tsRules, ruleName) && !tsRules[ruleName].meta.deprecated) &&
                 !Object.hasOwn(definedHybridRules, ruleName)
             )
-                missingRuleNames.push(ruleName);
+                missingRules.push(ruleName);
         }
-        if (missingRuleNames.length)
+        if (missingRules.length)
         {
             assert.fail
             (
-                `${missingRuleNames.length} rule(s) are not defined:\n${
-                missingRuleNames.map((name): string => `\n• ${name}`).join('')}`,
+                `${missingRules.length} rule(s) are not defined:\n${
+                missingRules.map((name): string => `\n• ${name}`).join('')}`,
             );
         }
     },
@@ -92,7 +92,7 @@ void test
     async (): Promise<void> =>
     {
         const definedHybridRules = RULES[HYBRID];
-        const missingRuleNames: string[] = [];
+        const missingRules: string[] = [];
         for (const [pluginName, definedPluginRules] of Object.entries(RULES))
         {
             const rulePrefix = getRulePrefix(pluginName);
@@ -108,15 +108,18 @@ void test
                     ) &&
                     !Object.hasOwn(definedPluginRules, ruleName)
                 )
-                    missingRuleNames.push(`${rulePrefix}/${ruleName}`);
+                {
+                    const ruleKey = getRuleKey(rulePrefix, ruleName);
+                    missingRules.push(ruleKey);
+                }
             }
         }
-        if (missingRuleNames.length)
+        if (missingRules.length)
         {
             assert.fail
             (
-                `${missingRuleNames.length} rule(s) are not defined:\n${
-                missingRuleNames.map((name): string => `\n• ${name}`).join('')}`,
+                `${missingRules.length} rule(s) are not defined:\n${
+                missingRules.map((name): string => `\n• ${name}`).join('')}`,
             );
         }
     },
@@ -148,9 +151,15 @@ void test
             assert(builtInRules.has(ruleName), `Rule ${ruleName} not found`);
             assert(!builtInRules.get(ruleName)!.meta!.deprecated, `Rule ${ruleName} is deprecated`);
             assert
-            (Object.hasOwn(tsRules, ruleName), `Rule @typescript-eslint/${ruleName} not found`);
+            (
+                Object.hasOwn(tsRules, ruleName),
+                `Rule ${getRuleKey('@typescript-eslint', ruleName)} not found`,
+            );
             assert
-            (!tsRules[ruleName].meta.deprecated, `Rule @typescript-eslint/${ruleName} not found`);
+            (
+                !tsRules[ruleName].meta.deprecated,
+                `Rule ${getRuleKey('@typescript-eslint', ruleName)} is deprecated`,
+            );
         }
     },
 );
@@ -169,12 +178,12 @@ void test
                 assert
                 (
                     Object.hasOwn(pluginRules, ruleName),
-                    `Rule ${rulePrefix}/${ruleName} not found`,
+                    `Rule ${getRuleKey(rulePrefix, ruleName)} not found`,
                 );
                 assert
                 (
                     !pluginRules[ruleName].meta!.deprecated,
-                    `Rule ${rulePrefix}/${ruleName} not found`,
+                    `Rule ${getRuleKey(rulePrefix, ruleName)} is deprecated`,
                 );
             }
         }

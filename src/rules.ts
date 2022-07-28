@@ -46,6 +46,11 @@ VersionedList<VersionType>
     return versionedList;
 }
 
+export function getRuleKey(rulePrefix: string, ruleName: string): string
+{
+    return `${rulePrefix}/${ruleName}`;
+}
+
 export function getRulePrefix(pluginName: string): string
 {
     const rulePrefix = pluginName.replace(/^eslint-plugin-|\/eslint-plugin$/, '');

@@ -1,4 +1,4 @@
-import { FOR_LANG, HYBRID, RULES, UNIQUE, getRulePrefix }   from './rules.js';
+import { FOR_LANG, HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix }   from './rules.js';
 import type
 {
     JSTSEntry,
@@ -9,8 +9,8 @@ import type
     VersionedList,
 }
 from './rules.js';
-import type { Linter }                                      from 'eslint';
-import semver                                               from 'semver';
+import type { Linter }                                                  from 'eslint';
+import semver                                                           from 'semver';
 
 export interface ConfigData extends Linter.HasRules
 {
@@ -37,9 +37,8 @@ function cloneRuleEntry(ruleEntry: Linter.RuleEntry): Linter.RuleEntry
 export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
 {
     const { plugins, rules } = createCommonEntries();
-    const baseOverride = createBaseOverride(configData);
-    const { env, parser, parserOptions, plugins: overridePlugins = [], rules: overrideRules } =
-    baseOverride;
+    const { env, parser, parserOptions, plugins: overridePlugins, rules: overrideRules } =
+    createBaseOverride(configData);
     plugins.push(...overridePlugins);
     Object.assign(rules, overrideRules);
     const baseConfig =
@@ -47,7 +46,7 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
     return baseConfig;
 }
 
-function createBaseOverride(configData: ConfigData): Linter.BaseConfig
+function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugins: string[]; }
 {
     const { plugins = [] } = configData;
     const lang = getLanguage(configData);
@@ -75,42 +74,44 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig
     const parserOptions = { ecmaVersion, ...configData.parserOptions };
     const rules: Record<string, Linter.RuleEntry> = { };
     const setOverrideRule =
-    (ruleName: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
+    (ruleKey: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
     {
         const ruleEntry =
         isVersionedList(ruleLangSettings) ?
         findRuleEntry(ruleLangSettings, jsVersion, tsVersion)! : ruleLangSettings;
-        rules[ruleName] = cloneRuleEntry(ruleEntry);
+        rules[ruleKey] = cloneRuleEntry(ruleEntry);
     };
-    for (const [ruleName, ruleDef] of Object.entries(RULES[UNIQUE] as PluginSettingsAny))
+    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
     {
-        if (isJSTSEntry(ruleDef))
+        if (isJSTSEntry(ruleSettings))
         {
-            const ruleLangSettings = ruleDef[lang];
+            const ruleLangSettings = ruleSettings[lang];
             setOverrideRule(ruleName, ruleLangSettings);
         }
     }
-    for (const [ruleName, ruleDef] of Object.entries(RULES[HYBRID] as PluginSettingsAny))
+    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[HYBRID] as PluginSettingsAny))
     {
-        if (isRuleEntry(ruleDef))
+        if (isRuleEntry(ruleSettings))
         {
             if (lang === 'ts')
             {
                 rules[ruleName] = 'off';
-                rules[`@typescript-eslint/${ruleName}`] = cloneRuleEntry(ruleDef);
+                const typescriptESLintRuleKey = getRuleKey('@typescript-eslint', ruleName);
+                rules[typescriptESLintRuleKey] = cloneRuleEntry(ruleSettings);
             }
             else
-                rules[ruleName] = cloneRuleEntry(ruleDef);
+                rules[ruleName] = cloneRuleEntry(ruleSettings);
         }
-        if (isJSTSEntry(ruleDef))
+        if (isJSTSEntry(ruleSettings))
         {
             if (lang === 'ts')
             {
                 rules[ruleName] = 'off';
-                setOverrideRule(`@typescript-eslint/${ruleName}`, ruleDef.ts);
+                const typescriptESLintRuleKey = getRuleKey('@typescript-eslint', ruleName);
+                setOverrideRule(typescriptESLintRuleKey, ruleSettings.ts);
             }
             else
-                setOverrideRule(ruleName, ruleDef.js);
+                setOverrideRule(ruleName, ruleSettings.js);
         }
     }
     for (const [pluginName, pluginSettings] of Object.entries(RULES))
@@ -121,22 +122,22 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig
                 continue;
             const rulePrefix = getRulePrefix(pluginName);
             plugins.push(rulePrefix);
-            for
-            (
-                const [ruleName, ruleDef] of
-                Object.entries(pluginSettings as Record<string, VersionedList | Linter.RuleEntry>)
-            )
-                setOverrideRule(`${rulePrefix}/${ruleName}`, ruleDef);
+            for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
+            {
+                const ruleKey = getRuleKey(rulePrefix, ruleName);
+                setOverrideRule(ruleKey, ruleSettings);
+            }
         }
         else
         {
             const rulePrefix = getRulePrefix(pluginName);
-            for (const [ruleName, ruleDef] of Object.entries(pluginSettings))
+            for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
             {
-                if (isJSTSEntry(ruleDef))
+                if (isJSTSEntry(ruleSettings))
                 {
-                    const ruleLangSettings = ruleDef[lang];
-                    setOverrideRule(`${rulePrefix}/${ruleName}`, ruleLangSettings);
+                    const ruleKey = getRuleKey(rulePrefix, ruleName);
+                    const ruleLangSettings = ruleSettings[lang];
+                    setOverrideRule(ruleKey, ruleLangSettings);
                 }
             }
         }
@@ -150,10 +151,10 @@ function createCommonEntries(): { plugins: string[]; rules: Record<string, Linte
 {
     const plugins: string[] = [];
     const rules: Record<string, Linter.RuleEntry> = { };
-    for (const [ruleName, ruleDef] of Object.entries(RULES[UNIQUE] as PluginSettingsAny))
+    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
     {
-        if (isRuleEntry(ruleDef))
-            rules[ruleName] = cloneRuleEntry(ruleDef);
+        if (isRuleEntry(ruleSettings))
+            rules[ruleName] = cloneRuleEntry(ruleSettings);
     }
     for (const [pluginName, pluginSettings] of Object.entries(RULES))
     {
@@ -161,10 +162,13 @@ function createCommonEntries(): { plugins: string[]; rules: Record<string, Linte
             continue;
         const rulePrefix = getRulePrefix(pluginName);
         plugins.push(rulePrefix);
-        for (const [ruleName, ruleDef] of Object.entries(pluginSettings))
+        for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
         {
-            if (isRuleEntry(ruleDef))
-                rules[`${rulePrefix}/${ruleName}`] = cloneRuleEntry(ruleDef);
+            if (isRuleEntry(ruleSettings))
+            {
+                const ruleKey = getRuleKey(rulePrefix, ruleName);
+                rules[ruleKey] = cloneRuleEntry(ruleSettings);
+            }
         }
     }
     const commonEntries = { plugins, rules };
@@ -248,7 +252,8 @@ function isJSTSEntry(ruleSettings: RuleSettingsAny): ruleSettings is JSTSEntry
 }
 
 function isPluginSettingsForLang
-(pluginSettings: PluginSettingsAny | PluginSettingsForLang): pluginSettings is PluginSettingsForLang
+(pluginSettings: PluginSettingsAny | PluginSettingsForLang):
+pluginSettings is PluginSettingsForLang
 {
     return FOR_LANG in pluginSettings;
 }
@@ -264,3 +269,13 @@ ruleLangSettings is VersionedList
 {
     return Array.isArray(ruleLangSettings) && 'versioned' in ruleLangSettings;
 }
+
+const ruleSettingsFor:
+<
+    PluginSettingsType extends PluginSettingsAny | PluginSettingsForLang,
+    RuleSettingsType =
+    PluginSettingsType extends Record<string, infer RuleSettingsType> ? RuleSettingsType : never,
+>
+(pluginSettings: PluginSettingsType) =>
+[string, RuleSettingsType][] =
+Object.entries;
