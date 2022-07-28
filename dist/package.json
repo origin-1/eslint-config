@@ -2,8 +2,10 @@
   "name": "@origin-1/eslint-config",
   "version": "0.0.0",
   "description": "ESLint configuration generator with origin-1 presets",
+  "homepage": "https://github.com/origin-1/eslint-config#readme",
   "license": "ISC",
   "author": "Francesco Trotta <ft@fasttime.org> (https://github.com/fasttime)",
+  "repository": "github:@origin-1/eslint-config",
   "dependencies": {
     "@fasttime/eslint-plugin": "0.6",
     "@types/eslint": "8",

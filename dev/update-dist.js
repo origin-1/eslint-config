@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFile, writeFile } from 'node:fs/promises';
+import { copyFile, readFile, writeFile } from 'node:fs/promises';
 
 async function readJSON(url)
 {
@@ -22,4 +22,11 @@ async function updatePackage()
 
 const pkgDirURL = new URL('..', import.meta.url);
 const makeURL = url => new URL(url, pkgDirURL);
-await updatePackage();
+await Promise.all
+(
+    [
+        updatePackage(),
+        copyFile(makeURL('LICENSE'), makeURL('dist/LICENSE')),
+        copyFile(makeURL('README.md'), makeURL('dist/README.md')),
+    ],
+);
