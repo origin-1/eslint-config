@@ -7,15 +7,15 @@
   "author": "Francesco Trotta <ft@fasttime.org> (https://github.com/fasttime)",
   "repository": "github:@origin-1/eslint-config",
   "dependencies": {
-    "@fasttime/eslint-plugin": "0.6",
     "@types/eslint": "8",
-    "@typescript-eslint/eslint-plugin": "5.30",
-    "@typescript-eslint/parser": "5.30",
-    "eslint-plugin-n": "15.2",
     "semver": "7"
   },
   "peerDependencies": {
-    "eslint": "8"
+    "@fasttime/eslint-plugin": "0.6",
+    "@typescript-eslint/eslint-plugin": "5",
+    "@typescript-eslint/parser": "5",
+    "eslint": "^8.14.0",
+    "eslint-plugin-n": "15"
   },
   "engines": {
     "node": ">=18"
