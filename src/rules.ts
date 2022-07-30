@@ -522,11 +522,11 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-exports-assign':                        'error',
         'no-extraneous-import':                     jsts('error', 'off'),
         'no-extraneous-require':                    'error',
-        'no-missing-import':                        'off',
-        'no-missing-require':                       'off', // False positives ".." and "../..".
+        'no-missing-import':                        'error',
+        'no-missing-require':                       'error',
         'no-unpublished-bin':                       'error',
         'no-unpublished-import':                    'error',
-        'no-unpublished-require':                   'off', // Crashes on "." and "./".
+        'no-unpublished-require':                   'error',
         'no-unsupported-features/es-builtins':      'off',
         'no-unsupported-features/es-syntax':        'off',
         'no-unsupported-features/node-builtins':    'off',

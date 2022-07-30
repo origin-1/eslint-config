@@ -257,6 +257,17 @@ void test
             ),
             ctx.test
             (
+                'override globals are set',
+                (): void =>
+                {
+                    const { overrides } = createConfig({ files: 'foobar', globals: { '_': true } });
+                    assert(overrides);
+                    const [{ globals }] = overrides;
+                    assert.deepEqual(globals, { '_': true });
+                },
+            ),
+            ctx.test
+            (
                 'override files and excludedFiles are set',
                 (): void =>
                 {
@@ -356,6 +367,15 @@ void test
                             },
                         ),
                     );
+                },
+            ),
+            ctx.test
+            (
+                'globals are set',
+                (): void =>
+                {
+                    const { globals } = createBaseConfig({ globals: { '$': true } });
+                    assert.deepEqual(globals, { '$': true });
                 },
             ),
         );

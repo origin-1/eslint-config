@@ -42,7 +42,15 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
     plugins.push(...overridePlugins);
     Object.assign(rules, overrideRules);
     const baseConfig =
-    { env, parser, parserOptions, plugins, reportUnusedDisableDirectives: true, rules };
+    {
+        env,
+        globals: configData.globals,
+        parser,
+        parserOptions,
+        plugins,
+        reportUnusedDisableDirectives: true,
+        rules,
+    };
     return baseConfig;
 }
 
@@ -194,8 +202,8 @@ export function createConfig(...configDataList: ConfigDataWithFiles[]): Linter.C
 function createOverride(configData: ConfigDataWithFiles): Linter.ConfigOverride
 {
     const baseOverride = createBaseOverride(configData);
-    const { excludedFiles, files } = configData;
-    const override = { ...baseOverride, excludedFiles, files };
+    const { excludedFiles, files, globals } = configData;
+    const override = { ...baseOverride, excludedFiles, files, globals };
     return override;
 }
 

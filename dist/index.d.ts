@@ -1,1 +1,1 @@
-export * from './lib/create-config';
+export * from './lib/create-config.js';
