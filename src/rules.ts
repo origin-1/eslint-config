@@ -67,6 +67,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 {
     [UNIQUE]:
     {
+        ////////////////////////////////////////////
         // Problem
         'array-callback-return':            'off',
         'constructor-super':                'error',
@@ -123,6 +124,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'use-isnan':                        ['error', { enforceForSwitchCase: true }],
         'valid-typeof':                     'error',
 
+        ////////////////////////////////////////////
         // Suggestion
         'accessor-pairs':                   ['error', { enforceForClassMembers: true }],
         'arrow-body-style':                 'error',
@@ -249,12 +251,13 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'sort-imports':                     ['error', { ignoreDeclarationSort: true }],
         'sort-keys':                        'off',
         'sort-vars':                        'off',
-        'spaced-comment':                   'error',
+        'spaced-comment':                   ['error', 'always', { exceptions: ['/'] }],
         'strict':                           jsts(['error', 'global'], 'off'),
         'symbol-description':               'off',
         'vars-on-top':                      'off',
         'yoda':                             'error',
 
+        ////////////////////////////////////////////
         // Layout
         'array-bracket-newline':            ['error', 'consistent'],
         'array-bracket-spacing':            'error',
@@ -309,6 +312,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     [HYBRID]:
     {
+        ////////////////////////////////////////////
         // Problem
         'no-dupe-class-members':            'error',
         'no-loss-of-precision':             'error',
@@ -325,6 +329,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ),
         'no-use-before-define':             'off',
 
+        ////////////////////////////////////////////
         // Suggestion
         'default-param-last':               'off',
         'dot-notation':                     'error',
@@ -336,7 +341,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-invalid-this':                  'off',
         'no-loop-func':                     'error',
         'no-magic-numbers':                 'off',
-         // Redeclarations are acceptable in TypeScript.
+        // Redeclarations are acceptable in TypeScript.
         'no-redeclare':                     jsts(['error', { builtinGlobals: true }], 'off'),
         'no-restricted-imports':            'off',
         'no-shadow':                        'off',
@@ -345,6 +350,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-useless-constructor':           'error',
         'require-await':                    'error',
 
+        ////////////////////////////////////////////
         // Layout
         'brace-style':                      ['error', 'allman'],
         'comma-dangle':                     ['error', 'always-multiline'],
@@ -405,6 +411,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         [FOR_LANG]: 'ts',
 
+        ////////////////////////////////////////////
         // Problem
         'await-thenable':                           'error',
         'ban-ts-comment':                           'off',
@@ -441,6 +448,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'return-await':                             'error',
         'unbound-method':                           'off',
 
+        ////////////////////////////////////////////
         // Suggestion
         'adjacent-overload-signatures':             'error',
         'array-type':                               'error',
@@ -505,24 +513,29 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'typedef':                                  'error',
         'unified-signatures':                       'error',
 
+        ////////////////////////////////////////////
         // Layout
         'type-annotation-spacing':                  'error',
     },
     '@fasttime/eslint-plugin':
     {
+        ////////////////////////////////////////////
         // Layout
         'nice-space-before-function-paren': 'error',
         'no-spaces-in-call-expression':     'error',
     },
     'eslint-plugin-n':
     {
+        ////////////////////////////////////////////
         // Problem
         'no-callback-literal':                      'off',
         'no-deprecated-api':                        'error',
         'no-exports-assign':                        'error',
+        // Does not handle type declaration imports.
         'no-extraneous-import':                     jsts('error', 'off'),
         'no-extraneous-require':                    'error',
-        'no-missing-import':                        'error',
+        // Does not handle type declaration imports.
+        'no-missing-import':                        jsts('error', 'off'),
         'no-missing-require':                       'error',
         'no-unpublished-bin':                       'error',
         'no-unpublished-import':                    'error',
@@ -533,6 +546,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'process-exit-as-throw':                    'error',
         'shebang':                                  'off',
 
+        ////////////////////////////////////////////
         // Suggestion
         'callback-return':                          'off',
         'exports-style':                            'off',
