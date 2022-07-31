@@ -2,7 +2,6 @@ import assert                           from 'node:assert/strict';
 import { createRequire }                from 'node:module';
 import { test }                         from 'node:test';
 import { pathToFileURL }                from 'node:url';
-import { getRuleKey, getRulePrefix }    from '../src/rules.js';
 import type { RuleType }                from '../src/rules.js';
 import type { Rule }                    from 'eslint';
 
@@ -24,7 +23,7 @@ async function getPluginRules(pluginName: string): Promise<Record<string, Rule.R
     return rules;
 }
 
-const { HYBRID, RULES, UNIQUE } = await import('../src/rules.js');
+const { HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix } = await import('../src/rules.js');
 
 void test
 (
