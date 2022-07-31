@@ -17,7 +17,7 @@ void test
         (
             ctx.test
             (
-                'root is set',
+                '`root` is set',
                 (): void =>
                 {
                     const config = createConfig();
@@ -26,7 +26,7 @@ void test
             ),
             ctx.test
             (
-                'top level rules are set',
+                'top level `rules` are set',
                 (): void =>
                 {
                     const { rules } = createConfig();
@@ -37,7 +37,7 @@ void test
             ),
             ctx.test
             (
-                'override rules are set',
+                'override `rules` are set',
                 async (ctx): Promise<void> =>
                 {
                     await allTests
@@ -63,7 +63,7 @@ void test
                                 (
                                     ctx.test
                                     (
-                                        'before entry of beforeOrElse',
+                                        '`before` entry of `beforeOrElse`',
                                         (): void =>
                                         {
                                             const { overrides } =
@@ -85,7 +85,7 @@ void test
                                     ),
                                     ctx.test
                                     (
-                                        'else entry of beforeOrElse',
+                                        '`else` entry of `beforeOrElse`',
                                         (): void =>
                                         {
                                             const { overrides } =
@@ -136,7 +136,7 @@ void test
                                 (
                                     ctx.test
                                     (
-                                        'before entry of beforeOrElse',
+                                        '`before` entry of `beforeOrElse`',
                                         (): void =>
                                         {
                                             const { overrides } =
@@ -152,7 +152,7 @@ void test
                                     ),
                                     ctx.test
                                     (
-                                        'else entry of beforeOrElse',
+                                        '`else` entry of `beforeOrElse`',
                                         (): void =>
                                         {
                                             const { overrides } =
@@ -174,7 +174,7 @@ void test
             ),
             ctx.test
             (
-                'top level plugins are set',
+                'top level `plugins` are set',
                 (): void =>
                 {
                     const { plugins } = createConfig();
@@ -183,7 +183,7 @@ void test
             ),
             ctx.test
             (
-                'override plugins are set',
+                'override `plugins` are set',
                 async (ctx): Promise<void> =>
                 {
                     await allTests
@@ -218,7 +218,7 @@ void test
             ),
             ctx.test
             (
-                'override environment and parser are set',
+                'override `env` and `parser` are set',
                 async (ctx): Promise<void> =>
                 {
                     await allTests
@@ -257,18 +257,22 @@ void test
             ),
             ctx.test
             (
-                'override globals are set',
+                'override `extends` and `globals` are set',
                 (): void =>
                 {
-                    const { overrides } = createConfig({ files: 'foobar', globals: { '_': true } });
+                    const extends_ = ['foo', 'bar'];
+                    const globals = { '_': true };
+                    const { overrides } =
+                    createConfig({ files: 'foobar', extends: extends_, globals });
                     assert(overrides);
-                    const [{ globals }] = overrides;
-                    assert.deepEqual(globals, { '_': true });
+                    const [override] = overrides;
+                    assert.equal(override.extends, extends_);
+                    assert.equal(override.globals, globals);
                 },
             ),
             ctx.test
             (
-                'override files and excludedFiles are set',
+                'override `files` and `excludedFiles` are set',
                 (): void =>
                 {
                     const { overrides } = createConfig({ excludedFiles: 'foo', files: 'bar' });
@@ -291,7 +295,7 @@ void test
         (
             ctx.test
             (
-                'rules are set',
+                '`rules` are set',
                 (): void =>
                 {
                     const { rules } = createBaseConfig({ rules: { foobar: 'warn' } });
@@ -307,7 +311,7 @@ void test
             ),
             ctx.test
             (
-                'plugins are set',
+                '`plugins` are set',
                 async (ctx): Promise<void> =>
                 {
                     await allTests
@@ -337,7 +341,7 @@ void test
             ),
             ctx.test
             (
-                'environment and parser are set',
+                '`env` and `parser` are set',
                 async (ctx): Promise<void> =>
                 {
                     await allTests
@@ -371,11 +375,14 @@ void test
             ),
             ctx.test
             (
-                'globals are set',
+                '`extends` and `globals` are set',
                 (): void =>
                 {
-                    const { globals } = createBaseConfig({ globals: { '$': true } });
-                    assert.deepEqual(globals, { '$': true });
+                    const extends_ = ['foo', 'bar'];
+                    const globals = { '$': true };
+                    const baseConfig = createBaseConfig({ extends: extends_, globals });
+                    assert.equal(baseConfig.extends, extends_);
+                    assert.equal(baseConfig.globals, globals);
                 },
             ),
         );

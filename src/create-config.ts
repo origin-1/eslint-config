@@ -15,6 +15,7 @@ import semver                                                           from 'se
 export interface ConfigData extends Linter.HasRules
 {
     env?: Record<string, boolean> | undefined;
+    extends?: string | string[] | undefined;
     globals?:
     Record<string, boolean | 'readonly' | 'readable' | 'writable' | 'writeable'> | undefined;
     jsVersion?: JSVersion | undefined;
@@ -41,10 +42,12 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
     createBaseOverride(configData);
     plugins.push(...overridePlugins);
     Object.assign(rules, overrideRules);
+    const { extends: extends_, globals } = configData;
     const baseConfig =
     {
         env,
-        globals: configData.globals,
+        extends: extends_,
+        globals,
         parser,
         parserOptions,
         plugins,
@@ -202,8 +205,8 @@ export function createConfig(...configDataList: ConfigDataWithFiles[]): Linter.C
 function createOverride(configData: ConfigDataWithFiles): Linter.ConfigOverride
 {
     const baseOverride = createBaseOverride(configData);
-    const { excludedFiles, files, globals } = configData;
-    const override = { ...baseOverride, excludedFiles, files, globals };
+    const { excludedFiles, extends: extends_, files, globals } = configData;
+    const override = { ...baseOverride, excludedFiles, extends: extends_, files, globals };
     return override;
 }
 
