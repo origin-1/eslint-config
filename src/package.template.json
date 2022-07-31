@@ -6,17 +6,8 @@
   "license": "ISC",
   "author": "Francesco Trotta <ft@fasttime.org> (https://github.com/fasttime)",
   "repository": "github:@origin-1/eslint-config",
-  "dependencies": {
-    "@types/eslint": "8",
-    "semver": "7"
-  },
-  "peerDependencies": {
-    "@fasttime/eslint-plugin": "0.6",
-    "@typescript-eslint/eslint-plugin": "5",
-    "@typescript-eslint/parser": "5",
-    "eslint": "^8.14.0",
-    "eslint-plugin-n": "15"
-  },
+  "dependencies": null,
+  "peerDependencies": null,
   "engines": {
     "node": ">=18"
   },

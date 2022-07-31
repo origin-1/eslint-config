@@ -11,12 +11,14 @@ async function readJSON(url)
 
 async function updatePackage()
 {
-    const srcPkgURL = makeURL('package.json');
-    const targetPkgURL = makeURL('dist/package.json');
-    const [src, target] = await Promise.all([srcPkgURL, targetPkgURL].map(readJSON));
-    target.dependencies     = src.dependencies;
-    target.peerDependencies = src.peerDependencies;
-    const data = `${JSON.stringify(target, null, 2)}\n`;
+    const referencePkgURL   = makeURL('package.json');
+    const templatePkgURL    = makeURL('src/package.template.json');
+    const targetPkgURL      = makeURL('dist/package.json');
+    const [{ dependencies, peerDependencies }, pkg] =
+    await Promise.all([referencePkgURL, templatePkgURL].map(readJSON));
+    pkg.dependencies        = dependencies;
+    pkg.peerDependencies    = peerDependencies;
+    const data = `${JSON.stringify(pkg, null, 2)}\n`;
     await writeFile(targetPkgURL, data);
 }
 

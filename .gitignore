@@ -7,5 +7,6 @@
 /dist/README.md
 /dist/lib
 /dist/node_modules
+/dist/package.json
 /node_modules
 /npm-debug.log

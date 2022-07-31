@@ -15,6 +15,7 @@ jobs:
         node-version: 18 >=18.1
     - run: |
         npm install
+        npm run update-dist
         npm run compile
         npm run lint
 

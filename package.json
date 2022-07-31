@@ -4,7 +4,7 @@
     "src"
   ],
   "scripts": {
-    "build": "npm install && node dev/clean.js && node dev/coverage.js && node dev/compile.js && node dev/update-dist.js && npm run lint",
+    "build": "npm install && node dev/clean.js && node dev/coverage.js && node dev/update-dist.js && node dev/compile.js && npm run lint",
     "clean": "node dev/clean.js",
     "compile": "node dev/compile.js",
     "lint": "eslint . --ignore-path .gitignore --ext .js,.cjs,.mjs,.ts,.cts,.mts",
