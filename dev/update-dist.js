@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { copyFile, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 
 async function readJSON(url)
 {
@@ -24,6 +24,7 @@ async function updatePackage()
 
 const pkgDirURL = new URL('..', import.meta.url);
 const makeURL = url => new URL(url, pkgDirURL);
+await mkdir(makeURL('dist'), { recursive: true });
 await Promise.all
 (
     [

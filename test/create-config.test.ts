@@ -1,7 +1,7 @@
 import assert   from 'node:assert/strict';
 import { test } from 'node:test';
 
-const { createBaseConfig, createConfig } = await import('../src/create-config.js');
+const { createBaseConfig, createConfig } = await import('../src/lib/create-config.js');
 
 export async function allTests(...promises: Promise<unknown>[]): Promise<unknown>
 {

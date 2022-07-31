@@ -1,7 +1,4 @@
-'use strict';
-
-module.exports.parse =
-() =>
+export function parse(): never
 {
     throw Error('missing configuration for this file');
-};
+}

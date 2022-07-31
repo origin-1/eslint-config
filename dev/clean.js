@@ -6,7 +6,7 @@ const RM_OPTIONS = { force: true, recursive: true };
 
 const pkgDirURL = new URL('..', import.meta.url);
 const promises =
-['coverage', 'dist/LICENSE', 'dist/README.md', 'dist/lib', 'dist/node_modules', 'dist/package.json']
+['coverage', 'dist']
 .map
 (
     async url =>

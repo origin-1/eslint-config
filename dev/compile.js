@@ -22,11 +22,7 @@ async function compileTS(pkgDir, rootDir, newOptions, writeFile)
     }
     )();
     const emitResult = program.emit(undefined, writeFile);
-    const diagnostics =
-    [
-        ...ts.getPreEmitDiagnostics(program).filter(({ code }) => code !== 2343),
-        ...emitResult.diagnostics,
-    ];
+    const diagnostics = [...ts.getPreEmitDiagnostics(program), ...emitResult.diagnostics];
     if (diagnostics.length)
     {
         const reporter = ts.createDiagnosticReporter(sys, true);
@@ -49,7 +45,7 @@ function getWriteFile(sysWriteFile, declarationDir, dTsFilter)
             /^\.\.[/\\]/.test(relativePath) ||
             isAbsolute(relativePath) ||
             extname(relativePath) !== '.ts' ||
-            dTsFilter.includes(relativePath)
+            dTsFilter.includes(relativePath.replaceAll('\\', '/'))
         )
             sysWriteFile(path, data, writeByteOrderMark);
     };
@@ -57,7 +53,7 @@ function getWriteFile(sysWriteFile, declarationDir, dTsFilter)
 }
 
 const pkgDir = fileURLToPath(new URL('..', import.meta.url));
-const outDir = join(pkgDir, 'dist/lib');
+const outDir = join(pkgDir, 'dist');
 const rootDir = join(pkgDir, 'src');
 const newOptions =
 {
@@ -67,5 +63,5 @@ const newOptions =
     outDir,
     rootDir:        join(pkgDir, 'src'),
 };
-const writeFile = getWriteFile(ts.sys.writeFile, outDir, ['create-config.d.ts']);
+const writeFile = getWriteFile(ts.sys.writeFile, outDir, ['index.d.ts', 'lib/create-config.d.ts']);
 await compileTS(pkgDir, rootDir, newOptions, writeFile);
