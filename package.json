@@ -9,6 +9,7 @@
     "compile": "node dev/compile.js",
     "lint": "eslint . --ignore-path .gitignore --ext .js,.cjs,.mjs,.ts,.cts,.mts",
     "test": "node --loader ts-node/esm --test test/create-config.test.ts test/rules.spec.test.ts",
+    "test-only": "node --loader ts-node/esm --test-only test/create-config.test.ts test/rules.spec.test.ts",
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {
