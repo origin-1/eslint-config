@@ -61,6 +61,7 @@ const newOptions =
     declarationDir: outDir,
     module:         ts.ModuleKind.CommonJS,
     outDir,
+    removeComments: true,
     rootDir:        join(pkgDir, 'src'),
 };
 const writeFile = getWriteFile(ts.sys.writeFile, outDir, ['index.d.ts', 'lib/create-config.d.ts']);
