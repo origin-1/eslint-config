@@ -7,20 +7,20 @@ createConfig
 (
     {
         env: { node: true },
-        files: '*.js',
         jsVersion: 2022,
+        files: '*.js',
         parserOptions: { sourceType: 'module' },
     },
     {
         env: { node: true },
-        files: ['*.cjs', 'dist/*.js'],
         jsVersion: 2022,
+        files: ['*.cjs', 'dist/*.js'],
         parserOptions: { sourceType: 'script' },
     },
     {
         env: { node: true },
+        tsVersion: 'latest',
         files: '*.ts',
         parserOptions: { project: 'tsconfig.json' },
-        tsVersion: 'latest',
     },
 );

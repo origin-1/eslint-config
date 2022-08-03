@@ -5,6 +5,8 @@ import { fileURLToPath }                        from 'node:url';
 import fastGlob                                 from 'fast-glob';
 import ts                                       from 'typescript';
 
+const TS_EXTNAMES = ['.ts', '.cts', '.mts'];
+
 async function compileTS(pkgDir, rootDir, newOptions, writeFile)
 {
     const { sys } = ts;
@@ -44,7 +46,7 @@ function getWriteFile(sysWriteFile, declarationDir, dTsFilter)
         (
             /^\.\.[/\\]/.test(relativePath) ||
             isAbsolute(relativePath) ||
-            extname(relativePath) !== '.ts' ||
+            !TS_EXTNAMES.includes(extname(relativePath)) ||
             dTsFilter.includes(relativePath.replaceAll('\\', '/'))
         )
             sysWriteFile(path, data, writeByteOrderMark);
@@ -64,5 +66,7 @@ const newOptions =
     removeComments: true,
     rootDir:        join(pkgDir, 'src'),
 };
-const writeFile = getWriteFile(ts.sys.writeFile, outDir, ['index.d.ts', 'lib/create-config.d.ts']);
+const writeFile =
+getWriteFile
+(ts.sys.writeFile, outDir, ['index.d.ts', 'lib/create-config.d.ts', 'patch-tslib.d.cts']);
 await compileTS(pkgDir, rootDir, newOptions, writeFile);

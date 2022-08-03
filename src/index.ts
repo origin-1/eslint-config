@@ -1,3 +1,5 @@
-import './lib/patch-tslib.js';
+import patchTslib from './patch-tslib.js';
+
+patchTslib(require);
 
 export * from './lib/create-config.js';

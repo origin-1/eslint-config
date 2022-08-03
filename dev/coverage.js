@@ -7,8 +7,10 @@ await c8js
     commands.npm,
     ['test'],
     {
+        all: true,
         cwd: new URL('..', import.meta.url),
         reporter: ['html', 'text-summary'],
+        src: 'src',
         useC8Config: false,
         watermarks:
         {
