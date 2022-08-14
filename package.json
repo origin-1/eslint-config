@@ -27,7 +27,7 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@fasttime/eslint-plugin": "0.6",
+    "@origin-1/eslint-plugin": "0.7",
     "@typescript-eslint/eslint-plugin": "5",
     "@typescript-eslint/parser": "5",
     "eslint": "^8.14.0",

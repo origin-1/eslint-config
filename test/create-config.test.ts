@@ -32,7 +32,7 @@ void test
                     const { rules } = createConfig();
                     assert(rules);
                     assert('eqeqeq' in rules);
-                    assert('@fasttime/no-spaces-in-call-expression' in rules);
+                    assert('@origin-1/no-spaces-in-call-expression' in rules);
                 },
             ),
             ctx.test
@@ -178,7 +178,7 @@ void test
                 (): void =>
                 {
                     const { plugins } = createConfig();
-                    assert.deepEqual(plugins, ['@fasttime', 'n']);
+                    assert.deepEqual(plugins, ['@origin-1', 'n']);
                 },
             ),
             ctx.test
@@ -301,7 +301,7 @@ void test
                     const { rules } = createBaseConfig({ rules: { foobar: 'warn' } });
                     assert(rules);
                     assert('eqeqeq' in rules);
-                    assert('@fasttime/no-spaces-in-call-expression' in rules);
+                    assert('@origin-1/no-spaces-in-call-expression' in rules);
                     assert('no-undef' in rules);
                     assert('semi' in rules);
                     assert('no-redeclare' in rules);
@@ -322,7 +322,7 @@ void test
                             (): void =>
                             {
                                 const { plugins } = createBaseConfig({ plugins: ['barbaz'] });
-                                assert.deepEqual(plugins, ['@fasttime', 'n', 'barbaz']);
+                                assert.deepEqual(plugins, ['@origin-1', 'n', 'barbaz']);
                             },
                         ),
                         ctx.test
@@ -333,7 +333,7 @@ void test
                                 const { plugins } =
                                 createBaseConfig({ plugins: ['barbaz'], tsVersion: 'latest' });
                                 assert.deepEqual
-                                (plugins, ['@fasttime', 'n', 'barbaz', '@typescript-eslint']);
+                                (plugins, ['@origin-1', 'n', 'barbaz', '@typescript-eslint']);
                             },
                         ),
                     );

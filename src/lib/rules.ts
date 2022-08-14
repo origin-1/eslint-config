@@ -517,7 +517,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         // Layout
         'type-annotation-spacing':                  'error',
     },
-    '@fasttime/eslint-plugin':
+    '@origin-1/eslint-plugin':
     {
         ////////////////////////////////////////////
         // Layout
