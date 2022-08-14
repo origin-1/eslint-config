@@ -190,6 +190,7 @@ export function createConfig(...configDataList: ConfigDataWithFiles[]): Linter.C
 {
     const { plugins, rules } = createCommonEntries();
     const overrides = configDataList.map(createOverride);
+    overrides.unshift({ files: ['*.js', '*.cjs', '*.mjs', '*.ts', '*.cts', '*.mts'] });
     const config =
     {
         overrides,

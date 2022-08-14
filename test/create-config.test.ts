@@ -20,8 +20,19 @@ void test
                 '`root` is set',
                 (): void =>
                 {
-                    const config = createConfig();
-                    assert.equal(config.root, true);
+                    const { root } = createConfig();
+                    assert.equal(root, true);
+                },
+            ),
+            ctx.test
+            (
+                '`overrides[0]` is set',
+                (): void =>
+                {
+                    const { overrides } = createConfig();
+                    assert(overrides);
+                    assert.deepEqual
+                    (overrides[0], { files: ['*.js', '*.cjs', '*.mjs', '*.ts', '*.cts', '*.mts'] });
                 },
             ),
             ctx.test
@@ -49,7 +60,7 @@ void test
                             {
                                 const { overrides } =
                                 createConfig({ files: 'foobar', rules: { foobar: 'warn' } });
-                                const rules = overrides?.[0]?.rules;
+                                const rules = overrides?.[1]?.rules;
                                 assert(rules);
                                 assert.equal(rules['no-undef'], 'error');
                                 assert.equal(rules.semi, 'error');
@@ -68,7 +79,7 @@ void test
                                         {
                                             const { overrides } =
                                             createConfig({ files: 'foobar', jsVersion: 2018 });
-                                            const rules = overrides?.[0]?.rules;
+                                            const rules = overrides?.[1]?.rules;
                                             assert(rules);
                                             assert.deepEqual
                                             (
@@ -90,7 +101,7 @@ void test
                                         {
                                             const { overrides } =
                                             createConfig({ files: 'foobar', jsVersion: 2019 });
-                                            const rules = overrides?.[0]?.rules;
+                                            const rules = overrides?.[1]?.rules;
                                             assert(rules);
                                             assert.deepEqual
                                             (
@@ -123,7 +134,7 @@ void test
                                         tsVersion: 'latest',
                                     },
                                 );
-                                const rules = overrides?.[0]?.rules;
+                                const rules = overrides?.[1]?.rules;
                                 assert(rules);
                                 assert.equal(rules['no-undef'], 'off');
                                 assert.equal(rules.semi, 'off');
@@ -141,7 +152,7 @@ void test
                                         {
                                             const { overrides } =
                                             createConfig({ files: 'foobar', tsVersion: '3.7.0' });
-                                            const rules = overrides?.[0]?.rules;
+                                            const rules = overrides?.[1]?.rules;
                                             assert(rules);
                                             assert.deepEqual
                                             (
@@ -157,7 +168,7 @@ void test
                                         {
                                             const { overrides } =
                                             createConfig({ files: 'foobar', tsVersion: '3.8.0' });
-                                            const rules = overrides?.[0]?.rules;
+                                            const rules = overrides?.[1]?.rules;
                                             assert(rules);
                                             assert.equal
                                             (
@@ -196,7 +207,7 @@ void test
                                 const { overrides } =
                                 createConfig({ files: 'foobar', plugins: ['barbaz'] });
                                 assert(overrides);
-                                const [{ plugins }] = overrides;
+                                const [, { plugins }] = overrides;
                                 assert.deepEqual(plugins, ['barbaz']);
                             },
                         ),
@@ -209,7 +220,7 @@ void test
                                 createConfig
                                 ({ files: 'foobar', plugins: ['barbaz'], tsVersion: 'latest' });
                                 assert(overrides);
-                                const [{ plugins }] = overrides;
+                                const [, { plugins }] = overrides;
                                 assert.deepEqual(plugins, ['barbaz', '@typescript-eslint']);
                             },
                         ),
@@ -231,7 +242,7 @@ void test
                                 const { overrides } =
                                 createConfig({ files: 'foobar', jsVersion: 2015 });
                                 assert(overrides);
-                                const [{ env, parser, parserOptions }] = overrides;
+                                const [, { env, parser, parserOptions }] = overrides;
                                 assert.deepEqual(env, { es6: true });
                                 assert.equal(parser, 'espree');
                                 assert.deepEqual(parserOptions, { ecmaVersion: 2015 });
@@ -246,7 +257,7 @@ void test
                                 createConfig
                                 ({ files: 'foobar', jsVersion: 2021, tsVersion: 'latest' });
                                 assert(overrides);
-                                const [{ env, parser, parserOptions }] = overrides;
+                                const [, { env, parser, parserOptions }] = overrides;
                                 assert.deepEqual(env, { es2021: true });
                                 assert.equal(parser, '@typescript-eslint/parser');
                                 assert.deepEqual(parserOptions, { ecmaVersion: 'latest' });
@@ -265,7 +276,7 @@ void test
                     const { overrides } =
                     createConfig({ files: 'foobar', extends: extends_, globals });
                     assert(overrides);
-                    const [override] = overrides;
+                    const [, override] = overrides;
                     assert.equal(override.extends, extends_);
                     assert.equal(override.globals, globals);
                 },
@@ -277,7 +288,7 @@ void test
                 {
                     const { overrides } = createConfig({ excludedFiles: 'foo', files: 'bar' });
                     assert(overrides);
-                    const [{ excludedFiles, files }] = overrides;
+                    const [, { excludedFiles, files }] = overrides;
                     assert.equal(excludedFiles, 'foo');
                     assert.equal(files, 'bar');
                 },
