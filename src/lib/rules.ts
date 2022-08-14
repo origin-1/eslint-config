@@ -534,9 +534,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         // Does not handle type declaration imports.
         'no-extraneous-import':                     jsts('error', 'off'),
         'no-extraneous-require':                    'error',
-        // Does not handle type declaration imports.
-        'no-missing-import':                        jsts('error', 'off'),
-        'no-missing-require':                       'error',
+        // Does not handle package.json "exports" and "imports" and type declaration imports.
+        'no-missing-import':                        'off',
+        // Does not handle package.json "exports" and "imports".
+        'no-missing-require':                       'off',
         'no-unpublished-bin':                       'error',
         'no-unpublished-import':                    'error',
         'no-unpublished-require':                   'error',
