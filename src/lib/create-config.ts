@@ -1,16 +1,11 @@
-import { FOR_LANG, HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix }   from './rules.js';
-import type
-{
-    JSTSEntry,
-    JSVersion,
-    PluginSettingsAny,
-    PluginSettingsForLang,
-    RuleSettingsAny,
-    VersionedList,
-}
+import { normalizeJSVersion, normalizeTSVersion }                   from './normalize-version.js';
+import type { JSVersion, TSVersion }                                from './normalize-version.js';
+import { FOR_LANG, HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix }
 from './rules.js';
-import type { Linter }                                                  from 'eslint';
-import semver                                                           from 'semver';
+import type { JSTSEntry, PluginSettingsAny, PluginSettingsForLang, RuleSettingsAny, VersionedList }
+from './rules.js';
+import type { Linter }                                              from 'eslint';
+import semver                                                       from 'semver';
 
 export interface ConfigData extends Linter.HasRules
 {
@@ -21,7 +16,7 @@ export interface ConfigData extends Linter.HasRules
     jsVersion?: JSVersion | undefined;
     parserOptions?: Linter.ParserOptions | undefined;
     plugins?: string[] | undefined;
-    tsVersion?: string | undefined;
+    tsVersion?: TSVersion | undefined;
 }
 
 export interface ConfigDataWithFiles extends ConfigData
@@ -64,12 +59,12 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugi
     let ecmaVersion: Linter.ParserOptions['ecmaVersion'];
     let envKey: string | undefined;
     let parser: string | undefined;
-    const jsVersion = getJSVersion(configData);
+    const jsVersion = normalizeJSVersion(configData.jsVersion);
     if (jsVersion === 2015)
         envKey = 'es6';
     else if (jsVersion > 2015)
         envKey = `es${jsVersion}`;
-    const tsVersion = getTSVersion(configData);
+    const tsVersion = normalizeTSVersion(configData.tsVersion);
     if (lang === 'ts')
     {
         ecmaVersion = 'latest';
@@ -235,27 +230,9 @@ Linter.RuleEntry | undefined
     }
 }
 
-function getJSVersion(configData: ConfigData): JSVersion
-{
-    const { jsVersion } = configData;
-    return Number.isInteger(jsVersion) ? jsVersion! : 5;
-}
-
 function getLanguage(configData: ConfigData): 'js' | 'ts'
 {
     return configData.tsVersion == null ? 'js' : 'ts';
-}
-
-function getTSVersion(configData: ConfigData): string
-{
-    const { tsVersion } = configData;
-    if (tsVersion != null)
-    {
-        const cleanVersion = semver.clean(tsVersion);
-        if (cleanVersion != null)
-            return cleanVersion;
-    }
-    return 'latest';
 }
 
 function isJSTSEntry(ruleSettings: RuleSettingsAny): ruleSettings is JSTSEntry

@@ -10,7 +10,7 @@
     "compile": "node dev/compile.js",
     "coverage": "node dev/coverage.js",
     "lint": "eslint . --ignore-path .gitignore",
-    "test": "node --loader ts-node/esm --test test/create-config.test.ts test/index.test.ts test/no-parser.test.ts test/patch-tslib.test.ts test/rules.spec.test.ts",
+    "test": "node --loader ts-node/esm --test test/create-config.test.ts test/index.test.ts test/no-parser.test.ts test/normalize-version.test.ts test/patch-tslib.test.ts test/rules.spec.test.ts",
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {

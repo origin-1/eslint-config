@@ -46,6 +46,10 @@ void test
                 );
             },
         );
-        assert.deepEqual(exportedNames, ['createBaseConfig', 'createConfig']);
+        assert.deepEqual
+        (
+            exportedNames,
+            ['createBaseConfig', 'createConfig', 'normalizeJSVersion', 'normalizeTSVersion'],
+        );
     },
 );

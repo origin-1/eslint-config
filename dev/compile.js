@@ -68,5 +68,9 @@ const newOptions =
 };
 const writeFile =
 getWriteFile
-(ts.sys.writeFile, outDir, ['index.d.ts', 'lib/create-config.d.ts', 'patch-tslib.d.cts']);
+(
+    ts.sys.writeFile,
+    outDir,
+    ['index.d.ts', 'lib/create-config.d.ts', 'lib/normalize-version.d.ts', 'patch-tslib.d.cts'],
+);
 await compileTS(pkgDir, rootDir, newOptions, writeFile);

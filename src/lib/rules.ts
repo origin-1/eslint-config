@@ -1,12 +1,11 @@
-import type { Linter } from 'eslint';
+import type { JSVersion, TSVersion }    from './normalize-version.js';
+import type { Linter }                  from 'eslint';
 
 export interface JSTSEntry
 {
     js: RuleSettingsJS;
     ts: RuleSettingsTS;
 }
-
-export type JSVersion = 5 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
 
 export const FOR_LANG: unique symbol = Symbol('For one language only');
 
@@ -17,24 +16,24 @@ export type PluginSettingsForLang   =
 
 export type RuleSettingsAny = Linter.RuleEntry | JSTSEntry;
 export type RuleSettingsJS  = VersionedList<JSVersion> | Linter.RuleEntry;
-export type RuleSettingsTS  = VersionedList<string> | Linter.RuleEntry;
+export type RuleSettingsTS  = VersionedList<TSVersion> | Linter.RuleEntry;
 
 export type RuleType = 'problem' | 'suggestion' | 'layout';
 
-interface VersionedEntry<VersionType extends JSVersion | string | undefined>
+interface VersionedEntry<VersionType extends JSVersion | TSVersion | undefined>
 {
     minVersion: VersionType;
     ruleEntry: Linter.RuleEntry;
 }
 
-export type VersionedList<VersionType extends JSVersion | string = JSVersion | string> =
+export type VersionedList<VersionType extends JSVersion | TSVersion = JSVersion | TSVersion> =
 [VersionedEntry<undefined>, ...VersionedEntry<VersionType>[]] & { versioned: true; };
 
 export const UNIQUE = Symbol('Unique built-in rules');
 export const HYBRID = Symbol('Hybrid rules');
 
 function beforeOrElse
-<VersionType extends JSVersion | string>
+<VersionType extends JSVersion | TSVersion>
 (version: VersionType, before: Linter.RuleEntry, else_: Linter.RuleEntry):
 VersionedList<VersionType>
 {
@@ -221,7 +220,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-useless-escape':                'error',
         'no-useless-rename':                'error',
         'no-useless-return':                'error',
-        'no-var':                           'error',
+        'no-var':                           jsts(beforeOrElse(2015, 'off', 'error'), 'error'),
         'no-void':                          'off',
         'no-warning-comments':              'off',
         'no-with':                          'error',
