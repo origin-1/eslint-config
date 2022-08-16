@@ -228,7 +228,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'one-var':                          ['error', 'never'],
         'one-var-declaration-per-line':     'error',
         'operator-assignment':              'error',
-        'prefer-arrow-callback':            'error',
+        'prefer-arrow-callback':            jsts(beforeOrElse(2015, 'off', 'error'), 'error'),
         'prefer-const':                     ['error', { ignoreReadBeforeAssign: true }],
         'prefer-destructuring':             'error',
         // Do not prefer the exponentiation operator in TypeScript, because that would result in
@@ -240,7 +240,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-object-spread':             'off',
         'prefer-promise-reject-errors':     'off',
         'prefer-regex-literals':            'off',
-        'prefer-rest-params':               'error',
+        'prefer-rest-params':               jsts(beforeOrElse(2015, 'off', 'error'), 'error'),
         'prefer-spread':                    'error',
         'prefer-template':                  'error',
         'quote-props':                      'off',
