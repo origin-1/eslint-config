@@ -32,6 +32,13 @@ export type VersionedList<VersionType extends JSVersion | TSVersion = JSVersion 
 export const UNIQUE = Symbol('Unique built-in rules');
 export const HYBRID = Symbol('Hybrid rules');
 
+function beforeJSOrElse
+(version: JSVersion, before: Linter.RuleEntry, else_: Linter.RuleEntry):
+JSTSEntry
+{
+    return jsts(beforeOrElse(version, before, else_), else_);
+}
+
 function beforeOrElse
 <VersionType extends JSVersion | TSVersion>
 (version: VersionType, before: Linter.RuleEntry, else_: Linter.RuleEntry):
@@ -95,7 +102,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-fallthrough':                   'error',
         'no-func-assign':                   'error',
         'no-import-assign':                 'error',
-        'no-inner-declarations':            'error',
+        'no-inner-declarations':            beforeJSOrElse(2015, 'error', 'off'),
         'no-invalid-regexp':                'error',
         'no-irregular-whitespace':          'error',
         'no-misleading-character-class':    'error',
@@ -180,7 +187,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-iterator':                      'error',
         'no-label-var':                     'error',
         'no-labels':                        ['error', { allowLoop: true, allowSwitch: true }],
-        'no-lone-blocks':                   'error',
+        'no-lone-blocks':                   beforeJSOrElse(2015, 'error', 'off'),
         'no-lonely-if':                     'off',
         'no-mixed-operators':               'off',
         'no-multi-assign':                  'off',
@@ -220,29 +227,29 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-useless-escape':                'error',
         'no-useless-rename':                'error',
         'no-useless-return':                'error',
-        'no-var':                           jsts(beforeOrElse(2015, 'off', 'error'), 'error'),
+        'no-var':                           beforeJSOrElse(2015, 'off', 'error'),
         'no-void':                          'off',
         'no-warning-comments':              'off',
         'no-with':                          'error',
-        'object-shorthand':                 'error',
+        'object-shorthand':                 beforeJSOrElse(2015, 'off', 'error'),
         'one-var':                          ['error', 'never'],
         'one-var-declaration-per-line':     'error',
         'operator-assignment':              'error',
-        'prefer-arrow-callback':            jsts(beforeOrElse(2015, 'off', 'error'), 'error'),
+        'prefer-arrow-callback':            beforeJSOrElse(2015, 'off', 'error'),
         'prefer-const':                     ['error', { ignoreReadBeforeAssign: true }],
-        'prefer-destructuring':             'error',
+        'prefer-destructuring':             beforeJSOrElse(2015, 'off', 'error'),
         // Do not prefer the exponentiation operator in TypeScript, because that would result in
         // getting the value of Math.pow upon every evaluation in ES5 transpiled code.
-        'prefer-exponentiation-operator':   jsts('error', 'off'),
+        'prefer-exponentiation-operator':   jsts(beforeOrElse(2016, 'off', 'error'), 'off'),
         'prefer-named-capture-group':       'off',
         'prefer-numeric-literals':          'error',
         'prefer-object-has-own':            'error',
         'prefer-object-spread':             'off',
         'prefer-promise-reject-errors':     'off',
         'prefer-regex-literals':            'off',
-        'prefer-rest-params':               jsts(beforeOrElse(2015, 'off', 'error'), 'error'),
-        'prefer-spread':                    'error',
-        'prefer-template':                  'error',
+        'prefer-rest-params':               beforeJSOrElse(2015, 'off', 'error'),
+        'prefer-spread':                    beforeJSOrElse(2015, 'off', 'error'),
+        'prefer-template':                  beforeJSOrElse(2015, 'off', 'error'),
         'quote-props':                      'off',
         'radix':                            'error',
         'require-unicode-regexp':           'off',
@@ -316,14 +323,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-dupe-class-members':            'error',
         'no-loss-of-precision':             'error',
         'no-unused-vars':
-        jsts
+        beforeJSOrElse
         (
-            beforeOrElse
-            (
-                2019,
-                ['error', { ignoreRestSiblings: true, vars: 'local' }],
-                ['error', { caughtErrors: 'all', ignoreRestSiblings: true, vars: 'local' }],
-            ),
+            2019,
+            ['error', { ignoreRestSiblings: true, vars: 'local' }],
             ['error', { caughtErrors: 'all', ignoreRestSiblings: true, vars: 'local' }],
         ),
         'no-use-before-define':             'off',
@@ -494,7 +497,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-for-of':                            'error',
         // https://github.com/typescript-eslint/typescript-eslint/issues/454
         'prefer-function-type':                     'off',
-        'prefer-includes':                          'error',
+        'prefer-includes':                          'off',
         'prefer-literal-enum-member':               'off',
         'prefer-namespace-keyword':                 'off',
         'prefer-nullish-coalescing':                'error',
@@ -530,9 +533,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-callback-literal':                      'off',
         'no-deprecated-api':                        'error',
         'no-exports-assign':                        'error',
-        // Does not handle type declaration imports.
-        'no-extraneous-import':                     jsts('error', 'off'),
-        'no-extraneous-require':                    'error',
+        // Does not handle workspace packages and type declaration imports.
+        'no-extraneous-import':                     'off',
+        // Does not handle workspace packages.
+        'no-extraneous-require':                    'off',
         // Does not handle package.json "exports" and "imports" and type declaration imports.
         'no-missing-import':                        'off',
         // Does not handle package.json "exports" and "imports".
@@ -558,8 +562,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-path-concat':                           'error',
         'no-process-env':                           'off',
         'no-process-exit':                          'off',
-        'no-restricted-import':                     'error',
-        'no-restricted-require':                    'error',
+        'no-restricted-import':                     'off',
+        'no-restricted-require':                    'off',
         'no-sync':                                  'off',
         'prefer-global/buffer':                     'error',
         'prefer-global/console':                    'error',
@@ -568,7 +572,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-global/text-encoder':               'error',
         'prefer-global/url':                        'error',
         'prefer-global/url-search-params':          'error',
-        'prefer-promises/dns':                      'error',
-        'prefer-promises/fs':                       'off',
+        'prefer-promises/dns':                      beforeJSOrElse(2015, 'off', 'error'),
+        'prefer-promises/fs':                       beforeJSOrElse(2015, 'off', 'error'),
     },
 };

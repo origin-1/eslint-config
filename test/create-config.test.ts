@@ -68,7 +68,7 @@ void test
                                 assert.deepEqual
                                 (rules['no-redeclare'], ['error', { builtinGlobals: true }]);
                                 assert(!('@typescript-eslint/no-redeclare' in rules));
-                                assert.equal(rules['n/no-extraneous-import'], 'error');
+                                assert.equal(rules['n/prefer-promises/fs'], 'off');
                                 assert.equal(rules.foobar, 'warn');
                                 await allTests
                                 (
@@ -141,7 +141,7 @@ void test
                                 assert('@typescript-eslint/semi' in rules);
                                 assert.equal(rules['no-redeclare'], 'off');
                                 assert('@typescript-eslint/no-redeclare' in rules);
-                                assert.equal(rules['n/no-extraneous-import'], 'off');
+                                assert.equal(rules['n/prefer-promises/fs'], 'error');
                                 assert.equal(rules.foobar, 'warn');
                                 await allTests
                                 (
@@ -316,7 +316,7 @@ void test
                     assert('no-undef' in rules);
                     assert('semi' in rules);
                     assert('no-redeclare' in rules);
-                    assert('n/no-extraneous-import' in rules);
+                    assert('n/prefer-promises/fs' in rules);
                     assert.equal(rules.foobar, 'warn');
                 },
             ),
