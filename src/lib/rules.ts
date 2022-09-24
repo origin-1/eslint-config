@@ -153,6 +153,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'id-denylist':                      'off',
         'id-length':                        'off',
         'id-match':                         'off',
+        'logical-assignment-operators':
+        beforeJSOrElse(2021, 'off', ['error', 'always', { enforceForIfStatements: true }]),
         'max-classes-per-file':             'off',
         'max-depth':                        'off',
         'max-lines':                        'off',
