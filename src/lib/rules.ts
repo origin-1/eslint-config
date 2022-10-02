@@ -259,7 +259,12 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'sort-imports':                     ['error', { ignoreDeclarationSort: true }],
         'sort-keys':                        'off',
         'sort-vars':                        'off',
-        'spaced-comment':                   ['error', 'always', { exceptions: ['/'] }],
+        'spaced-comment':
+        [
+            'error',
+            'always',
+            { block: { exceptions: ['*'] }, line: { exceptions: ['/'], markers: ['/'] } },
+        ],
         'strict':                           jsts(['error', 'global'], 'off'),
         'symbol-description':               'off',
         'vars-on-top':                      'off',
