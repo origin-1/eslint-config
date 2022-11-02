@@ -81,8 +81,8 @@ void test
                     (
                         (): void => void normalizeTSVersion('4.0' as TSVersion),
                         {
-                            constructor: TypeError,
-                            message: 'tsVersion \'4.0\' is not supported',
+                            constructor:    TypeError,
+                            message:        'tsVersion \'4.0\' is not supported',
                         },
                     );
                 },

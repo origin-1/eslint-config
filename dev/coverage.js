@@ -7,11 +7,11 @@ await c8js
     commands.npm,
     ['test'],
     {
-        all: true,
-        cwd: new URL('..', import.meta.url),
-        reporter: ['html', 'text-summary'],
-        src: 'src',
-        useC8Config: false,
+        all:            true,
+        cwd:            new URL('..', import.meta.url),
+        reporter:       ['html', 'text-summary'],
+        src:            'src',
+        useC8Config:    false,
         watermarks:
         {
             branches:   [90, 100],

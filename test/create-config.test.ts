@@ -86,10 +86,7 @@ void test
                                                 rules['no-unused-vars'],
                                                 [
                                                     'error',
-                                                    {
-                                                        ignoreRestSiblings: true,
-                                                        vars: 'local',
-                                                    },
+                                                    { ignoreRestSiblings: true, vars: 'local' },
                                                 ],
                                             );
                                         },
@@ -109,9 +106,9 @@ void test
                                                 [
                                                     'error',
                                                     {
-                                                        caughtErrors: 'all',
+                                                        caughtErrors:       'all',
                                                         ignoreRestSiblings: true,
-                                                        vars: 'local',
+                                                        vars:               'local',
                                                     },
                                                 ],
                                             );
@@ -129,9 +126,9 @@ void test
                                 createConfig
                                 (
                                     {
-                                        files: 'foobar',
-                                        rules: { foobar: 'warn' },
-                                        tsVersion: 'latest',
+                                        files:      'foobar',
+                                        rules:      { foobar: 'warn' },
+                                        tsVersion:  'latest',
                                     },
                                 );
                                 const rules = overrides?.[1]?.rules;

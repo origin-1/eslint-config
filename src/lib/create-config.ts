@@ -41,12 +41,12 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
     const baseConfig =
     {
         env,
-        extends: extends_,
+        extends:                        extends_,
         globals,
         parser,
         parserOptions,
         plugins,
-        reportUnusedDisableDirectives: true,
+        reportUnusedDisableDirectives:  true,
         rules,
     };
     return baseConfig;
@@ -189,10 +189,10 @@ export function createConfig(...configDataList: ConfigDataWithFiles[]): Linter.C
     const config =
     {
         overrides,
-        parser: '@origin-1/eslint-config/no-parser',
+        parser:                         '@origin-1/eslint-config/no-parser',
         plugins,
-        reportUnusedDisableDirectives: true,
-        root: true,
+        reportUnusedDisableDirectives:  true,
+        root:                           true,
         rules,
     };
     return config;

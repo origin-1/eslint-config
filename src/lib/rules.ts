@@ -288,7 +288,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'generator-star-spacing':           ['error', 'both'],
         'implicit-arrow-linebreak':         'off',
         'jsx-quotes':                       'error',
-        'key-spacing':                      ['error', { mode: 'minimum' }],
+        'key-spacing':
+        ['error', { multiLine: { align: 'value', mode: 'minimum' } }],
         'line-comment-position':            'off',
         'linebreak-style':                  'error',
         // In TypeScript files, lines-around-comment doesn't work well at the start of a block.
@@ -373,11 +374,11 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
                 'error',
                 4,
                 {
-                    CallExpression: { arguments: 'first' },
-                    FunctionDeclaration: { parameters: 'first' },
-                    FunctionExpression: { parameters: 'first' },
-                    MemberExpression: 0,
-                    VariableDeclarator: 0,
+                    CallExpression:         { arguments: 'first' },
+                    FunctionDeclaration:    { parameters: 'first' },
+                    FunctionExpression:     { parameters: 'first' },
+                    MemberExpression:       0,
+                    VariableDeclarator:     0,
                     ignoredNodes:
                     [
                         'ArrowFunctionExpression',
@@ -397,14 +398,14 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         [
             'error',
             {
-                blankLine: 'always',
-                prev: '*',
-                next: ['class', 'directive', 'export', 'function', 'import'],
+                blankLine:  'always',
+                prev:       '*',
+                next:       ['class', 'directive', 'export', 'function', 'import'],
             },
             {
-                blankLine: 'always',
-                prev: ['class', 'directive', 'export', 'function', 'import'],
-                next: '*',
+                blankLine:  'always',
+                prev:       ['class', 'directive', 'export', 'function', 'import'],
+                next:       '*',
             },
             { blankLine: 'any', prev: 'export', next: 'export' },
             { blankLine: 'any', prev: 'import', next: 'import' },
@@ -445,6 +446,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsafe-argument':                       'error',
         'no-unsafe-assignment':                     'error',
         'no-unsafe-call':                           'off',
+        'no-unsafe-declaration-merging':            'error',
         'no-unsafe-member-access':                  'error',
         'no-unsafe-return':                         'error',
         'no-var-requires':                          'error',
@@ -475,8 +477,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
             ['error', { prefer: 'no-type-imports' }],
             'error',
         ),
-        'member-delimiter-style':
-        ['error', { singleline: { requireLast: true } }],
         'member-ordering':                          'error',
         'method-signature-style':                   'off',
         'naming-convention':                        'off',
@@ -515,7 +515,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-return-this-type':                  'error',
         'prefer-string-starts-ends-with':           'error',
         'promise-function-async':                   ['error', { allowAny: true }],
-        'sort-type-union-intersection-members':     'off',
+        'sort-type-constituents':                   'off',
         'strict-boolean-expressions':               'off',
         'switch-exhaustiveness-check':              'error',
         'triple-slash-reference':                   ['error', { lib: 'never' }],
@@ -524,6 +524,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
+        'member-delimiter-style':
+        ['error', { singleline: { requireLast: true } }],
         'type-annotation-spacing':                  'error',
     },
     '@origin-1/eslint-plugin':
