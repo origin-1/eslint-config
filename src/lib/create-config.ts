@@ -9,10 +9,9 @@ import semver                                                       from 'semver
 
 export interface ConfigData extends Linter.HasRules
 {
-    env?: Record<string, boolean> | undefined;
+    env?: Linter.BaseConfig['env'];
     extends?: string | string[] | undefined;
-    globals?:
-    Record<string, boolean | 'readonly' | 'readable' | 'writable' | 'writeable'> | undefined;
+    globals?: Linter.BaseConfig['globals'];
     jsVersion?: JSVersion | undefined;
     parserOptions?: Linter.ParserOptions | undefined;
     plugins?: string[] | undefined;
