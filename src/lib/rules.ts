@@ -233,7 +233,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-void':                          'off',
         'no-warning-comments':              'off',
         'no-with':                          'error',
-        'object-shorthand':                 beforeJSOrElse(2015, 'off', 'error'),
+        'object-shorthand':
+        beforeJSOrElse(2015, 'off', ['error', 'always', { avoidQuotes: true }]),
         'one-var':                          ['error', 'never'],
         'one-var-declaration-per-line':     'error',
         'operator-assignment':              'error',
@@ -520,7 +521,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'switch-exhaustiveness-check':              'error',
         'triple-slash-reference':                   ['error', { lib: 'never' }],
         'typedef':                                  'error',
-        'unified-signatures':                       'error',
+        'unified-signatures':
+        ['error', { ignoreDifferentlyNamedParameters: true }],
 
         ////////////////////////////////////////////
         // Layout
