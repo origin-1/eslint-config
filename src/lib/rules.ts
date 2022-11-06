@@ -106,7 +106,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-invalid-regexp':                'error',
         'no-irregular-whitespace':          'error',
         'no-misleading-character-class':    'error',
-        'no-new-symbol':                    'error',
+        'no-new-native-nonconstructor':     'error',
+        'no-new-symbol':                    'off', // Replaced by no-new-native-nonconstructor.
         'no-obj-calls':                     'error',
         'no-promise-executor-return':       'error',
         'no-prototype-builtins':            'off',
@@ -175,6 +176,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-div-regex':                     'error',
         'no-else-return':                   'error',
         'no-empty':                         ['error', { allowEmptyCatch: true }],
+        'no-empty-static-block':            'error',
         'no-eq-null':                       'off',
         'no-eval':                          'off',
         'no-extend-native':                 'error',
