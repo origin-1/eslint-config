@@ -201,11 +201,14 @@ void test
                             'for JavaScript',
                             (): void =>
                             {
+                                const inputPlugins = ['barbaz'];
                                 const { overrides } =
-                                createConfig({ files: 'foobar', plugins: ['barbaz'] });
+                                createConfig({ files: 'foobar', plugins: inputPlugins });
                                 assert(overrides);
-                                const [, { plugins }] = overrides;
-                                assert.deepEqual(plugins, ['barbaz']);
+                                const [, { plugins: actualPlugins }] = overrides;
+                                assert.notEqual(actualPlugins, inputPlugins);
+                                assert.deepEqual(actualPlugins, ['barbaz']);
+                                assert.deepEqual(inputPlugins, ['barbaz']);
                             },
                         ),
                         ctx.test
@@ -213,12 +216,15 @@ void test
                             'for TypeScript',
                             (): void =>
                             {
+                                const inputPlugins = ['barbaz'];
                                 const { overrides } =
                                 createConfig
-                                ({ files: 'foobar', plugins: ['barbaz'], tsVersion: 'latest' });
+                                ({ files: 'foobar', plugins: inputPlugins, tsVersion: 'latest' });
                                 assert(overrides);
-                                const [, { plugins }] = overrides;
-                                assert.deepEqual(plugins, ['barbaz', '@typescript-eslint']);
+                                const [, { plugins: actualPlugins }] = overrides;
+                                assert.notEqual(actualPlugins, inputPlugins);
+                                assert.deepEqual(actualPlugins, ['barbaz', '@typescript-eslint']);
+                                assert.deepEqual(inputPlugins, ['barbaz']);
                             },
                         ),
                     );

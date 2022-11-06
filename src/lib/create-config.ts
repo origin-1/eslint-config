@@ -53,7 +53,8 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
 
 function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugins: string[]; }
 {
-    const { plugins = [] } = configData;
+    const configPlugins = configData.plugins;
+    const plugins = configPlugins == null ? [] : [...configPlugins];
     const lang = getLanguage(configData);
     let ecmaVersion: Linter.ParserOptions['ecmaVersion'];
     let envKey: string | undefined;
