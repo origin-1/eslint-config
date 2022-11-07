@@ -31,23 +31,33 @@ function cloneRuleEntry(ruleEntry: Linter.RuleEntry): Linter.RuleEntry
 
 export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
 {
-    const { plugins, rules } = createCommonEntries();
+    let plugins: string[];
+    let rules: Record<string, Linter.RuleEntry>;
+    const lang = getLanguage(configData);
+    if (lang != null)
+        ({ plugins, rules } = createCommonEntries());
+    else
+    {
+        plugins = [];
+        rules = { };
+    }
     const { env, parser, parserOptions, plugins: overridePlugins, rules: overrideRules } =
     createBaseOverride(configData);
     plugins.push(...overridePlugins);
     Object.assign(rules, overrideRules);
     const { extends: extends_, globals } = configData;
-    const baseConfig =
+    const baseConfig: Linter.BaseConfig =
     {
         env,
         extends:                        extends_,
         globals,
-        parser,
         parserOptions,
         plugins,
         reportUnusedDisableDirectives:  true,
         rules,
     };
+    if (lang != null)
+        baseConfig.parser = parser;
     return baseConfig;
 }
 
@@ -65,91 +75,99 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugi
     else if (jsVersion > 2015)
         envKey = `es${jsVersion}`;
     const tsVersion = normalizeTSVersion(configData.tsVersion);
-    if (lang === 'ts')
+    switch (lang)
     {
-        ecmaVersion = 'latest';
-        parser = '@typescript-eslint/parser';
-    }
-    else
-    {
+    case 'js':
         ecmaVersion = jsVersion;
         parser = 'espree';
+        break;
+    case 'ts':
+        ecmaVersion = 'latest';
+        parser = '@typescript-eslint/parser';
+        break;
+    default:
+        break;
     }
     const env = envKey ? { [envKey]: true } : { };
     Object.assign(env, configData.env);
     const parserOptions = { ecmaVersion, ...configData.parserOptions };
     const rules: Record<string, Linter.RuleEntry> = { };
-    const setOverrideRule =
-    (ruleKey: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
+    const baseOverride: Linter.BaseConfig & { plugins: string[]; } =
+    { env, parserOptions, plugins, rules };
+    if (lang != null)
     {
-        const ruleEntry =
-        isVersionedList(ruleLangSettings) ?
-        findRuleEntry(ruleLangSettings, jsVersion, tsVersion)! : ruleLangSettings;
-        rules[ruleKey] = cloneRuleEntry(ruleEntry);
-    };
-    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
-    {
-        if (isJSTSEntry(ruleSettings))
+        baseOverride.parser = parser;
+        const setOverrideRule =
+        (ruleKey: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
         {
-            const ruleLangSettings = ruleSettings[lang];
-            setOverrideRule(ruleName, ruleLangSettings);
-        }
-    }
-    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[HYBRID] as PluginSettingsAny))
-    {
-        if (isRuleEntry(ruleSettings))
+            const ruleEntry =
+            isVersionedList(ruleLangSettings) ?
+            findRuleEntry(ruleLangSettings, jsVersion, tsVersion)! : ruleLangSettings;
+            rules[ruleKey] = cloneRuleEntry(ruleEntry);
+        };
+        for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
         {
-            if (lang === 'ts')
+            if (isJSTSEntry(ruleSettings))
             {
-                rules[ruleName] = 'off';
-                const typescriptESLintRuleKey = getRuleKey('@typescript-eslint', ruleName);
-                rules[typescriptESLintRuleKey] = cloneRuleEntry(ruleSettings);
-            }
-            else
-                rules[ruleName] = cloneRuleEntry(ruleSettings);
-        }
-        if (isJSTSEntry(ruleSettings))
-        {
-            if (lang === 'ts')
-            {
-                rules[ruleName] = 'off';
-                const typescriptESLintRuleKey = getRuleKey('@typescript-eslint', ruleName);
-                setOverrideRule(typescriptESLintRuleKey, ruleSettings.ts);
-            }
-            else
-                setOverrideRule(ruleName, ruleSettings.js);
-        }
-    }
-    for (const [pluginName, pluginSettings] of Object.entries(RULES))
-    {
-        if (isPluginSettingsForLang(pluginSettings))
-        {
-            if (lang !== pluginSettings[FOR_LANG])
-                continue;
-            const rulePrefix = getRulePrefix(pluginName);
-            plugins.push(rulePrefix);
-            for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
-            {
-                const ruleKey = getRuleKey(rulePrefix, ruleName);
-                setOverrideRule(ruleKey, ruleSettings);
+                const ruleLangSettings = ruleSettings[lang];
+                setOverrideRule(ruleName, ruleLangSettings);
             }
         }
-        else
+        for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[HYBRID] as PluginSettingsAny))
         {
-            const rulePrefix = getRulePrefix(pluginName);
-            for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
+            if (isRuleEntry(ruleSettings))
             {
-                if (isJSTSEntry(ruleSettings))
+                if (lang === 'ts')
+                {
+                    rules[ruleName] = 'off';
+                    const typescriptESLintRuleKey = getRuleKey('@typescript-eslint', ruleName);
+                    rules[typescriptESLintRuleKey] = cloneRuleEntry(ruleSettings);
+                }
+                else
+                    rules[ruleName] = cloneRuleEntry(ruleSettings);
+            }
+            if (isJSTSEntry(ruleSettings))
+            {
+                if (lang === 'ts')
+                {
+                    rules[ruleName] = 'off';
+                    const typescriptESLintRuleKey = getRuleKey('@typescript-eslint', ruleName);
+                    setOverrideRule(typescriptESLintRuleKey, ruleSettings.ts);
+                }
+                else
+                    setOverrideRule(ruleName, ruleSettings.js);
+            }
+        }
+        for (const [pluginName, pluginSettings] of Object.entries(RULES))
+        {
+            if (isPluginSettingsForLang(pluginSettings))
+            {
+                if (lang !== pluginSettings[FOR_LANG])
+                    continue;
+                const rulePrefix = getRulePrefix(pluginName);
+                plugins.push(rulePrefix);
+                for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
                 {
                     const ruleKey = getRuleKey(rulePrefix, ruleName);
-                    const ruleLangSettings = ruleSettings[lang];
-                    setOverrideRule(ruleKey, ruleLangSettings);
+                    setOverrideRule(ruleKey, ruleSettings);
+                }
+            }
+            else
+            {
+                const rulePrefix = getRulePrefix(pluginName);
+                for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
+                {
+                    if (isJSTSEntry(ruleSettings))
+                    {
+                        const ruleKey = getRuleKey(rulePrefix, ruleName);
+                        const ruleLangSettings = ruleSettings[lang];
+                        setOverrideRule(ruleKey, ruleLangSettings);
+                    }
                 }
             }
         }
     }
     Object.assign(rules, configData.rules);
-    const baseOverride = { env, parser, parserOptions, plugins, rules };
     return baseOverride;
 }
 
@@ -230,9 +248,12 @@ Linter.RuleEntry | undefined
     }
 }
 
-function getLanguage(configData: ConfigData): 'js' | 'ts'
+function getLanguage(configData: ConfigData): 'js' | 'ts' | undefined
 {
-    return configData.tsVersion == null ? 'js' : 'ts';
+    if (configData.tsVersion != null)
+        return 'ts';
+    if (configData.jsVersion != null)
+        return 'js';
 }
 
 function isJSTSEntry(ruleSettings: RuleSettingsAny): ruleSettings is JSTSEntry

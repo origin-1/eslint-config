@@ -59,7 +59,8 @@ void test
                             async (ctx): Promise<void> =>
                             {
                                 const { overrides } =
-                                createConfig({ files: 'foobar', rules: { foobar: 'warn' } });
+                                createConfig
+                                ({ files: 'foobar', jsVersion: 5, rules: { foobar: 'warn' } });
                                 const rules = overrides?.[1]?.rules;
                                 assert(rules);
                                 assert.equal(rules['no-undef'], 'error');
@@ -177,6 +178,17 @@ void test
                                 );
                             },
                         ),
+                        ctx.test
+                        (
+                            'without a language',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig({ files: 'foobar', rules: { foobar: 'warn' } });
+                                const rules = overrides?.[1]?.rules;
+                                assert.deepEqual(rules, { foobar: 'warn' });
+                            },
+                        ),
                     );
                 },
             ),
@@ -203,7 +215,8 @@ void test
                             {
                                 const inputPlugins = ['barbaz'];
                                 const { overrides } =
-                                createConfig({ files: 'foobar', plugins: inputPlugins });
+                                createConfig
+                                ({ files: 'foobar', jsVersion: 5, plugins: inputPlugins });
                                 assert(overrides);
                                 const [, { plugins: actualPlugins }] = overrides;
                                 assert.notEqual(actualPlugins, inputPlugins);
@@ -227,6 +240,21 @@ void test
                                 assert.deepEqual(inputPlugins, ['barbaz']);
                             },
                         ),
+                        ctx.test
+                        (
+                            'without a language',
+                            (): void =>
+                            {
+                                const inputPlugins = ['barbaz'];
+                                const { overrides } =
+                                createConfig({ files: 'foobar', plugins: inputPlugins });
+                                assert(overrides);
+                                const [, { plugins: actualPlugins }] = overrides;
+                                assert.notEqual(actualPlugins, inputPlugins);
+                                assert.deepEqual(actualPlugins, ['barbaz']);
+                                assert.deepEqual(inputPlugins, ['barbaz']);
+                            },
+                        ),
                     );
                 },
             ),
@@ -245,10 +273,10 @@ void test
                                 const { overrides } =
                                 createConfig({ files: 'foobar', jsVersion: 2015 });
                                 assert(overrides);
-                                const [, { env, parser, parserOptions }] = overrides;
-                                assert.deepEqual(env, { es6: true });
-                                assert.equal(parser, 'espree');
-                                assert.deepEqual(parserOptions, { ecmaVersion: 2015 });
+                                const [, override] = overrides;
+                                assert.deepEqual(override.env, { es6: true });
+                                assert.equal(override.parser, 'espree');
+                                assert.deepEqual(override.parserOptions, { ecmaVersion: 2015 });
                             },
                         ),
                         ctx.test
@@ -260,10 +288,24 @@ void test
                                 createConfig
                                 ({ files: 'foobar', jsVersion: 2021, tsVersion: 'latest' });
                                 assert(overrides);
-                                const [, { env, parser, parserOptions }] = overrides;
-                                assert.deepEqual(env, { es2021: true });
-                                assert.equal(parser, '@typescript-eslint/parser');
-                                assert.deepEqual(parserOptions, { ecmaVersion: 'latest' });
+                                const [, override] = overrides;
+                                assert.deepEqual(override.env, { es2021: true });
+                                assert.equal(override.parser, '@typescript-eslint/parser');
+                                assert.deepEqual(override.parserOptions, { ecmaVersion: 'latest' });
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'without a language',
+                            (): void =>
+                            {
+                                const { overrides } = createConfig({ files: 'foobar' });
+                                assert(overrides);
+                                const [, override] = overrides;
+                                assert.deepEqual(override.env, { });
+                                assert(!('parser' in override));
+                                assert.deepEqual
+                                (override.parserOptions, { ecmaVersion: undefined });
                             },
                         ),
                     );
@@ -291,9 +333,9 @@ void test
                 {
                     const { overrides } = createConfig({ excludedFiles: 'foo', files: 'bar' });
                     assert(overrides);
-                    const [, { excludedFiles, files }] = overrides;
-                    assert.equal(excludedFiles, 'foo');
-                    assert.equal(files, 'bar');
+                    const [, override] = overrides;
+                    assert.equal(override.excludedFiles, 'foo');
+                    assert.equal(override.files, 'bar');
                 },
             ),
         );
@@ -312,7 +354,7 @@ void test
                 '`rules` are set',
                 (): void =>
                 {
-                    const { rules } = createBaseConfig({ rules: { foobar: 'warn' } });
+                    const { rules } = createBaseConfig({ jsVersion: 5, rules: { foobar: 'warn' } });
                     assert(rules);
                     assert('eqeqeq' in rules);
                     assert('@origin-1/no-spaces-in-call-expression' in rules);
@@ -335,7 +377,8 @@ void test
                             'for JavaScript',
                             (): void =>
                             {
-                                const { plugins } = createBaseConfig({ plugins: ['barbaz'] });
+                                const { plugins } =
+                                createBaseConfig({ jsVersion: 5, plugins: ['barbaz'] });
                                 assert.deepEqual(plugins, ['@origin-1', 'n', 'barbaz']);
                             },
                         ),
@@ -348,6 +391,15 @@ void test
                                 createBaseConfig({ plugins: ['barbaz'], tsVersion: 'latest' });
                                 assert.deepEqual
                                 (plugins, ['@origin-1', 'n', 'barbaz', '@typescript-eslint']);
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'without a language',
+                            (): void =>
+                            {
+                                const { plugins } = createBaseConfig({ plugins: ['barbaz'] });
+                                assert.deepEqual(plugins, ['barbaz']);
                             },
                         ),
                     );
@@ -365,11 +417,10 @@ void test
                             'for JavaScript',
                             (): void =>
                             {
-                                const { env, parser, parserOptions } =
-                                createBaseConfig({ jsVersion: 2015 });
-                                assert.deepEqual(env, { es6: true });
-                                assert.equal(parser, 'espree');
-                                assert.deepEqual(parserOptions, { ecmaVersion: 2015 });
+                                const baseConfig = createBaseConfig({ jsVersion: 2015 });
+                                assert.deepEqual(baseConfig.env, { es6: true });
+                                assert.equal(baseConfig.parser, 'espree');
+                                assert.deepEqual(baseConfig.parserOptions, { ecmaVersion: 2015 });
                             },
                         ),
                         ctx.test
@@ -377,11 +428,24 @@ void test
                             'for TypeScript',
                             (): void =>
                             {
-                                const { env, parser, parserOptions } =
+                                const baseConfig =
                                 createBaseConfig({ jsVersion: 2021, tsVersion: 'latest' });
-                                assert.deepEqual(env, { es2021: true });
-                                assert.equal(parser, '@typescript-eslint/parser');
-                                assert.deepEqual(parserOptions, { ecmaVersion: 'latest' });
+                                assert.deepEqual(baseConfig.env, { es2021: true });
+                                assert.equal(baseConfig.parser, '@typescript-eslint/parser');
+                                assert.deepEqual
+                                (baseConfig.parserOptions, { ecmaVersion: 'latest' });
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'without a language',
+                            (): void =>
+                            {
+                                const baseConfig = createBaseConfig({ });
+                                assert.deepEqual(baseConfig.env, { });
+                                assert(!('parser' in baseConfig));
+                                assert.deepEqual
+                                (baseConfig.parserOptions, { ecmaVersion: undefined });
                             },
                         ),
                     );
