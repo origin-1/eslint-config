@@ -23,6 +23,12 @@ async function getPluginRules(pluginName: string): Promise<Record<string, Rule.R
     return rules;
 }
 
+async function patchIndentTsRule(): Promise<void>
+{
+    const { default: { rules: tsRules } } = await import('@typescript-eslint/eslint-plugin');
+    tsRules.indent.meta.deprecated = true;
+}
+
 const { HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix } = await import('../src/lib/rules.js');
 
 void test
@@ -60,6 +66,7 @@ void test
     'all hybrid rules are defined',
     async (): Promise<void> =>
     {
+        await patchIndentTsRule();
         const builtInRules = await getBuiltInRules();
         const { default: { rules: tsRules } } = await import('@typescript-eslint/eslint-plugin');
         const definedHybridRules = RULES[HYBRID];
@@ -90,6 +97,7 @@ void test
     'all plugin rules are defined',
     async (): Promise<void> =>
     {
+        await patchIndentTsRule();
         const definedHybridRules = RULES[HYBRID];
         const missingRules: string[] = [];
         for (const [pluginName, definedPluginRules] of Object.entries(RULES))

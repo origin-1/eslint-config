@@ -290,6 +290,28 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'function-paren-newline':           ['error', 'consistent'],
         'generator-star-spacing':           ['error', 'both'],
         'implicit-arrow-linebreak':         'off',
+        // typescript-eslint rule is flawed.
+        'indent':
+        [
+            'error',
+            4,
+            {
+                CallExpression:         { arguments: 'first' },
+                FunctionDeclaration:    { parameters: 'first' },
+                FunctionExpression:     { parameters: 'first' },
+                MemberExpression:       0,
+                VariableDeclarator:     0,
+                ignoredNodes:
+                [
+                    'ArrowFunctionExpression',
+                    'CallExpression[typeParameters]',
+                    'ClassDeclaration[superClass]',
+                    'ConditionalExpression>:matches(.consequent,.alternate)',
+                    'ImportDeclaration',
+                    'TemplateLiteral',
+                ],
+            },
+        ],
         'jsx-quotes':                       'error',
         'key-spacing':
         ['error', { multiLine: { align: 'value', mode: 'minimum' } }],
@@ -369,30 +391,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-dangle':                     ['error', 'always-multiline'],
         'comma-spacing':                    'error',
         'func-call-spacing':                'off',
-        // typescript-eslint rule is flawed.
-        'indent':
-        jsts
-        (
-            [
-                'error',
-                4,
-                {
-                    CallExpression:         { arguments: 'first' },
-                    FunctionDeclaration:    { parameters: 'first' },
-                    FunctionExpression:     { parameters: 'first' },
-                    MemberExpression:       0,
-                    VariableDeclarator:     0,
-                    ignoredNodes:
-                    [
-                        'ArrowFunctionExpression',
-                        'ClassDeclaration[superClass]',
-                        'ConditionalExpression',
-                        'ImportDeclaration',
-                    ],
-                },
-            ],
-            'off',
-        ),
         'keyword-spacing':                  'error',
         'lines-between-class-members':      'off',
         'no-extra-parens':                  'error',
@@ -449,7 +447,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsafe-argument':                       'error',
         'no-unsafe-assignment':                     'error',
         'no-unsafe-call':                           'off',
-        'no-unsafe-declaration-merging':            'error',
+        'no-unsafe-declaration-merging':            'off',
         'no-unsafe-member-access':                  'error',
         'no-unsafe-return':                         'error',
         'no-var-requires':                          'error',
