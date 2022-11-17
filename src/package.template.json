@@ -1,6 +1,6 @@
 {
   "name": "@origin-1/eslint-config",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "ESLint configuration generator with Origin₁ presets",
   "homepage": "https://github.com/origin-1/eslint-config#readme",
   "license": "ISC",
