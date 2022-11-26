@@ -313,8 +313,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
             },
         ],
         'jsx-quotes':                       'error',
-        'key-spacing':
-        ['error', { multiLine: { align: 'value', mode: 'minimum' } }],
+        // Superseded by `@origin-1/property-colon-spacing`.
+        'key-spacing':                      'off',
         'line-comment-position':            'off',
         'linebreak-style':                  'error',
         // In TypeScript files, lines-around-comment doesn't work well at the start of a block.
@@ -420,7 +420,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     '@typescript-eslint/eslint-plugin':
     {
-        [FOR_LANG]: 'ts',
+        [FOR_LANG]:                                 'ts',
 
         ////////////////////////////////////////////
         // Problem
@@ -536,6 +536,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         // Layout
         'nice-space-before-function-paren': 'error',
         'no-spaces-in-call-expression':     'error',
+        'property-colon-spacing':           'error',
     },
     'eslint-plugin-n':
     {
