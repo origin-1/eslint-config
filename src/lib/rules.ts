@@ -391,7 +391,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-dangle':                     ['error', 'always-multiline'],
         'comma-spacing':                    'error',
         'func-call-spacing':                'off',
-        'keyword-spacing':                  'error',
+        // typescript-eslint rule crashes if options are not specified.
+        'keyword-spacing':                  ['error', { after: true, before: true }],
         'lines-between-class-members':      'off',
         'no-extra-parens':                  'error',
         'object-curly-spacing':             ['error', 'always'],
