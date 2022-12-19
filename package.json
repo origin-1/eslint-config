@@ -27,10 +27,10 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@origin-1/eslint-plugin": ">=0.8",
-    "@typescript-eslint/eslint-plugin": "^5.45",
-    "@typescript-eslint/parser": "^5.45",
-    "eslint": "^8.28.0",
+    "@origin-1/eslint-plugin": ">=0.9",
+    "@typescript-eslint/eslint-plugin": "^5.46",
+    "@typescript-eslint/parser": "^5.46",
+    "eslint": "^8.28",
     "eslint-plugin-n": "15"
   },
   "engines": {

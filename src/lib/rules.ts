@@ -275,7 +275,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
-        'array-bracket-newline':            ['error', 'consistent'],
+        'array-bracket-newline':            'off',
         'array-bracket-spacing':            'error',
         'array-element-newline':            'off',
         'arrow-parens':                     ['error', 'as-needed'],
@@ -387,7 +387,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
-        'brace-style':                      ['error', 'allman'],
+        'brace-style':                      'off',
         'comma-dangle':                     ['error', 'always-multiline'],
         'comma-spacing':                    'error',
         'func-call-spacing':                'off',
@@ -534,6 +534,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         ////////////////////////////////////////////
         // Layout
+        'bracket-layout':                   'error',
         'nice-space-before-function-paren': 'error',
         'no-spaces-in-call-expression':     'error',
         'property-colon-spacing':           'error',

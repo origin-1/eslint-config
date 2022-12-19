@@ -12,17 +12,19 @@ async function compileTS(pkgDir, rootDir, newOptions, writeFile)
     const { sys } = ts;
     const program =
     await
-    (async () =>
-    {
-        const fileNames = await fastGlob('**/*.ts', { absolute: true, cwd: rootDir });
-        const tsConfigPath = join(pkgDir, 'tsconfig.json');
-        const tsConfig = ts.readConfigFile(tsConfigPath, sys.readFile);
-        const { options } = ts.parseJsonConfigFileContent(tsConfig.config, sys, pkgDir);
-        Object.assign(options, newOptions);
-        const program = ts.createProgram(fileNames, options);
-        return program;
-    }
-    )();
+    (
+        async () =>
+        {
+            const fileNames = await fastGlob('**/*.ts', { absolute: true, cwd: rootDir });
+            const tsConfigPath = join(pkgDir, 'tsconfig.json');
+            const tsConfig = ts.readConfigFile(tsConfigPath, sys.readFile);
+            const { options } = ts.parseJsonConfigFileContent(tsConfig.config, sys, pkgDir);
+            Object.assign(options, newOptions);
+            const program = ts.createProgram(fileNames, options);
+            return program;
+        }
+    )
+    ();
     const emitResult = program.emit(undefined, writeFile);
     const diagnostics = [...ts.getPreEmitDiagnostics(program), ...emitResult.diagnostics];
     if (diagnostics.length)
