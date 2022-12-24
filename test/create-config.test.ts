@@ -63,8 +63,8 @@ void test
                                 ({ files: 'foobar', jsVersion: 5, rules: { foobar: 'warn' } });
                                 const rules = overrides?.[1]?.rules;
                                 assert(rules);
-                                assert.equal(rules['no-undef'], 'error');
-                                assert.equal(rules.semi, 'error');
+                                assert.deepEqual(rules['no-undef'], ['error']);
+                                assert.deepEqual(rules.semi, ['error']);
                                 assert(!('@typescript-eslint/semi' in rules));
                                 assert.deepEqual
                                 (rules['no-redeclare'], ['error', { builtinGlobals: true }]);
@@ -139,7 +139,7 @@ void test
                                 assert('@typescript-eslint/semi' in rules);
                                 assert.equal(rules['no-redeclare'], 'off');
                                 assert('@typescript-eslint/no-redeclare' in rules);
-                                assert.equal(rules['n/prefer-promises/fs'], 'error');
+                                assert.deepEqual(rules['n/prefer-promises/fs'], ['error']);
                                 assert.equal(rules.foobar, 'warn');
                                 await allTests
                                 (
@@ -168,10 +168,10 @@ void test
                                             createConfig({ files: 'foobar', tsVersion: '3.8.0' });
                                             const rules = overrides?.[1]?.rules;
                                             assert(rules);
-                                            assert.equal
+                                            assert.deepEqual
                                             (
                                                 rules['@typescript-eslint/consistent-type-imports'],
-                                                'error',
+                                                ['error'],
                                             );
                                         },
                                     ),
