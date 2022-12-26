@@ -9,7 +9,7 @@
     "clean": "node dev/clean.js",
     "compile": "node dev/compile.js",
     "coverage": "node dev/coverage.js",
-    "lint": "eslint . --ignore-path .gitignore",
+    "lint": "eslint . --ignore-path .gitignore --format compact",
     "test": "node --loader ts-node/esm --test test/create-config.test.ts test/index.test.ts test/no-parser.test.ts test/normalize-version.test.ts test/patch-tslib.test.ts test/rules.spec.test.ts",
     "update-dist": "node dev/update-dist.js"
   },
@@ -27,7 +27,7 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@origin-1/eslint-plugin": ">=0.9",
+    "@origin-1/eslint-plugin": ">=0.10",
     "@typescript-eslint/eslint-plugin": "^5.46",
     "@typescript-eslint/parser": "^5.46",
     "eslint": "^8.28",

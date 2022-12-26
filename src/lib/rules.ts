@@ -290,28 +290,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'function-paren-newline':           ['error', 'consistent'],
         'generator-star-spacing':           ['error', 'both'],
         'implicit-arrow-linebreak':         'off',
-        // typescript-eslint rule is flawed.
-        'indent':
-        [
-            'error',
-            4,
-            {
-                CallExpression:         { arguments: 'first' },
-                FunctionDeclaration:    { parameters: 'first' },
-                FunctionExpression:     { parameters: 'first' },
-                MemberExpression:       0,
-                VariableDeclarator:     0,
-                ignoredNodes:
-                [
-                    'ArrowFunctionExpression',
-                    'CallExpression[typeParameters]',
-                    'ClassDeclaration[superClass]',
-                    'ConditionalExpression>:matches(.consequent,.alternate)',
-                    'ImportDeclaration',
-                    'TemplateLiteral',
-                ],
-            },
-        ],
         'jsx-quotes':                       ['error'],
         // Superseded by `@origin-1/property-colon-spacing`.
         'key-spacing':                      'off',
@@ -391,6 +369,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-dangle':                     ['error', 'always-multiline'],
         'comma-spacing':                    ['error'],
         'func-call-spacing':                'off',
+        'indent':                           'off',
         'keyword-spacing':                  ['error'],
         'lines-between-class-members':      'off',
         'no-extra-parens':                  ['error'],
@@ -535,6 +514,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////
         // Layout
         'bracket-layout':                   'error',
+        'indent':                           'error',
         'nice-space-before-function-paren': 'error',
         'no-spaces-in-call-expression':     'error',
         'property-colon-spacing':           'error',
