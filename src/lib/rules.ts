@@ -513,11 +513,11 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         ////////////////////////////////////////////
         // Layout
-        'bracket-layout':                   'error',
-        'indent':                           'error',
-        'nice-space-before-function-paren': 'error',
-        'no-spaces-in-call-expression':     'error',
-        'property-colon-spacing':           'error',
+        'bracket-layout':                   ['error'],
+        'indent':                           ['error'],
+        'nice-space-before-function-paren': ['error'],
+        'no-spaces-in-call-expression':     ['error'],
+        'property-colon-spacing':           ['error'],
     },
     'eslint-plugin-n':
     {
