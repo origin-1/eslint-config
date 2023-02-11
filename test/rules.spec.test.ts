@@ -1,9 +1,20 @@
-import assert                           from 'node:assert/strict';
+import assert, { AssertionError }       from 'node:assert/strict';
 import { createRequire }                from 'node:module';
 import { test }                         from 'node:test';
 import { pathToFileURL }                from 'node:url';
 import type { RuleType }                from '../src/lib/rules.js';
 import type { Rule }                    from 'eslint';
+
+function assertNoRulesMissing(missingRules: readonly string[]): void
+{
+    if (missingRules.length)
+    {
+        const message =
+        `${missingRules.length} rule(s) are not defined:\n${
+        missingRules.map((name): string => `\n* ${name}`).join('')}`;
+        throw new AssertionError({ message, stackStartFn: assertNoRulesMissing });
+    }
+}
 
 async function getBuiltInRules(): Promise<Map<string, Rule.RuleModule>>
 {
@@ -44,14 +55,7 @@ void test
             )
                 missingRules.push(ruleName);
         }
-        if (missingRules.length)
-        {
-            assert.fail
-            (
-                `${missingRules.length} rule(s) are not defined:\n${
-                missingRules.map((name): string => `\n• ${name}`).join('')}`,
-            );
-        }
+        assertNoRulesMissing(missingRules);
     },
 );
 
@@ -74,14 +78,7 @@ void test
             )
                 missingRules.push(ruleName);
         }
-        if (missingRules.length)
-        {
-            assert.fail
-            (
-                `${missingRules.length} rule(s) are not defined:\n${
-                missingRules.map((name): string => `\n• ${name}`).join('')}`,
-            );
-        }
+        assertNoRulesMissing(missingRules);
     },
 );
 
@@ -113,14 +110,7 @@ void test
                 }
             }
         }
-        if (missingRules.length)
-        {
-            assert.fail
-            (
-                `${missingRules.length} rule(s) are not defined:\n${
-                missingRules.map((name): string => `\n• ${name}`).join('')}`,
-            );
-        }
+        assertNoRulesMissing(missingRules);
     },
 );
 

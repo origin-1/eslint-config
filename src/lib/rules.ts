@@ -291,13 +291,22 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'generator-star-spacing':           ['error', 'both'],
         'implicit-arrow-linebreak':         'off',
         'jsx-quotes':                       ['error'],
-        // Superseded by `@origin-1/property-colon-spacing`.
-        'key-spacing':                      'off',
         'line-comment-position':            'off',
         'linebreak-style':                  ['error'],
         // In TypeScript files, lines-around-comment doesn't work well at the start of a block.
         'lines-around-comment':
-        jsts(['error', { allowBlockStart: true, allowObjectStart: true }], 'off'),
+        jsts
+        (
+            [
+                'error',
+                {
+                    allowBlockStart:            true,
+                    allowObjectStart:           true,
+                    applyDefaultIgnorePatterns: false,
+                },
+            ],
+            'off',
+        ),
         'max-len':                          ['error', { code: 100 }],
         'max-statements-per-line':          ['error'],
         'multiline-ternary':                'off',
@@ -370,6 +379,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-spacing':                    ['error'],
         'func-call-spacing':                'off',
         'indent':                           'off',
+        // Superseded by `@origin-1/property-colon-spacing`.
+        'key-spacing':                      'off',
         'keyword-spacing':                  ['error'],
         'lines-between-class-members':      'off',
         'no-extra-parens':                  ['error'],
@@ -416,6 +427,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-extra-non-null-assertion':              ['error'],
         'no-floating-promises':                     ['error'],
         'no-for-in-array':                          ['error'],
+        'no-import-type-side-effects':              ['error'],
         'no-invalid-void-type':                     'off',
         'no-misused-new':                           ['error'],
         'no-misused-promises':                      ['error'],
