@@ -14,8 +14,9 @@ async function updatePackage()
     const referencePkgURL   = makeURL('package.json');
     const templatePkgURL    = makeURL('src/package.template.json');
     const targetPkgURL      = makeURL('dist/package.json');
-    const [{ dependencies, peerDependencies }, pkg] =
+    const [{ version, dependencies, peerDependencies }, pkg] =
     await Promise.all([referencePkgURL, templatePkgURL].map(readJSON));
+    pkg.version             = version;
     pkg.dependencies        = dependencies;
     pkg.peerDependencies    = peerDependencies;
     const data = `${JSON.stringify(pkg, null, 2)}\n`;
