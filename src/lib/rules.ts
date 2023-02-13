@@ -94,8 +94,9 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-dupe-else-if':                  ['error'],
         'no-dupe-keys':                     ['error'],
         'no-duplicate-case':                ['error'],
-        // TypeScript has type only imports.
-        'no-duplicate-imports':             jsts(['error'], 'off'),
+        // TypeScript < 4.5 permits no type modifiers on import names and no mixed imports.
+        'no-duplicate-imports':
+        jsts(['error'], beforeOrElse('4.5.0', 'off', ['error'])),
         'no-empty-character-class':         ['error'],
         'no-empty-pattern':                 ['error'],
         'no-ex-assign':                     ['error'],
@@ -280,7 +281,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'array-element-newline':            'off',
         'arrow-parens':                     ['error', 'as-needed'],
         'arrow-spacing':                    ['error'],
-        'block-spacing':                    ['error'],
         'comma-style':
         ['error', 'last', { exceptions: { ArrayExpression: true } }],
         'computed-property-spacing':        ['error'],
@@ -374,6 +374,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
+        'block-spacing':                    ['error'],
         'brace-style':                      'off',
         'comma-dangle':                     ['error', 'always-multiline'],
         'comma-spacing':                    ['error'],
@@ -427,7 +428,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-extra-non-null-assertion':              ['error'],
         'no-floating-promises':                     ['error'],
         'no-for-in-array':                          ['error'],
-        'no-import-type-side-effects':              ['error'],
+        'no-import-type-side-effects':              'off',
         'no-invalid-void-type':                     'off',
         'no-misused-new':                           ['error'],
         'no-misused-promises':                      ['error'],
@@ -463,12 +464,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'consistent-type-definitions':              ['error', 'interface'],
         'consistent-type-exports':                  ['error'],
         'consistent-type-imports':
-        beforeOrElse
-        (
-            '3.8.0',
-            ['error', { prefer: 'no-type-imports' }],
-            ['error'],
-        ),
+        beforeOrElse('3.8.0', ['error', { prefer: 'no-type-imports' }], ['error']),
         'member-ordering':                          ['error'],
         'method-signature-style':                   'off',
         'naming-convention':                        'off',

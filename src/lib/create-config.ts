@@ -1,11 +1,22 @@
-import { normalizeJSVersion, normalizeTSVersion }                   from './normalize-version.js';
-import type { JSVersion, TSVersion }                                from './normalize-version.js';
-import { FOR_LANG, HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix }
+import { type JSVersion, type TSVersion, normalizeJSVersion, normalizeTSVersion }
+from './normalize-version.js';
+import
+{
+    FOR_LANG,
+    HYBRID,
+    type JSTSEntry,
+    type PluginSettingsAny,
+    type PluginSettingsForLang,
+    RULES,
+    type RuleSettingsAny,
+    UNIQUE,
+    type VersionedList,
+    getRuleKey,
+    getRulePrefix,
+}
 from './rules.js';
-import type { JSTSEntry, PluginSettingsAny, PluginSettingsForLang, RuleSettingsAny, VersionedList }
-from './rules.js';
-import type { Linter }                                              from 'eslint';
-import semver                                                       from 'semver';
+import type { Linter }  from 'eslint';
+import semver           from 'semver';
 
 export interface ConfigData extends Linter.HasRules
 {
