@@ -24,6 +24,7 @@ export interface ConfigData extends Linter.HasRules
     extends?: string | string[] | undefined;
     globals?: Linter.BaseConfig['globals'];
     jsVersion?: JSVersion | undefined;
+    parser?: string | undefined;
     parserOptions?: Linter.ParserOptions | undefined;
     plugins?: string[] | undefined;
     tsVersion?: TSVersion | undefined;
@@ -67,7 +68,7 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
         reportUnusedDisableDirectives:  true,
         rules,
     };
-    if (lang != null)
+    if (parser != null)
         baseConfig.parser = parser;
     return baseConfig;
 }
@@ -78,8 +79,8 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugi
     const plugins = configPlugins == null ? [] : [...configPlugins];
     const lang = getLanguage(configData);
     let ecmaVersion: Linter.ParserOptions['ecmaVersion'];
+    let { parser } = configData;
     let envKey: string | undefined;
-    let parser: string | undefined;
     const jsVersion = normalizeJSVersion(configData.jsVersion);
     if (jsVersion === 2015)
         envKey = 'es6';
@@ -90,11 +91,11 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugi
     {
     case 'js':
         ecmaVersion = jsVersion;
-        parser = 'espree';
+        parser ??= 'espree';
         break;
     case 'ts':
         ecmaVersion = 'latest';
-        parser = '@typescript-eslint/parser';
+        parser ??= '@typescript-eslint/parser';
         break;
     default:
         break;
@@ -105,9 +106,10 @@ function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugi
     const rules: Record<string, Linter.RuleEntry> = { };
     const baseOverride: Linter.BaseConfig & { plugins: string[]; } =
     { env, parserOptions, plugins, rules };
+    if (parser != null)
+        baseOverride.parser = parser;
     if (lang != null)
     {
-        baseOverride.parser = parser;
         const setOverrideRule =
         (ruleKey: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
         {
