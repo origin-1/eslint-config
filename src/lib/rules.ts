@@ -293,20 +293,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'jsx-quotes':                       ['error'],
         'line-comment-position':            'off',
         'linebreak-style':                  ['error'],
-        // In TypeScript files, lines-around-comment doesn't work well at the start of a block.
-        'lines-around-comment':
-        jsts
-        (
-            [
-                'error',
-                {
-                    allowBlockStart:            true,
-                    allowObjectStart:           true,
-                    applyDefaultIgnorePatterns: false,
-                },
-            ],
-            'off',
-        ),
         'max-len':                          ['error', { code: 100 }],
         'max-statements-per-line':          ['error'],
         'multiline-ternary':                'off',
@@ -330,7 +316,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'space-unary-ops':                  ['error'],
         'switch-colon-spacing':             ['error', { after: true, before: false }],
         'template-curly-spacing':           ['error'],
-        'template-tag-spacing':             ['error', 'always'],
+        'template-tag-spacing':             'off',
         'unicode-bom':                      ['error'],
         'wrap-iife':                        'off',
         'wrap-regex':                       'off',
@@ -383,6 +369,15 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         // Superseded by `@origin-1/property-colon-spacing`.
         'key-spacing':                      'off',
         'keyword-spacing':                  ['error'],
+        'lines-around-comment':
+        [
+            'error',
+            {
+                allowBlockStart:            true,
+                allowObjectStart:           true,
+                applyDefaultIgnorePatterns: false,
+            },
+        ],
         'lines-between-class-members':      'off',
         'no-extra-parens':                  ['error'],
         'object-curly-spacing':             ['error', 'always'],
@@ -470,6 +465,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'method-signature-style':                   'off',
         'naming-convention':                        'off',
         'no-base-to-string':                        ['error'],
+        'no-duplicate-type-constituents':           ['error'],
         'no-dynamic-delete':                        'off',
         'no-empty-interface':                       ['error', { allowSingleExtends: true }],
         'no-explicit-any':                          'off',
@@ -526,6 +522,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'indent':                           ['error'],
         'nice-space-before-function-paren': ['error'],
         'no-spaces-in-call-expression':     ['error'],
+        'no-spaces-in-tagged-template':     ['error'],
         'property-colon-spacing':           ['error'],
     },
     'eslint-plugin-n':
