@@ -27,6 +27,7 @@ export interface ConfigData extends Linter.HasRules
     parser?: string | undefined;
     parserOptions?: Linter.ParserOptions | undefined;
     plugins?: string[] | undefined;
+    processor?: string | undefined;
     tsVersion?: TSVersion | undefined;
 }
 
@@ -57,7 +58,7 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
     createBaseOverride(configData);
     plugins.push(...overridePlugins);
     Object.assign(rules, overrideRules);
-    const { extends: extends_, globals } = configData;
+    const { extends: extends_, globals, processor } = configData;
     const baseConfig: Linter.BaseConfig =
     {
         env,
@@ -65,6 +66,7 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
         globals,
         parserOptions,
         plugins,
+        processor,
         reportUnusedDisableDirectives:  true,
         rules,
     };
@@ -232,8 +234,9 @@ export function createConfig(...configDataList: ConfigDataWithFiles[]): Linter.C
 function createOverride(configData: ConfigDataWithFiles): Linter.ConfigOverride
 {
     const baseOverride = createBaseOverride(configData);
-    const { excludedFiles, extends: extends_, files, globals } = configData;
-    const override = { ...baseOverride, excludedFiles, extends: extends_, files, globals };
+    const { excludedFiles, extends: extends_, files, globals, processor } = configData;
+    const override =
+    { ...baseOverride, excludedFiles, extends: extends_, files, globals, processor };
     return override;
 }
 

@@ -419,16 +419,19 @@ void test
         ),
         ctx.test
         (
-            'override `extends` and `globals` are set',
+            'override `extends`, `globals` and `processor` are set',
             (): void =>
             {
                 const extends_ = ['foo', 'bar'];
                 const globals = { '_': true };
-                const { overrides } = createConfig({ files: 'foobar', extends: extends_, globals });
+                const processor = 'barfoo';
+                const { overrides } =
+                createConfig({ files: 'foobar', extends: extends_, globals, processor });
                 assert(overrides);
                 const [, override] = overrides;
-                assert.equal(override.extends, extends_);
-                assert.equal(override.globals, globals);
+                assert.equal(override.extends,      extends_);
+                assert.equal(override.globals,      globals);
+                assert.equal(override.processor,    processor);
             },
         ),
         ctx.test
@@ -656,14 +659,16 @@ void test
         ),
         ctx.test
         (
-            '`extends` and `globals` are set',
+            '`extends`, `globals` and `processor` are set',
             (): void =>
             {
                 const extends_ = ['foo', 'bar'];
                 const globals = { '$': true };
-                const baseConfig = createBaseConfig({ extends: extends_, globals });
-                assert.equal(baseConfig.extends, extends_);
-                assert.equal(baseConfig.globals, globals);
+                const processor = 'barfoo';
+                const baseConfig = createBaseConfig({ extends: extends_, globals, processor });
+                assert.equal(baseConfig.extends,    extends_);
+                assert.equal(baseConfig.globals,    globals);
+                assert.equal(baseConfig.processor,  processor);
             },
         ),
     ),
