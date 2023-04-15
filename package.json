@@ -30,8 +30,8 @@
   },
   "peerDependencies": {
     "@origin-1/eslint-plugin": ">=0.13",
-    "@typescript-eslint/eslint-plugin": "^5.57",
-    "@typescript-eslint/parser": "^5.57",
+    "@typescript-eslint/eslint-plugin": "^5.58",
+    "@typescript-eslint/parser": "^5.58",
     "eslint": "^8.37",
     "eslint-plugin-n": "15"
   },

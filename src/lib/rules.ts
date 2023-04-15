@@ -482,6 +482,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unnecessary-type-arguments':            ['error'],
         'no-unnecessary-type-assertion':            ['error'],
         'no-unnecessary-type-constraint':           ['error'],
+        'no-unsafe-enum-comparison':                ['error'],
         'no-useless-empty-export':                  ['error'],
         'non-nullable-type-assertion-style':        ['error'],
         'prefer-as-const':                          ['error'],
