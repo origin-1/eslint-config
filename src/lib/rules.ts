@@ -370,14 +370,29 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'key-spacing':                      'off',
         'keyword-spacing':                  ['error'],
         'lines-around-comment':
-        [
-            'error',
-            {
-                allowBlockStart:            true,
-                allowObjectStart:           true,
-                applyDefaultIgnorePatterns: false,
-            },
-        ],
+        jsts
+        (
+            [
+                'error',
+                {
+                    allowBlockStart:            true,
+                    allowObjectStart:           true,
+                    applyDefaultIgnorePatterns: false,
+                },
+            ],
+            [
+                'error',
+                {
+                    allowBlockStart:            true,
+                    allowEnumStart:             true,
+                    allowInterfaceStart:        true,
+                    allowModuleStart:           true,
+                    allowObjectStart:           true,
+                    allowTypeStart:             true,
+                    applyDefaultIgnorePatterns: false,
+                },
+            ],
+        ),
         'lines-between-class-members':      'off',
         'no-extra-parens':                  ['error'],
         'object-curly-spacing':             ['error', 'always'],
