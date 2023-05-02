@@ -49,7 +49,13 @@ void test
         assert.deepEqual
         (
             exportedNames,
-            ['createBaseConfig', 'createConfig', 'normalizeJSVersion', 'normalizeTSVersion'],
+            [
+                'createBaseConfig',
+                'createConfig',
+                'createFlatConfig',
+                'normalizeJSVersion',
+                'normalizeTSVersion',
+            ],
         );
     },
 );

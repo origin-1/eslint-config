@@ -1,7 +1,9 @@
-import assert   from 'node:assert/strict';
-import { test } from 'node:test';
+import assert           from 'node:assert/strict';
+import { test }         from 'node:test';
+import type { Linter }  from 'eslint';
 
-const { createBaseConfig, createConfig } = await import('../src/lib/create-config.js');
+const { createBaseConfig, createConfig, createFlatConfig } =
+await import('../src/lib/create-config.js');
 
 export async function allTests(...promises: Promise<unknown>[]): Promise<void>
 {
@@ -669,6 +671,283 @@ void test
                 assert.equal(baseConfig.extends,    extends_);
                 assert.equal(baseConfig.globals,    globals);
                 assert.equal(baseConfig.processor,  processor);
+            },
+        ),
+    ),
+);
+
+void test
+(
+    'createFlatConfig',
+    async (ctx): Promise<void> =>
+    allTests
+    (
+        ctx.test
+        (
+            'without a language',
+            async (): Promise<void> =>
+            {
+                const files: string[]   = [];
+                const ignores: string[] = [];
+                const languageOptions   = { };
+                const linterOptions     = { };
+                const plugins           = { };
+                const processor         = 'foo';
+                const rules             = { };
+                const settings          = { };
+                const [config] =
+                await createFlatConfig
+                (
+                    {
+                        files,
+                        ignores,
+                        languageOptions,
+                        linterOptions,
+                        plugins,
+                        processor,
+                        rules,
+                        settings,
+                    },
+                );
+                assert.equal(config.files, files);
+                assert.equal(config.ignores, ignores);
+                assert.equal(config.languageOptions, languageOptions);
+                assert.equal(config.linterOptions, linterOptions);
+                assert.equal(config.plugins, plugins);
+                assert.equal(config.processor, processor);
+                assert.equal(config.rules, rules);
+                assert.equal(config.settings, settings);
+            },
+        ),
+        ctx.test
+        (
+            'with both `jsVersion` and `tsVersion specified`',
+            async (): Promise<void> =>
+            {
+                await assert.rejects
+                (
+                    async (): Promise<unknown> =>
+                    createFlatConfig({ jsVersion: 5, tsVersion: 'latest' }),
+                    {
+                        constructor: TypeError,
+                        message:
+                        '`jsVersion` and `tsVersion` cannot be specified at the same time',
+                    },
+                );
+            },
+        ),
+        ctx.test
+        (
+            '`files` and `ignores` are set',
+            async (): Promise<void> =>
+            {
+                const files = ['foo', 'bar'];
+                const ignores = ['baz'];
+                const [config] = await createFlatConfig({ files, ignores });
+                assert.equal(config.files, files);
+                assert.equal(config.ignores, ignores);
+                assert(!('languageOptions' in config));
+                assert(!('parser' in config));
+                assert(!('rules' in config));
+            },
+        ),
+        ctx.test
+        (
+            '`jsVersion` is not set',
+            async (): Promise<void> =>
+            {
+                const [config] = await createFlatConfig({ jsVersion: 5 });
+                assert(!('jsVersion' in config));
+            },
+        ),
+        ctx.test
+        (
+            '`tsVersion` is not set',
+            async (): Promise<void> =>
+            {
+                const [config] = await createFlatConfig({ tsVersion: '4.0.0' });
+                assert(!('tsVersion' in config));
+            },
+        ),
+        ctx.test
+        (
+            '`rules` are set',
+            async (): Promise<void> =>
+            {
+                const [{ rules }] =
+                await createFlatConfig({ jsVersion: 5, rules: { foobar: 'warn' } });
+                assert(rules);
+                assert('eqeqeq' in rules);
+                assert('@origin-1/no-spaces-in-call-expression' in rules);
+                assert('no-undef' in rules);
+                assert('semi' in rules);
+                assert('no-redeclare' in rules);
+                assert('n/prefer-promises/fs' in rules);
+                assert.equal(rules.foobar, 'warn');
+            },
+        ),
+        ctx.test
+        (
+            '`plugins` are set',
+            async (ctx): Promise<void> =>
+            allTests
+            (
+                ctx.test
+                (
+                    'for JavaScript',
+                    async (): Promise<void> =>
+                    {
+                        const [{ plugins }] =
+                        await createFlatConfig({ jsVersion: 5, plugins: { barbaz: { } } });
+                        assert(plugins);
+                        assert.deepEqual(Object.keys(plugins), ['@origin-1', 'n', 'barbaz']);
+                    },
+                ),
+                ctx.test
+                (
+                    'for TypeScript',
+                    async (): Promise<void> =>
+                    {
+                        const [{ plugins }] =
+                        await createFlatConfig({ plugins: { barbaz: { } }, tsVersion: 'latest' });
+                        assert(plugins);
+                        assert.deepEqual
+                        (Object.keys(plugins), ['@origin-1', 'n', '@typescript-eslint', 'barbaz']);
+                    },
+                ),
+            ),
+        ),
+        ctx.test
+        (
+            '`languageOptions` and `linterOptions` are set',
+            async (ctx): Promise<void> =>
+            allTests
+            (
+                ctx.test
+                (
+                    'for JavaScript',
+                    async (ctx): Promise<void> =>
+                    allTests
+                    (
+                        ctx.test
+                        (
+                            'defaults and merging',
+                            async (): Promise<void> =>
+                            {
+                                const espree =
+                                await import('espree' as string) as Linter.ParserModule;
+                                const [{ languageOptions, linterOptions }] =
+                                await createFlatConfig
+                                (
+                                    {
+                                        jsVersion:          2015,
+                                        languageOptions:    { sourceType: 'module' },
+                                        linterOptions:      { noInlineConfig: false },
+                                    },
+                                );
+                                assert(languageOptions);
+                                assert.equal(languageOptions.ecmaVersion, 2015);
+                                assert.equal(languageOptions.parser, espree);
+                                assert.equal(languageOptions.sourceType, 'module');
+                                assert(linterOptions);
+                                assert.equal(linterOptions.noInlineConfig, false);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, true);
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'overwriting',
+                            async (): Promise<void> =>
+                            {
+                                const parser = { } as Linter.ParserModule;
+                                const [{ languageOptions, linterOptions }] =
+                                await createFlatConfig
+                                (
+                                    {
+                                        jsVersion:          2015,
+                                        languageOptions:    { ecmaVersion: 'latest', parser },
+                                        linterOptions:
+                                        { reportUnusedDisableDirectives: false },
+                                    },
+                                );
+                                assert(languageOptions);
+                                assert.equal(languageOptions.ecmaVersion, 'latest');
+                                assert.equal(languageOptions.parser, parser);
+                                assert(linterOptions);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, false);
+                            },
+                        ),
+                    ),
+                ),
+                ctx.test
+                (
+                    'for TypeScript',
+                    async (ctx): Promise<void> =>
+                    allTests
+                    (
+                        ctx.test
+                        (
+                            'defaults and merging',
+                            async (): Promise<void> =>
+                            {
+                                const parser = await import('@typescript-eslint/parser');
+                                const parserOptions = { project: 'tsconfig.json' };
+                                const [{ languageOptions, linterOptions }] =
+                                await createFlatConfig
+                                (
+                                    {
+                                        languageOptions:    { parserOptions },
+                                        linterOptions:      { noInlineConfig: false },
+                                        tsVersion:          'latest',
+                                    },
+                                );
+                                assert(languageOptions);
+                                assert.equal(languageOptions.ecmaVersion, 'latest');
+                                assert.equal(languageOptions.parser, parser);
+                                assert.equal(languageOptions.parserOptions, parserOptions);
+                                assert(linterOptions);
+                                assert.equal(linterOptions.noInlineConfig, false);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, true);
+                            },
+                        ),
+                        ctx.test
+                        (
+                            'overwriting',
+                            async (): Promise<void> =>
+                            {
+                                const parser = await import('@typescript-eslint/parser');
+                                const [{ languageOptions, linterOptions }] =
+                                await createFlatConfig
+                                (
+                                    {
+                                        languageOptions:    { ecmaVersion: 2019 },
+                                        linterOptions:
+                                        { reportUnusedDisableDirectives: false },
+                                        tsVersion:          'latest',
+                                    },
+                                );
+                                assert(languageOptions);
+                                assert.equal(languageOptions.ecmaVersion, 2019);
+                                assert.equal(languageOptions.parser, parser);
+                                assert(linterOptions);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, false);
+                            },
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        ctx.test
+        (
+            '`globals` and `processor` are set',
+            async (): Promise<void> =>
+            {
+                const globals = { '$': true };
+                const processor = 'barfoo';
+                const [config] =
+                await createFlatConfig({ languageOptions: { globals }, processor });
+                assert.equal(config.languageOptions?.globals, globals);
+                assert.equal(config.processor,  processor);
             },
         ),
     ),
