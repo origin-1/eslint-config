@@ -1,9 +1,9 @@
 import assert, { AssertionError }       from 'node:assert/strict';
 import { createRequire }                from 'node:module';
-import { test }                         from 'node:test';
 import { pathToFileURL }                from 'node:url';
 import type { RuleType }                from '../src/lib/rules.js';
 import type { Rule }                    from 'eslint';
+import { describe, it }                 from 'mocha';
 
 function assertNoRulesMissing(missingRules: readonly string[]): void
 {
@@ -36,7 +36,7 @@ async function getPluginRules(pluginName: string): Promise<Record<string, Rule.R
 
 const { HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix } = await import('../src/lib/rules.js');
 
-void test
+it
 (
     'all built-in rules are defined',
     async (): Promise<void> =>
@@ -59,7 +59,7 @@ void test
     },
 );
 
-void test
+it
 (
     'all hybrid rules are defined',
     async (): Promise<void> =>
@@ -82,7 +82,7 @@ void test
     },
 );
 
-void test
+it
 (
     'all plugin rules are defined',
     async (): Promise<void> =>
@@ -114,7 +114,7 @@ void test
     },
 );
 
-void test
+it
 (
     'unique rules exist',
     async (): Promise<void> =>
@@ -128,7 +128,7 @@ void test
     },
 );
 
-void test
+it
 (
     'hybrid rules exist',
     async (): Promise<void> =>
@@ -153,7 +153,7 @@ void test
     },
 );
 
-void test
+it
 (
     'plugin rules exist',
     async (): Promise<void> =>
@@ -179,7 +179,7 @@ void test
     },
 );
 
-void test
+it
 (
     'hybrid rules are not duplicated',
     (): void =>
@@ -202,10 +202,10 @@ void test
     },
 );
 
-void test
+describe
 (
     'are sorted',
-    async (ctx): Promise<void> =>
+    (): void =>
     {
         function compareRules
         (ruleNameA: string, ruleTypeA: RuleType, ruleNameB: string, ruleTypeB: RuleType):
@@ -244,16 +244,21 @@ void test
             }
         }
 
-        const builtInRules = await getBuiltInRules();
-        const promises =
-        Reflect.ownKeys(RULES).map
+        let builtInRules: Map<string, Rule.RuleModule>;
+        before
         (
-            async (key): Promise<void> =>
+            async (): Promise<void> =>
+            {
+                builtInRules = await getBuiltInRules();
+            },
+        );
+        Reflect.ownKeys(RULES).forEach
+        (
+            (key): void =>
             {
                 const definedRules = RULES[key];
-                const testName = typeof key === 'symbol' ? key.description : `${key} plugin rules`;
-                const promise =
-                ctx.test
+                const testName = typeof key === 'symbol' ? key.description! : `${key} plugin rules`;
+                it
                 (
                     testName,
                     async (): Promise<void> =>
@@ -278,9 +283,7 @@ void test
                         }
                     },
                 );
-                return promise;
             },
         );
-        await Promise.all(promises);
     },
 );

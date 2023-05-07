@@ -1,15 +1,15 @@
 import assert               from 'node:assert/strict';
 import { createRequire }    from 'node:module';
-import { test }             from 'node:test';
+import { describe, it }     from 'mocha';
 
 const { default: patchTslib } = await import('../src/patch-tslib.js');
 
-void test
+describe
 (
     'patch-tslib',
-    async (ctx): Promise<void> =>
+    (): void =>
     {
-        await ctx.test
+        it
         (
             'does nothing if tsutils is not installed',
             (): void =>
@@ -25,7 +25,8 @@ void test
                 patchTslib(require);
             },
         );
-        await ctx.test
+
+        it
         (
             'prevents global scope pollution',
             (): void =>

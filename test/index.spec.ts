@@ -1,12 +1,13 @@
 import assert       from 'node:assert/strict';
-import { test }     from 'node:test';
 import { Worker }   from 'node:worker_threads';
+import { it }       from 'mocha';
 
-void test
+it
 (
     'index',
-    async (): Promise<void> =>
+    async function (): Promise<void>
     {
+        this.timeout(this.timeout() * 2);
         const exportedNames =
         await new Promise
         (

@@ -12,7 +12,7 @@
     "coverage": "node dev/coverage.js",
     "lint": "eslint . --ignore-path .gitignore --format compact",
     "release": "npm version -m 'Version %s'",
-    "test": "node --loader ts-node/esm --test test/create-config.test.ts test/index.test.ts test/no-parser.test.ts test/normalize-version.test.ts test/patch-tslib.test.ts test/rules.spec.test.ts",
+    "test": "node --loader ts-node/esm node_modules/mocha/bin/mocha.js --check-leaks --file test/patch-tslib.ts test/**/*.spec.ts",
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {
@@ -21,10 +21,12 @@
   },
   "devDependencies": {
     "@origin-1/eslint-config": "file:dist",
+    "@types/mocha": "latest",
     "@types/semver": "latest",
     "c8js": "latest",
     "eslint": "latest",
     "fast-glob": "latest",
+    "mocha": "latest",
     "ts-node": "latest",
     "typescript": "latest"
   },

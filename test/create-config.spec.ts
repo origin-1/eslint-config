@@ -1,22 +1,16 @@
 import assert           from 'node:assert/strict';
-import { test }         from 'node:test';
 import type { Linter }  from 'eslint';
+import { describe, it } from 'mocha';
 
 const { createBaseConfig, createConfig, createFlatConfig } =
 await import('../src/lib/create-config.js');
 
-export async function allTests(...promises: Promise<unknown>[]): Promise<void>
-{
-    await Promise.all(promises);
-}
-
-void test
+describe
 (
     'createConfig',
-    async (ctx): Promise<void> =>
-    allTests
-    (
-        ctx.test
+    (): void =>
+    {
+        it
         (
             '`root` is set',
             (): void =>
@@ -24,8 +18,9 @@ void test
                 const { root } = createConfig();
                 assert.equal(root, true);
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             '`overrides[0]` is set',
             (): void =>
@@ -35,8 +30,9 @@ void test
                 assert.deepEqual
                 (overrides[0], { files: ['*.js', '*.cjs', '*.mjs', '*.ts', '*.cts', '*.mts'] });
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             'top level `rules` are set',
             (): void =>
@@ -46,17 +42,17 @@ void test
                 assert('eqeqeq' in rules);
                 assert('@origin-1/no-spaces-in-call-expression' in rules);
             },
-        ),
-        ctx.test
+        );
+
+        describe
         (
             'override `rules` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                describe
                 (
                     'for JavaScript',
-                    async (ctx): Promise<void> =>
+                    (): void =>
                     {
                         const { overrides } =
                         createConfig({ files: 'foobar', jsVersion: 5, rules: { foobar: 'warn' } });
@@ -70,54 +66,54 @@ void test
                         assert(!('@typescript-eslint/no-redeclare' in rules));
                         assert.equal(rules['n/prefer-promises/fs'], 'off');
                         assert.equal(rules.foobar, 'warn');
-                        await allTests
+
+                        it
                         (
-                            ctx.test
-                            (
-                                '`before` entry of `beforeOrElse`',
-                                (): void =>
-                                {
-                                    const { overrides } =
-                                    createConfig({ files: 'foobar', jsVersion: 2018 });
-                                    const rules = overrides?.[1]?.rules;
-                                    assert(rules);
-                                    assert.deepEqual
-                                    (
-                                        rules['no-unused-vars'],
-                                        ['error', { ignoreRestSiblings: true, vars: 'local' }],
-                                    );
-                                },
-                            ),
-                            ctx.test
-                            (
-                                '`else` entry of `beforeOrElse`',
-                                (): void =>
-                                {
-                                    const { overrides } =
-                                    createConfig({ files: 'foobar', jsVersion: 2019 });
-                                    const rules = overrides?.[1]?.rules;
-                                    assert(rules);
-                                    assert.deepEqual
-                                    (
-                                        rules['no-unused-vars'],
-                                        [
-                                            'error',
-                                            {
-                                                caughtErrors:       'all',
-                                                ignoreRestSiblings: true,
-                                                vars:               'local',
-                                            },
-                                        ],
-                                    );
-                                },
-                            ),
+                            '`before` entry of `beforeOrElse`',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig({ files: 'foobar', jsVersion: 2018 });
+                                const rules = overrides?.[1]?.rules;
+                                assert(rules);
+                                assert.deepEqual
+                                (
+                                    rules['no-unused-vars'],
+                                    ['error', { ignoreRestSiblings: true, vars: 'local' }],
+                                );
+                            },
+                        );
+
+                        it
+                        (
+                            '`else` entry of `beforeOrElse`',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig({ files: 'foobar', jsVersion: 2019 });
+                                const rules = overrides?.[1]?.rules;
+                                assert(rules);
+                                assert.deepEqual
+                                (
+                                    rules['no-unused-vars'],
+                                    [
+                                        'error',
+                                        {
+                                            caughtErrors:       'all',
+                                            ignoreRestSiblings: true,
+                                            vars:               'local',
+                                        },
+                                    ],
+                                );
+                            },
                         );
                     },
-                ),
-                ctx.test
+                );
+
+                describe
                 (
                     'for TypeScript',
-                    async (ctx): Promise<void> =>
+                    (): void =>
                     {
                         const { overrides } =
                         createConfig
@@ -131,44 +127,41 @@ void test
                         assert('@typescript-eslint/no-redeclare' in rules);
                         assert.deepEqual(rules['n/prefer-promises/fs'], ['error']);
                         assert.equal(rules.foobar, 'warn');
-                        await allTests
+
+                        it
                         (
-                            ctx.test
-                            (
-                                '`before` entry of `beforeOrElse`',
-                                (): void =>
-                                {
-                                    const { overrides } =
-                                    createConfig({ files: 'foobar', tsVersion: '3.7.0' });
-                                    const rules = overrides?.[1]?.rules;
-                                    assert(rules);
-                                    assert.deepEqual
-                                    (
-                                        rules['@typescript-eslint/consistent-type-imports'],
-                                        ['error', { prefer: 'no-type-imports' }],
-                                    );
-                                },
-                            ),
-                            ctx.test
-                            (
-                                '`else` entry of `beforeOrElse`',
-                                (): void =>
-                                {
-                                    const { overrides } =
-                                    createConfig({ files: 'foobar', tsVersion: '3.8.0' });
-                                    const rules = overrides?.[1]?.rules;
-                                    assert(rules);
-                                    assert.deepEqual
-                                    (
-                                        rules['@typescript-eslint/consistent-type-imports'],
-                                        ['error'],
-                                    );
-                                },
-                            ),
+                            '`before` entry of `beforeOrElse`',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig({ files: 'foobar', tsVersion: '3.7.0' });
+                                const rules = overrides?.[1]?.rules;
+                                assert(rules);
+                                assert.deepEqual
+                                (
+                                    rules['@typescript-eslint/consistent-type-imports'],
+                                    ['error', { prefer: 'no-type-imports' }],
+                                );
+                            },
+                        );
+
+                        it
+                        (
+                            '`else` entry of `beforeOrElse`',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig({ files: 'foobar', tsVersion: '3.8.0' });
+                                const rules = overrides?.[1]?.rules;
+                                assert(rules);
+                                assert.deepEqual
+                                (rules['@typescript-eslint/consistent-type-imports'], ['error']);
+                            },
                         );
                     },
-                ),
-                ctx.test
+                );
+
+                it
                 (
                     'without a language',
                     (): void =>
@@ -178,10 +171,11 @@ void test
                         const rules = overrides?.[1]?.rules;
                         assert.deepEqual(rules, { foobar: 'warn' });
                     },
-                ),
-            ),
-        ),
-        ctx.test
+                );
+            },
+        );
+
+        it
         (
             'top level `plugins` are set',
             (): void =>
@@ -189,14 +183,14 @@ void test
                 const { plugins } = createConfig();
                 assert.deepEqual(plugins, ['@origin-1', 'n']);
             },
-        ),
-        ctx.test
+        );
+
+        describe
         (
             'override `plugins` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                it
                 (
                     'for JavaScript',
                     (): void =>
@@ -210,8 +204,9 @@ void test
                         assert.deepEqual(actualPlugins, ['barbaz']);
                         assert.deepEqual(inputPlugins, ['barbaz']);
                     },
-                ),
-                ctx.test
+                );
+
+                it
                 (
                     'for TypeScript',
                     (): void =>
@@ -226,8 +221,9 @@ void test
                         assert.deepEqual(actualPlugins, ['barbaz', '@typescript-eslint']);
                         assert.deepEqual(inputPlugins, ['barbaz']);
                     },
-                ),
-                ctx.test
+                );
+
+                it
                 (
                     'without a language',
                     (): void =>
@@ -241,22 +237,21 @@ void test
                         assert.deepEqual(actualPlugins, ['barbaz']);
                         assert.deepEqual(inputPlugins, ['barbaz']);
                     },
-                ),
-            ),
-        ),
-        ctx.test
+                );
+            },
+        );
+
+        describe
         (
             'override `env` and `parser` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                describe
                 (
                     'for JavaScript',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             (): void =>
@@ -281,8 +276,9 @@ void test
                                     { ecmaVersion: 2015, sourceType: 'module' },
                                 );
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             (): void =>
@@ -304,16 +300,16 @@ void test
                                 assert.equal(override.parser, 'FOOBAR');
                                 assert.deepEqual(override.parserOptions, { ecmaVersion: 'latest' });
                             },
-                        ),
-                    ),
-                ),
-                ctx.test
+                        );
+                    },
+                );
+
+                describe
                 (
                     'for TypeScript',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             (): void =>
@@ -339,8 +335,9 @@ void test
                                     { ecmaVersion: 'latest', project: 'tsconfig.json' },
                                 );
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             (): void =>
@@ -363,16 +360,16 @@ void test
                                 assert.equal(override.parser, 'FOOBAR');
                                 assert.deepEqual(override.parserOptions, { ecmaVersion: 2021 });
                             },
-                        ),
-                    ),
-                ),
-                ctx.test
+                        );
+                    },
+                );
+
+                describe
                 (
                     'without a language',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             (): void =>
@@ -393,8 +390,9 @@ void test
                                 assert.deepEqual
                                 (override.parserOptions, { ecmaVersion: undefined, foo: 'bar' });
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             (): void =>
@@ -414,12 +412,13 @@ void test
                                 assert.equal(override.parser, 'FOOBAR');
                                 assert.deepEqual(override.parserOptions, { ecmaVersion: 'latest' });
                             },
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        ctx.test
+                        );
+                    },
+                );
+            },
+        );
+
+        it
         (
             'override `extends`, `globals` and `processor` are set',
             (): void =>
@@ -435,8 +434,9 @@ void test
                 assert.equal(override.globals,      globals);
                 assert.equal(override.processor,    processor);
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             'override `files` and `excludedFiles` are set',
             (): void =>
@@ -447,17 +447,16 @@ void test
                 assert.equal(override.excludedFiles, 'foo');
                 assert.equal(override.files, 'bar');
             },
-        ),
-    ),
+        );
+    },
 );
 
-void test
+describe
 (
     'createBaseConfig',
-    async (ctx): Promise<void> =>
-    allTests
-    (
-        ctx.test
+    (): void =>
+    {
+        it
         (
             '`rules` are set',
             (): void =>
@@ -472,14 +471,14 @@ void test
                 assert('n/prefer-promises/fs' in rules);
                 assert.equal(rules.foobar, 'warn');
             },
-        ),
-        ctx.test
+        );
+
+        describe
         (
             '`plugins` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                it
                 (
                     'for JavaScript',
                     (): void =>
@@ -487,8 +486,9 @@ void test
                         const { plugins } = createBaseConfig({ jsVersion: 5, plugins: ['barbaz'] });
                         assert.deepEqual(plugins, ['@origin-1', 'n', 'barbaz']);
                     },
-                ),
-                ctx.test
+                );
+
+                it
                 (
                     'for TypeScript',
                     (): void =>
@@ -498,8 +498,9 @@ void test
                         assert.deepEqual
                         (plugins, ['@origin-1', 'n', 'barbaz', '@typescript-eslint']);
                     },
-                ),
-                ctx.test
+                );
+
+                it
                 (
                     'without a language',
                     (): void =>
@@ -507,22 +508,21 @@ void test
                         const { plugins } = createBaseConfig({ plugins: ['barbaz'] });
                         assert.deepEqual(plugins, ['barbaz']);
                     },
-                ),
-            ),
-        ),
-        ctx.test
+                );
+            },
+        );
+
+        describe
         (
             '`env` and `parser` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                describe
                 (
                     'for JavaScript',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             (): void =>
@@ -544,8 +544,9 @@ void test
                                     { ecmaVersion: 2015, sourceType: 'module' },
                                 );
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             (): void =>
@@ -565,16 +566,16 @@ void test
                                 assert.deepEqual
                                 (baseConfig.parserOptions, { ecmaVersion: 'latest' });
                             },
-                        ),
-                    ),
-                ),
-                ctx.test
+                        );
+                    },
+                );
+
+                describe
                 (
                     'for TypeScript',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             (): void =>
@@ -597,8 +598,9 @@ void test
                                     { ecmaVersion: 'latest', project: 'tsconfig.json' },
                                 );
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             (): void =>
@@ -618,16 +620,16 @@ void test
                                 assert.equal(baseConfig.parser, 'FOOBAR');
                                 assert.deepEqual(baseConfig.parserOptions, { ecmaVersion: 2021 });
                             },
-                        ),
-                    ),
-                ),
-                ctx.test
+                        );
+                    },
+                );
+
+                describe
                 (
                     'without a language',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             (): void =>
@@ -640,8 +642,9 @@ void test
                                 assert.deepEqual
                                 (baseConfig.parserOptions, { ecmaVersion: undefined, foo: 'bar' });
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             (): void =>
@@ -654,12 +657,13 @@ void test
                                 assert.deepEqual
                                 (baseConfig.parserOptions, { ecmaVersion: 'latest' });
                             },
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        ctx.test
+                        );
+                    },
+                );
+            },
+        );
+
+        it
         (
             '`extends`, `globals` and `processor` are set',
             (): void =>
@@ -672,17 +676,16 @@ void test
                 assert.equal(baseConfig.globals,    globals);
                 assert.equal(baseConfig.processor,  processor);
             },
-        ),
-    ),
+        );
+    },
 );
 
-void test
+describe
 (
     'createFlatConfig',
-    async (ctx): Promise<void> =>
-    allTests
-    (
-        ctx.test
+    (): void =>
+    {
+        it
         (
             'without a language',
             async (): Promise<void> =>
@@ -718,8 +721,9 @@ void test
                 assert.equal(config.rules, rules);
                 assert.equal(config.settings, settings);
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             'with both `jsVersion` and `tsVersion specified`',
             async (): Promise<void> =>
@@ -735,8 +739,9 @@ void test
                     },
                 );
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             '`files` and `ignores` are set',
             async (): Promise<void> =>
@@ -750,8 +755,9 @@ void test
                 assert(!('parser' in config));
                 assert(!('rules' in config));
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             '`jsVersion` is not set',
             async (): Promise<void> =>
@@ -759,8 +765,9 @@ void test
                 const [config] = await createFlatConfig({ jsVersion: 5 });
                 assert(!('jsVersion' in config));
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             '`tsVersion` is not set',
             async (): Promise<void> =>
@@ -768,8 +775,9 @@ void test
                 const [config] = await createFlatConfig({ tsVersion: '4.0.0' });
                 assert(!('tsVersion' in config));
             },
-        ),
-        ctx.test
+        );
+
+        it
         (
             '`rules` are set',
             async (): Promise<void> =>
@@ -785,14 +793,14 @@ void test
                 assert('n/prefer-promises/fs' in rules);
                 assert.equal(rules.foobar, 'warn');
             },
-        ),
-        ctx.test
+        );
+
+        describe
         (
             '`plugins` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                it
                 (
                     'for JavaScript',
                     async (): Promise<void> =>
@@ -802,8 +810,9 @@ void test
                         assert(plugins);
                         assert.deepEqual(Object.keys(plugins), ['@origin-1', 'n', 'barbaz']);
                     },
-                ),
-                ctx.test
+                );
+
+                it
                 (
                     'for TypeScript',
                     async (): Promise<void> =>
@@ -814,22 +823,21 @@ void test
                         assert.deepEqual
                         (Object.keys(plugins), ['@origin-1', 'n', '@typescript-eslint', 'barbaz']);
                     },
-                ),
-            ),
-        ),
-        ctx.test
+                );
+            },
+        );
+
+        describe
         (
             '`languageOptions` and `linterOptions` are set',
-            async (ctx): Promise<void> =>
-            allTests
-            (
-                ctx.test
+            (): void =>
+            {
+                describe
                 (
                     'for JavaScript',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             async (): Promise<void> =>
@@ -853,8 +861,9 @@ void test
                                 assert.equal(linterOptions.noInlineConfig, false);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, true);
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             async (): Promise<void> =>
@@ -876,16 +885,16 @@ void test
                                 assert(linterOptions);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, false);
                             },
-                        ),
-                    ),
-                ),
-                ctx.test
+                        );
+                    },
+                );
+
+                describe
                 (
                     'for TypeScript',
-                    async (ctx): Promise<void> =>
-                    allTests
-                    (
-                        ctx.test
+                    (): void =>
+                    {
+                        it
                         (
                             'defaults and merging',
                             async (): Promise<void> =>
@@ -909,8 +918,9 @@ void test
                                 assert.equal(linterOptions.noInlineConfig, false);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, true);
                             },
-                        ),
-                        ctx.test
+                        );
+
+                        it
                         (
                             'overwriting',
                             async (): Promise<void> =>
@@ -932,12 +942,13 @@ void test
                                 assert(linterOptions);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, false);
                             },
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        ctx.test
+                        );
+                    },
+                );
+            },
+        );
+
+        it
         (
             '`globals` and `processor` are set',
             async (): Promise<void> =>
@@ -947,8 +958,8 @@ void test
                 const [config] =
                 await createFlatConfig({ languageOptions: { globals }, processor });
                 assert.equal(config.languageOptions?.globals, globals);
-                assert.equal(config.processor,  processor);
+                assert.equal(config.processor, processor);
             },
-        ),
-    ),
+        );
+    },
 );

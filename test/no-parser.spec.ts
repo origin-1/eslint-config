@@ -1,9 +1,9 @@
 import assert   from 'node:assert/strict';
-import { test } from 'node:test';
+import { it }   from 'mocha';
 
 const { parse } = await import('../src/no-parser.js');
 
-void test
+it
 (
     'no-parser throws an error',
     (): void =>
