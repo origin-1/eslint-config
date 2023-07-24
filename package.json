@@ -12,7 +12,7 @@
     "coverage": "node dev/coverage.js",
     "lint": "eslint . --ignore-path .gitignore --format compact",
     "release": "npm version -m 'Version %s'",
-    "test": "node --loader ts-node/esm node_modules/mocha/bin/mocha.js --check-leaks --file test/patch-tslib.ts test/**/*.spec.ts",
+    "test": "node --loader ts-node/esm node_modules/mocha/bin/mocha.js --check-leaks test/**/*.spec.ts",
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {
@@ -32,10 +32,10 @@
   },
   "peerDependencies": {
     "@origin-1/eslint-plugin": ">=0.13",
-    "@typescript-eslint/eslint-plugin": "^5.58",
-    "@typescript-eslint/parser": "^5.58",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.37",
-    "eslint-plugin-n": "15"
+    "eslint-plugin-n": "16"
   },
   "engines": {
     "node": ">=18"

@@ -139,7 +139,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'block-scoped-var':                 'off',
         'camelcase':                        'off',
         'capitalized-comments':             'off',
-        'class-methods-use-this':           'off',
         'complexity':                       'off',
         'consistent-return':                'off',
         'consistent-this':                  'off',
@@ -215,7 +214,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-restricted-properties':         'off',
         'no-restricted-syntax':             ['error'],
         'no-return-assign':                 ['error', 'always'],
-        'no-return-await':                  ['error'],
+        'no-return-await':                  'off',
         'no-script-url':                    ['error'],
         'no-sequences':                     ['error'],
         'no-shadow-restricted-names':       ['error'],
@@ -339,6 +338,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Suggestion
+        'class-methods-use-this':           'off',
         'default-param-last':               'off',
         'dot-notation':                     ['error'],
         'init-declarations':                'off',
@@ -441,7 +441,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-import-type-side-effects':              'off',
         'no-invalid-void-type':                     'off',
         'no-misused-new':                           ['error'],
-        'no-misused-promises':                      ['error'],
+        'no-misused-promises':                      ['error', { checksVoidReturn: false }],
         'no-mixed-enums':                           ['error'],
         'no-non-null-asserted-nullish-coalescing':  ['error'],
         'no-non-null-asserted-optional-chain':      ['error'],
@@ -490,7 +490,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-namespace':                             'off',
         'no-redundant-type-constituents':           ['error'],
         'no-this-alias':                            'off',
-        'no-type-alias':                            'off',
         'no-unnecessary-boolean-literal-compare':   ['error'],
         'no-unnecessary-condition':                 ['error'],
         'no-unnecessary-qualifier':                 ['error'],

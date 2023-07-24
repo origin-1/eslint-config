@@ -14,7 +14,6 @@
   "exports": {
     ".": "./index.js",
     "./no-parser": "./no-parser.js",
-    "./package.json": "./package.json",
-    "./patch-tslib": "./patch-tslib.js"
+    "./package.json": "./package.json"
   }
 }

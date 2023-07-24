@@ -73,6 +73,6 @@ getWriteFile
 (
     ts.sys.writeFile,
     outDir,
-    ['index.d.ts', 'lib/create-config.d.ts', 'lib/normalize-version.d.ts', 'patch-tslib.d.cts'],
+    ['index.d.ts', 'lib/create-config.d.ts', 'lib/normalize-version.d.ts'],
 );
 await compileTS(pkgDir, rootDir, newOptions, writeFile);
