@@ -31,10 +31,10 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@origin-1/eslint-plugin": ">=0.13",
+    "@origin-1/eslint-plugin": ">=0.14",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "eslint": "^8.37",
+    "eslint": "^8.46",
     "eslint-plugin-n": "16"
   },
   "engines": {

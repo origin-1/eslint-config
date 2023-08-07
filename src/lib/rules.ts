@@ -76,7 +76,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////
         // Problem
         'array-callback-return':            'off',
-        'constructor-super':                ['error'],
+        'constructor-super':                jsts(['error'], 'off'), // Not required in TypeScript.
         'for-direction':                    ['error'],
         'getter-return':                    ['error'],
         'no-async-promise-executor':        ['error'],
@@ -200,7 +200,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-nested-ternary':                'off',
         'no-new':                           'off',
         'no-new-func':                      'off',
-        'no-new-object':                    ['error'],
+        'no-new-object':                    'off',
         'no-new-wrappers':                  ['error'],
         'no-nonoctal-decimal-escape':       ['error'],
         'no-octal':                         ['error'],
@@ -214,7 +214,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-restricted-properties':         'off',
         'no-restricted-syntax':             ['error'],
         'no-return-assign':                 ['error', 'always'],
-        'no-return-await':                  'off',
         'no-script-url':                    ['error'],
         'no-sequences':                     ['error'],
         'no-shadow-restricted-names':       ['error'],
@@ -325,7 +324,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         ////////////////////////////////////////////
         // Problem
-        'no-dupe-class-members':            ['error'],
+        'no-dupe-class-members':            jsts(['error'], 'off'), // Not required in TypeScript.
         'no-loss-of-precision':             ['error'],
         'no-unused-vars':
         beforeJSOrElse
@@ -531,6 +530,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     '@origin-1/eslint-plugin':
     {
+        ////////////////////////////////////////////
+        // Suggestion
+        'no-extra-new':                     ['error'],
+
         ////////////////////////////////////////////
         // Layout
         'bracket-layout':                   ['error'],
