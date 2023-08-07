@@ -11,7 +11,7 @@
     "compile": "node dev/compile.js",
     "coverage": "node dev/coverage.js",
     "lint": "eslint . --ignore-path .gitignore --format compact",
-    "release": "npm version -m 'Version %s'",
+    "release": "npm version -m \"Version %s\"",
     "test": "node --loader ts-node/esm node_modules/mocha/bin/mocha.js --check-leaks test/**/*.spec.ts",
     "update-dist": "node dev/update-dist.js"
   },
