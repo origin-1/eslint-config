@@ -61,12 +61,13 @@ const outDir = join(pkgDir, 'dist');
 const rootDir = join(pkgDir, 'src');
 const newOptions =
 {
-    declaration:    true,
-    declarationDir: outDir,
-    module:         ts.ModuleKind.CommonJS,
+    declaration:        true,
+    declarationDir:     outDir,
+    module:             ts.ModuleKind.CommonJS,
+    moduleResolution:   ts.ModuleResolutionKind.Node10,
     outDir,
-    removeComments: true,
-    rootDir:        join(pkgDir, 'src'),
+    removeComments:     true,
+    rootDir:            join(pkgDir, 'src'),
 };
 const writeFile =
 getWriteFile

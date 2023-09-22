@@ -34,7 +34,7 @@
     "@origin-1/eslint-plugin": ">=0.14",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "eslint": "^8.46",
+    "eslint": "^8.50",
     "eslint-plugin-n": "16"
   },
   "engines": {
