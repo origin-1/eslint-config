@@ -1,4 +1,5 @@
 {
+  "name": "@origin-1/eslint-config",
   "version": "0.17.1",
   "files": [
     "dist",
@@ -40,5 +41,6 @@
   "engines": {
     "node": ">=18"
   },
+  "private": true,
   "type": "module"
 }
