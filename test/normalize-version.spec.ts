@@ -39,7 +39,7 @@ describe
                         constructor: TypeError,
                         message:
                         'jsVersion 6 is not supported. Valid values are 5, 2015, 2016, 2017, ' +
-                        '2018, 2019, 2020, 2021, and 2022',
+                        '2018, 2019, 2020, 2021, 2022, 2023, and 2024',
                     },
                 );
             },
