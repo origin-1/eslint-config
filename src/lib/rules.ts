@@ -241,7 +241,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'operator-assignment':              ['error'],
         'prefer-arrow-callback':            beforeJSOrElse(2015, 'off', ['error']),
         'prefer-const':                     ['error', { ignoreReadBeforeAssign: true }],
-        'prefer-destructuring':             beforeJSOrElse(2015, 'off', ['error']),
         // Do not prefer the exponentiation operator in TypeScript, because that would result in
         // getting the value of Math.pow upon every evaluation in ES5 transpiled code.
         'prefer-exponentiation-operator':   jsts(beforeOrElse(2016, 'off', ['error']), 'off'),
@@ -355,6 +354,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-throw-literal':                 ['error'],
         'no-unused-expressions':            ['error'],
         'no-useless-constructor':           ['error'],
+        'prefer-destructuring':             beforeJSOrElse(2015, 'off', ['error']),
         'require-await':                    ['error'],
 
         ////////////////////////////////////////////
