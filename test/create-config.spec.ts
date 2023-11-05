@@ -54,18 +54,26 @@ describe
                     'for JavaScript',
                     (): void =>
                     {
-                        const { overrides } =
-                        createConfig({ files: 'foobar', jsVersion: 5, rules: { foobar: 'warn' } });
-                        const rules = overrides?.[1]?.rules;
-                        assert(rules);
-                        assert.deepEqual(rules['no-undef'], ['error']);
-                        assert.deepEqual(rules.semi, ['error']);
-                        assert(!('@typescript-eslint/semi' in rules));
-                        assert.deepEqual
-                        (rules['no-redeclare'], ['error', { builtinGlobals: true }]);
-                        assert(!('@typescript-eslint/no-redeclare' in rules));
-                        assert.equal(rules['n/prefer-promises/fs'], 'off');
-                        assert.equal(rules.foobar, 'warn');
+                        it
+                        (
+                            'defaults',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig
+                                ({ files: 'foobar', jsVersion: 5, rules: { foobar: 'warn' } });
+                                const rules = overrides?.[1]?.rules;
+                                assert(rules);
+                                assert.deepEqual(rules['no-undef'], ['error']);
+                                assert.deepEqual(rules.semi, ['error']);
+                                assert(!('@typescript-eslint/semi' in rules));
+                                assert.deepEqual
+                                (rules['no-redeclare'], ['error', { builtinGlobals: true }]);
+                                assert(!('@typescript-eslint/no-redeclare' in rules));
+                                assert.equal(rules['n/prefer-promises/fs'], 'off');
+                                assert.equal(rules.foobar, 'warn');
+                            },
+                        );
 
                         it
                         (
@@ -115,18 +123,31 @@ describe
                     'for TypeScript',
                     (): void =>
                     {
-                        const { overrides } =
-                        createConfig
-                        ({ files: 'foobar', rules: { foobar: 'warn' }, tsVersion: 'latest' });
-                        const rules = overrides?.[1]?.rules;
-                        assert(rules);
-                        assert.equal(rules['no-undef'], 'off');
-                        assert.equal(rules.semi, 'off');
-                        assert('@typescript-eslint/semi' in rules);
-                        assert.equal(rules['no-redeclare'], 'off');
-                        assert('@typescript-eslint/no-redeclare' in rules);
-                        assert.deepEqual(rules['n/prefer-promises/fs'], ['error']);
-                        assert.equal(rules.foobar, 'warn');
+                        it
+                        (
+                            'defaults',
+                            (): void =>
+                            {
+                                const { overrides } =
+                                createConfig
+                                (
+                                    {
+                                        files:      'foobar',
+                                        rules:      { foobar: 'warn' },
+                                        tsVersion:  'latest',
+                                    },
+                                );
+                                const rules = overrides?.[1]?.rules;
+                                assert(rules);
+                                assert.equal(rules['no-undef'], 'off');
+                                assert.equal(rules.semi, 'off');
+                                assert('@typescript-eslint/semi' in rules);
+                                assert.equal(rules['no-redeclare'], 'off');
+                                assert('@typescript-eslint/no-redeclare' in rules);
+                                assert.deepEqual(rules['n/prefer-promises/fs'], ['error']);
+                                assert.equal(rules.foobar, 'warn');
+                            },
+                        );
 
                         it
                         (
