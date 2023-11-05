@@ -161,7 +161,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'max-lines':                        'off',
         'max-lines-per-function':           'off',
         'max-nested-callbacks':             'off',
-        'max-params':                       'off',
         'max-statements':                   'off',
         'multiline-comment-style':          'off',
         'new-cap':                          ['error', { capIsNew: false }],
@@ -169,7 +168,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-bitwise':                       'off',
         'no-caller':                        ['error'],
         'no-case-declarations':             ['error'],
-        'no-confusing-arrow':               'off',
         'no-console':                       'off',
         'no-continue':                      'off',
         'no-delete-var':                    ['error'],
@@ -183,7 +181,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-extra-bind':                    ['error'],
         'no-extra-boolean-cast':            ['error'],
         'no-extra-label':                   ['error'],
-        'no-floating-decimal':              ['error'],
         'no-global-assign':                 ['error'],
         'no-implicit-coercion':             'off',
         'no-implicit-globals':              'off',
@@ -193,7 +190,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-labels':                        ['error', { allowLoop: true, allowSwitch: true }],
         'no-lone-blocks':                   beforeJSOrElse(2015, ['error'], 'off'),
         'no-lonely-if':                     'off',
-        'no-mixed-operators':               'off',
         'no-multi-assign':                  'off',
         'no-multi-str':                     ['error'],
         'no-negated-condition':             'off',
@@ -237,7 +233,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'object-shorthand':
         beforeJSOrElse(2015, 'off', ['error', 'always', { avoidQuotes: true }]),
         'one-var':                          ['error', 'never'],
-        'one-var-declaration-per-line':     ['error'],
         'operator-assignment':              ['error'],
         'prefer-arrow-callback':            beforeJSOrElse(2015, 'off', ['error']),
         'prefer-const':                     ['error', { ignoreReadBeforeAssign: true }],
@@ -253,19 +248,12 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-rest-params':               beforeJSOrElse(2015, 'off', ['error']),
         'prefer-spread':                    beforeJSOrElse(2015, 'off', ['error']),
         'prefer-template':                  beforeJSOrElse(2015, 'off', ['error']),
-        'quote-props':                      'off',
         'radix':                            ['error'],
         'require-unicode-regexp':           'off',
         'require-yield':                    ['error'],
         'sort-imports':                     ['error', { ignoreDeclarationSort: true }],
         'sort-keys':                        'off',
         'sort-vars':                        'off',
-        'spaced-comment':
-        [
-            'error',
-            'always',
-            { block: { exceptions: ['*'] }, line: { exceptions: ['/'], markers: ['/'] } },
-        ],
         'strict':                           jsts(['error', 'global'], 'off'),
         'symbol-description':               'off',
         'vars-on-top':                      'off',
@@ -273,51 +261,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
-        'array-bracket-newline':            'off',
-        'array-bracket-spacing':            ['error'],
-        'array-element-newline':            'off',
-        'arrow-parens':                     ['error', 'as-needed'],
-        'arrow-spacing':                    ['error'],
-        'comma-style':
-        ['error', 'last', { exceptions: { ArrayExpression: true } }],
-        'computed-property-spacing':        ['error'],
-        'dot-location':                     ['error', 'property'],
-        'eol-last':                         ['error'],
-        'function-call-argument-newline':   ['error', 'consistent'],
-        'function-paren-newline':           ['error', 'consistent'],
-        'generator-star-spacing':           ['error', 'both'],
-        'implicit-arrow-linebreak':         'off',
-        'jsx-quotes':                       ['error'],
         'line-comment-position':            'off',
-        'linebreak-style':                  ['error'],
-        'max-len':                          ['error', { code: 100 }],
-        'max-statements-per-line':          ['error'],
-        'multiline-ternary':                'off',
-        'new-parens':                       ['error'],
-        'newline-per-chained-call':         'off',
-        'no-mixed-spaces-and-tabs':         'off',
-        'no-multi-spaces':                  'off',
-        'no-multiple-empty-lines':          ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
-        'no-tabs':                          ['error'],
-        'no-trailing-spaces':               ['error'],
-        'no-whitespace-before-property':    ['error'],
-        'nonblock-statement-body-position': 'off',
-        'object-curly-newline':             'off',
-        'object-property-newline':          ['error', { allowMultiplePropertiesPerLine: true }],
-        'operator-linebreak':               ['error', 'after'],
-        'padded-blocks':                    ['error', 'never'],
-        'rest-spread-spacing':              ['error'],
-        'semi-spacing':                     ['error'],
-        'semi-style':                       ['error'],
-        'space-in-parens':                  ['error'],
-        'space-unary-ops':                  ['error'],
-        'switch-colon-spacing':             ['error', { after: true, before: false }],
-        'template-curly-spacing':           ['error'],
-        'template-tag-spacing':             'off',
         'unicode-bom':                      ['error'],
-        'wrap-iife':                        'off',
-        'wrap-regex':                       'off',
-        'yield-star-spacing':               ['error', 'both'],
     },
     [HYBRID]:
     {
@@ -340,9 +285,9 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'default-param-last':               'off',
         'dot-notation':                     ['error'],
         'init-declarations':                'off',
+        'max-params':                       'off',
         'no-array-constructor':             ['error'],
         'no-empty-function':                'off',
-        'no-extra-semi':                    ['error'],
         'no-implied-eval':                  'off',
         'no-invalid-this':                  'off',
         'no-loop-func':                     ['error'],
@@ -356,67 +301,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-useless-constructor':           ['error'],
         'prefer-destructuring':             beforeJSOrElse(2015, 'off', ['error']),
         'require-await':                    ['error'],
-
-        ////////////////////////////////////////////
-        // Layout
-        'block-spacing':                    ['error'],
-        'brace-style':                      'off',
-        'comma-dangle':                     ['error', 'always-multiline'],
-        'comma-spacing':                    ['error'],
-        'func-call-spacing':                'off',
-        'indent':                           'off',
-        // Superseded by `@origin-1/property-colon-spacing`.
-        'key-spacing':                      'off',
-        'keyword-spacing':                  ['error'],
-        'lines-around-comment':
-        jsts
-        (
-            [
-                'error',
-                {
-                    allowBlockStart:            true,
-                    allowObjectStart:           true,
-                    applyDefaultIgnorePatterns: false,
-                },
-            ],
-            [
-                'error',
-                {
-                    allowBlockStart:            true,
-                    allowEnumStart:             true,
-                    allowInterfaceStart:        true,
-                    allowModuleStart:           true,
-                    allowObjectStart:           true,
-                    allowTypeStart:             true,
-                    applyDefaultIgnorePatterns: false,
-                },
-            ],
-        ),
-        'lines-between-class-members':      'off',
-        'no-extra-parens':                  ['error'],
-        'object-curly-spacing':             ['error', 'always'],
-        'padding-line-between-statements':
-        [
-            'error',
-            {
-                blankLine:  'always',
-                prev:       '*',
-                next:       ['class', 'directive', 'export', 'function', 'import'],
-            },
-            {
-                blankLine:  'always',
-                prev:       ['class', 'directive', 'export', 'function', 'import'],
-                next:       '*',
-            },
-            { blankLine: 'any', prev: 'export', next: 'export' },
-            { blankLine: 'any', prev: 'import', next: 'import' },
-        ],
-        'quotes':                           ['error', 'single'],
-        'semi':                             ['error'],
-        'space-before-blocks':              ['error'],
-        'space-before-function-paren':      'off',
-        // typescript-eslint rule does not handle well colons (":") in mapped types.
-        'space-infix-ops':                  jsts(['error'], 'off'),
     },
     '@typescript-eslint/eslint-plugin':
     {
@@ -483,6 +367,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-dynamic-delete':                        'off',
         'no-empty-interface':                       ['error', { allowSingleExtends: true }],
         'no-explicit-any':                          'off',
+        'no-extra-semi':                            'off', // in @stylish
         'no-extraneous-class':                      ['error', { allowConstructorOnly: true }],
         'no-inferrable-types':                      ['error'],
         'no-meaningless-void-operator':             ['error', { checkNever: true }],
@@ -524,9 +409,25 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
-        'member-delimiter-style':
-        ['error', { singleline: { requireLast: true } }],
-        'type-annotation-spacing':                  ['error'],
+        'block-spacing':                            'off', // in @stylish
+        'brace-style':                              'off', // in @stylish
+        'comma-dangle':                             'off', // in @stylish
+        'comma-spacing':                            'off', // in @stylish
+        'func-call-spacing':                        'off', // in @stylish
+        'indent':                                   'off', // in @stylish
+        'key-spacing':                              'off', // in @stylish
+        'keyword-spacing':                          'off', // in @stylish
+        'lines-around-comment':                     'off', // in @stylish
+        'lines-between-class-members':              'off', // in @stylish
+        'member-delimiter-style':                   'off', // in @stylish
+        'no-extra-parens':                          'off', // in @stylish
+        'padding-line-between-statements':          'off', // in @stylish
+        'quotes':                                   'off', // in @stylish
+        'semi':                                     'off', // in @stylish
+        'space-before-blocks':                      'off', // in @stylish
+        'space-before-function-paren':              'off', // in @stylish
+        'space-infix-ops':                          'off', // in @stylish
+        'type-annotation-spacing':                  'off', // in @stylish
     },
     '@origin-1/eslint-plugin':
     {
@@ -542,6 +443,147 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-spaces-in-call-expression':     ['error'],
         'no-spaces-in-tagged-template':     ['error'],
         'property-colon-spacing':           ['error'],
+    },
+    '@stylistic/eslint-plugin':
+    {
+        ////////////////////////////////////////////
+        // Suggestion
+        'no-confusing-arrow':               'off',
+        'no-extra-semi':                    ['error'],
+        'no-floating-decimal':              ['error'],
+        'no-mixed-operators':               'off',
+        'one-var-declaration-per-line':     ['error'],
+        'quote-props':                      'off',
+        'spaced-comment':
+        [
+            'error',
+            'always',
+            { block: { exceptions: ['*'] }, line: { exceptions: ['/'], markers: ['/'] } },
+        ],
+
+        ////////////////////////////////////////////
+        // Layout
+        'array-bracket-newline':            'off',
+        'array-bracket-spacing':            ['error'],
+        'array-element-newline':            'off',
+        'arrow-parens':                     ['error', 'as-needed'],
+        'arrow-spacing':                    ['error'],
+        'block-spacing':                    ['error'],
+        'brace-style':                      'off',
+        'comma-dangle':                     ['error', 'always-multiline'],
+        'comma-spacing':                    ['error'],
+        'comma-style':
+        ['error', 'last', { exceptions: { ArrayExpression: true } }],
+        'computed-property-spacing':        ['error'],
+        'dot-location':                     ['error', 'property'],
+        'eol-last':                         ['error'],
+        'func-call-spacing':                'off',
+        'function-call-argument-newline':   ['error', 'consistent'],
+        'function-paren-newline':           ['error', 'consistent'],
+        'generator-star-spacing':           ['error', 'both'],
+        'implicit-arrow-linebreak':         'off',
+        'indent':                           'off',
+        'jsx-child-element-spacing':        'off',
+        'jsx-closing-bracket-location':     'off',
+        'jsx-closing-tag-location':         ['error'],
+        'jsx-curly-brace-presence':         'off',
+        'jsx-curly-newline':                'off',
+        'jsx-curly-spacing':                'off',
+        'jsx-equals-spacing':               ['error'],
+        'jsx-first-prop-new-line':          'off',
+        'jsx-indent':                       'off',
+        'jsx-indent-props':                 'off',
+        'jsx-max-props-per-line':           'off',
+        'jsx-newline':                      'off',
+        'jsx-one-expression-per-line':      'off',
+        'jsx-props-no-multi-spaces':        'off',
+        'jsx-quotes':                       ['error'],
+        'jsx-self-closing-comp':            'off',
+        'jsx-sort-props':                   'off',
+        'jsx-tag-spacing':
+        ['error', { beforeClosing: 'allow', beforeSelfClosing: 'always' }],
+        'jsx-wrap-multilines':              'off',
+        'key-spacing':                      'off',
+        'keyword-spacing':                  ['error'],
+        'linebreak-style':                  ['error'],
+        'lines-around-comment':
+        jsts
+        (
+            [
+                'error',
+                {
+                    allowBlockStart:            true,
+                    allowObjectStart:           true,
+                    applyDefaultIgnorePatterns: false,
+                },
+            ],
+            [
+                'error',
+                {
+                    allowBlockStart:            true,
+                    allowEnumStart:             true,
+                    allowInterfaceStart:        true,
+                    allowModuleStart:           true,
+                    allowObjectStart:           true,
+                    allowTypeStart:             true,
+                    applyDefaultIgnorePatterns: false,
+                },
+            ],
+        ),
+        'lines-between-class-members':      'off',
+        'max-len':                          ['error', { code: 100 }],
+        'max-statements-per-line':          ['error'],
+        'member-delimiter-style':           ['error', { singleline: { requireLast: true } }],
+        'multiline-ternary':                'off',
+        'new-parens':                       ['error'],
+        'newline-per-chained-call':         'off',
+        'no-extra-parens':                  ['error'],
+        'no-mixed-spaces-and-tabs':         'off',
+        'no-multi-spaces':                  'off',
+        'no-multiple-empty-lines':          ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
+        'no-tabs':                          ['error'],
+        'no-trailing-spaces':               ['error'],
+        'no-whitespace-before-property':    ['error'],
+        'nonblock-statement-body-position': 'off',
+        'object-curly-newline':             'off',
+        'object-curly-spacing':             ['error', 'always'],
+        'object-property-newline':          ['error', { allowMultiplePropertiesPerLine: true }],
+        'operator-linebreak':               ['error', 'after'],
+        'padded-blocks':                    ['error', 'never'],
+        'padding-line-between-statements':
+        [
+            'error',
+            {
+                blankLine:  'always',
+                prev:       '*',
+                next:       ['class', 'directive', 'export', 'function', 'import'],
+            },
+            {
+                blankLine:  'always',
+                prev:       ['class', 'directive', 'export', 'function', 'import'],
+                next:       '*',
+            },
+            { blankLine: 'any', prev: 'export', next: 'export' },
+            { blankLine: 'any', prev: 'import', next: 'import' },
+        ],
+        'quotes':                           ['error', 'single'],
+        'rest-spread-spacing':              ['error'],
+        'semi':                             ['error'],
+        'semi-spacing':                     ['error'],
+        'semi-style':                       ['error'],
+        'space-before-blocks':              ['error'],
+        'space-before-function-paren':      'off',
+        'space-in-parens':                  ['error'],
+        // Rule does not handle well colons (":") in mapped types.
+        'space-infix-ops':                  jsts(['error'], 'off'),
+        'space-unary-ops':                  ['error'],
+        'switch-colon-spacing':             ['error', { after: true, before: false }],
+        'template-curly-spacing':           ['error'],
+        'template-tag-spacing':             'off',
+        'type-annotation-spacing':          ['error'],
+        'wrap-iife':                        'off',
+        'wrap-regex':                       'off',
+        'yield-star-spacing':               ['error', 'both'],
     },
     'eslint-plugin-n':
     {

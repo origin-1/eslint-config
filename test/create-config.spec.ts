@@ -65,8 +65,8 @@ describe
                                 const rules = overrides?.[1]?.rules;
                                 assert(rules);
                                 assert.deepEqual(rules['no-undef'], ['error']);
-                                assert.deepEqual(rules.semi, ['error']);
-                                assert(!('@typescript-eslint/semi' in rules));
+                                assert.deepEqual(rules['dot-notation'], ['error']);
+                                assert(!('@typescript-eslint/dot-notation' in rules));
                                 assert.deepEqual
                                 (rules['no-redeclare'], ['error', { builtinGlobals: true }]);
                                 assert(!('@typescript-eslint/no-redeclare' in rules));
@@ -140,8 +140,8 @@ describe
                                 const rules = overrides?.[1]?.rules;
                                 assert(rules);
                                 assert.equal(rules['no-undef'], 'off');
-                                assert.equal(rules.semi, 'off');
-                                assert('@typescript-eslint/semi' in rules);
+                                assert.equal(rules['dot-notation'], 'off');
+                                assert('@typescript-eslint/dot-notation' in rules);
                                 assert.equal(rules['no-redeclare'], 'off');
                                 assert('@typescript-eslint/no-redeclare' in rules);
                                 assert.deepEqual(rules['n/prefer-promises/fs'], ['error']);
@@ -202,7 +202,7 @@ describe
             (): void =>
             {
                 const { plugins } = createConfig();
-                assert.deepEqual(plugins, ['@origin-1', 'n']);
+                assert.deepEqual(plugins, ['@origin-1', '@stylistic', 'n']);
             },
         );
 
@@ -487,7 +487,7 @@ describe
                 assert('eqeqeq' in rules);
                 assert('@origin-1/no-spaces-in-call-expression' in rules);
                 assert('no-undef' in rules);
-                assert('semi' in rules);
+                assert('dot-notation' in rules);
                 assert('no-redeclare' in rules);
                 assert('n/prefer-promises/fs' in rules);
                 assert.equal(rules.foobar, 'warn');
@@ -505,7 +505,7 @@ describe
                     (): void =>
                     {
                         const { plugins } = createBaseConfig({ jsVersion: 5, plugins: ['barbaz'] });
-                        assert.deepEqual(plugins, ['@origin-1', 'n', 'barbaz']);
+                        assert.deepEqual(plugins, ['@origin-1', '@stylistic', 'n', 'barbaz']);
                     },
                 );
 
@@ -517,7 +517,7 @@ describe
                         const { plugins } =
                         createBaseConfig({ plugins: ['barbaz'], tsVersion: 'latest' });
                         assert.deepEqual
-                        (plugins, ['@origin-1', 'n', 'barbaz', '@typescript-eslint']);
+                        (plugins, ['@origin-1', '@stylistic', 'n', 'barbaz', '@typescript-eslint']);
                     },
                 );
 
@@ -809,7 +809,7 @@ describe
                 assert('eqeqeq' in rules);
                 assert('@origin-1/no-spaces-in-call-expression' in rules);
                 assert('no-undef' in rules);
-                assert('semi' in rules);
+                assert('dot-notation' in rules);
                 assert('no-redeclare' in rules);
                 assert('n/prefer-promises/fs' in rules);
                 assert.equal(rules.foobar, 'warn');
@@ -829,7 +829,8 @@ describe
                         const [{ plugins }] =
                         await createFlatConfig({ jsVersion: 5, plugins: { barbaz: { } } });
                         assert(plugins);
-                        assert.deepEqual(Object.keys(plugins), ['@origin-1', 'n', 'barbaz']);
+                        assert.deepEqual
+                        (Object.keys(plugins), ['@origin-1', '@stylistic', 'n', 'barbaz']);
                     },
                 );
 
@@ -842,7 +843,10 @@ describe
                         await createFlatConfig({ plugins: { barbaz: { } }, tsVersion: 'latest' });
                         assert(plugins);
                         assert.deepEqual
-                        (Object.keys(plugins), ['@origin-1', 'n', '@typescript-eslint', 'barbaz']);
+                        (
+                            Object.keys(plugins),
+                            ['@origin-1', '@stylistic', 'n', '@typescript-eslint', 'barbaz'],
+                        );
                     },
                 );
             },
