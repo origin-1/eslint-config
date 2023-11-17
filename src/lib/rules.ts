@@ -336,6 +336,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsafe-declaration-merging':            'off',
         'no-unsafe-member-access':                  ['error'],
         'no-unsafe-return':                         ['error'],
+        'no-unsafe-unary-minus':                    'off',
         'no-var-requires':                          ['error'],
         'parameter-properties':                     ['error', { prefer: 'parameter-property' }],
         'prefer-reduce-type-parameter':             ['error'],
@@ -447,21 +448,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     '@stylistic/eslint-plugin':
     {
         ////////////////////////////////////////////
-        // Suggestion
-        'no-confusing-arrow':               'off',
-        'no-extra-semi':                    ['error'],
-        'no-floating-decimal':              ['error'],
-        'no-mixed-operators':               'off',
-        'one-var-declaration-per-line':     ['error'],
-        'quote-props':                      'off',
-        'spaced-comment':
-        [
-            'error',
-            'always',
-            { block: { exceptions: ['*'] }, line: { exceptions: ['/'], markers: ['/'] } },
-        ],
-
-        ////////////////////////////////////////////
         // Layout
         'array-bracket-newline':            'off',
         'array-bracket-spacing':            ['error'],
@@ -479,6 +465,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'eol-last':                         ['error'],
         'func-call-spacing':                'off',
         'function-call-argument-newline':   ['error', 'consistent'],
+        'function-call-spacing':            'off',
         'function-paren-newline':           ['error', 'consistent'],
         'generator-star-spacing':           ['error', 'both'],
         'implicit-arrow-linebreak':         'off',
@@ -537,7 +524,11 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'multiline-ternary':                'off',
         'new-parens':                       ['error'],
         'newline-per-chained-call':         'off',
+        'no-confusing-arrow':               'off',
         'no-extra-parens':                  ['error'],
+        'no-extra-semi':                    ['error'],
+        'no-floating-decimal':              ['error'],
+        'no-mixed-operators':               'off',
         'no-mixed-spaces-and-tabs':         'off',
         'no-multi-spaces':                  'off',
         'no-multiple-empty-lines':          ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
@@ -548,6 +539,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'object-curly-newline':             'off',
         'object-curly-spacing':             ['error', 'always'],
         'object-property-newline':          ['error', { allowMultiplePropertiesPerLine: true }],
+        'one-var-declaration-per-line':     ['error'],
         'operator-linebreak':               ['error', 'after'],
         'padded-blocks':                    ['error', 'never'],
         'padding-line-between-statements':
@@ -566,6 +558,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
             { blankLine: 'any', prev: 'export', next: 'export' },
             { blankLine: 'any', prev: 'import', next: 'import' },
         ],
+        'quote-props':                      'off',
         'quotes':                           ['error', 'single'],
         'rest-spread-spacing':              ['error'],
         'semi':                             ['error'],
@@ -577,6 +570,12 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         // Rule does not handle well colons (":") in mapped types.
         'space-infix-ops':                  jsts(['error'], 'off'),
         'space-unary-ops':                  ['error'],
+        'spaced-comment':
+        [
+            'error',
+            'always',
+            { block: { exceptions: ['*'] }, line: { exceptions: ['/'], markers: ['/'] } },
+        ],
         'switch-colon-spacing':             ['error', { after: true, before: false }],
         'template-curly-spacing':           ['error'],
         'template-tag-spacing':             'off',

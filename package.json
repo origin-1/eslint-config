@@ -34,9 +34,9 @@
   "peerDependencies": {
     "@origin-1/eslint-plugin": ">=0.14",
     "@stylistic/eslint-plugin": "1",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.53",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.54",
     "eslint-plugin-n": "16"
   },
   "engines": {
