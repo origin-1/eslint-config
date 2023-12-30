@@ -369,7 +369,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-dynamic-delete':                        'off',
         'no-empty-interface':                       ['error', { allowSingleExtends: true }],
         'no-explicit-any':                          'off',
-        'no-extra-semi':                            'off', // in @stylish
         'no-extraneous-class':                      ['error', { allowConstructorOnly: true }],
         'no-inferrable-types':                      ['error'],
         'no-meaningless-void-operator':             ['error', { checkNever: true }],
@@ -408,28 +407,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'typedef':                                  ['error'],
         'unified-signatures':
         ['error', { ignoreDifferentlyNamedParameters: true }],
-
-        ////////////////////////////////////////////
-        // Layout
-        'block-spacing':                            'off', // in @stylish
-        'brace-style':                              'off', // in @stylish
-        'comma-dangle':                             'off', // in @stylish
-        'comma-spacing':                            'off', // in @stylish
-        'func-call-spacing':                        'off', // in @stylish
-        'indent':                                   'off', // in @stylish
-        'key-spacing':                              'off', // in @stylish
-        'keyword-spacing':                          'off', // in @stylish
-        'lines-around-comment':                     'off', // in @stylish
-        'lines-between-class-members':              'off', // in @stylish
-        'member-delimiter-style':                   'off', // in @stylish
-        'no-extra-parens':                          'off', // in @stylish
-        'padding-line-between-statements':          'off', // in @stylish
-        'quotes':                                   'off', // in @stylish
-        'semi':                                     'off', // in @stylish
-        'space-before-blocks':                      'off', // in @stylish
-        'space-before-function-paren':              'off', // in @stylish
-        'space-infix-ops':                          'off', // in @stylish
-        'type-annotation-spacing':                  'off', // in @stylish
     },
     '@origin-1/eslint-plugin':
     {
