@@ -25,7 +25,7 @@
     "@types/mocha": "latest",
     "@types/semver": "latest",
     "c8js": "latest",
-    "eslint": "latest",
+    "eslint": "9.0.0-alpha.0",
     "fast-glob": "latest",
     "globals": "latest",
     "mocha": "latest",
@@ -37,7 +37,7 @@
     "@stylistic/eslint-plugin": "^1.5",
     "@typescript-eslint/eslint-plugin": "^6.16",
     "@typescript-eslint/parser": "^6.16",
-    "eslint": "^8.56",
+    "eslint": "9.0.0-alpha.0",
     "eslint-plugin-n": "16"
   },
   "engines": {

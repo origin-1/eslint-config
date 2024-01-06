@@ -108,7 +108,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-irregular-whitespace':          ['error'],
         'no-misleading-character-class':    ['error'],
         'no-new-native-nonconstructor':     ['error'],
-        'no-new-symbol':                    'off', // Replaced by no-new-native-nonconstructor.
         'no-obj-calls':                     ['error'],
         'no-promise-executor-return':       ['error'],
         'no-prototype-builtins':            'off',
