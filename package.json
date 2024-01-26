@@ -1,6 +1,6 @@
 {
   "name": "@origin-1/eslint-config",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "files": [
     "dist",
     "src"
