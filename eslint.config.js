@@ -1,7 +1,7 @@
-import { createFlatConfig } from './dist/index.js';
-import globals              from 'globals';
+import { createConfig } from './dist/index.js';
+import globals          from 'globals';
 
-export default createFlatConfig
+export default createConfig
 (
     {
         ignores: ['**/.*', 'coverage', 'dist'],

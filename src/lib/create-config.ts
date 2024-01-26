@@ -18,7 +18,7 @@ from './rules.js';
 import type { ESLint, Linter }  from 'eslint';
 import semver                   from 'semver';
 
-export interface ConfigData extends Linter.HasRules, LanguageConfigData
+export interface BaseConfigData extends Linter.HasRules, LanguageConfigData
 {
     env?: Linter.BaseConfig['env'];
     extends?: string | string[] | undefined;
@@ -29,13 +29,7 @@ export interface ConfigData extends Linter.HasRules, LanguageConfigData
     processor?: string | undefined;
 }
 
-export interface ConfigDataWithFiles extends ConfigData
-{
-    excludedFiles?: string | string[] | undefined;
-    files: string | string[];
-}
-
-export type FlatConfigData = Linter.FlatConfig & LanguageConfigData;
+export type ConfigData = Linter.FlatConfig & LanguageConfigData;
 
 export interface LanguageConfigData
 {
@@ -129,7 +123,7 @@ function cloneRuleEntry(ruleEntry: Linter.RuleEntry): Linter.RuleEntry
     return structuredClone(ruleEntry);
 }
 
-export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
+export function createBaseConfig(configData: BaseConfigData): Linter.BaseConfig
 {
     let plugins: string[];
     let rules: Record<string, Linter.RuleEntry>;
@@ -162,7 +156,7 @@ export function createBaseConfig(configData: ConfigData): Linter.BaseConfig
     return baseConfig;
 }
 
-function createBaseOverride(configData: ConfigData): Linter.BaseConfig & { plugins: string[]; }
+function createBaseOverride(configData: BaseConfigData): Linter.BaseConfig & { plugins: string[]; }
 {
     const configPlugins = configData.plugins;
     const plugins = configPlugins == null ? [] : [...configPlugins];
@@ -231,41 +225,15 @@ function createCommonEntries(): { plugins: string[]; rules: Record<string, Linte
     return commonEntries;
 }
 
-export function createConfig(...configDataList: ConfigDataWithFiles[]): Linter.Config
-{
-    const { plugins, rules } = createCommonEntries();
-    const overrides = configDataList.map(createOverride);
-    overrides.unshift({ files: ['*.js', '*.cjs', '*.mjs', '*.ts', '*.cts', '*.mts'] });
-    const config =
-    {
-        overrides,
-        parser:                         '@origin-1/eslint-config/no-parser',
-        plugins,
-        reportUnusedDisableDirectives:  true,
-        root:                           true,
-        rules,
-    };
-    return config;
-}
-
-export async function createFlatConfig
-(...configDataList: FlatConfigData[]):
-Promise<Linter.FlatConfig[]>
+export async function createConfig(...configDataList: ConfigData[]): Promise<Linter.FlatConfig[]>
 {
     const promises = configDataList.map(createSingleFlatConfig);
     return Promise.all(promises);
 }
 
-function createOverride(configData: ConfigDataWithFiles): Linter.ConfigOverride
-{
-    const baseOverride = createBaseOverride(configData);
-    const { excludedFiles, extends: extends_, files, globals, processor } = configData;
-    const override =
-    { ...baseOverride, excludedFiles, extends: extends_, files, globals, processor };
-    return override;
-}
+export { createConfig as createFlatConfig };
 
-async function createSingleFlatConfig(configData: FlatConfigData): Promise<Linter.FlatConfig>
+async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.FlatConfig>
 {
     const { jsVersion: rawJSVersion, tsVersion: rawTSVersion, ...config } = configData;
     if (rawJSVersion != null && rawTSVersion != null)
