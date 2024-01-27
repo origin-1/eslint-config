@@ -59,7 +59,7 @@ export function getRuleKey(rulePrefix: string, ruleName: string): string
 
 export function getRulePrefix(pluginName: string): string
 {
-    const rulePrefix = pluginName.replace(/^eslint-plugin-|\/eslint-plugin$/, '');
+    const rulePrefix = pluginName.replace(/(?<=^|\/)eslint-plugin-|\/eslint-plugin$/, '');
     return rulePrefix;
 }
 
@@ -134,7 +134,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Suggestion
-        'accessor-pairs':                   ['error', { enforceForClassMembers: true }],
+        'accessor-pairs':                   ['error'],
         'arrow-body-style':                 ['error'],
         'block-scoped-var':                 'off',
         'camelcase':                        'off',
@@ -423,6 +423,23 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-spaces-in-call-expression':     ['error'],
         'no-spaces-in-tagged-template':     ['error'],
         'property-colon-spacing':           ['error'],
+    },
+    '@eslint-community/eslint-plugin-eslint-comments':
+    {
+        ////////////////////////////////////////////
+        // Problem
+        'no-duplicate-disable':     ['error'],
+        'no-unused-disable':        ['error'],
+        'no-unused-enable':         ['error'],
+
+        ////////////////////////////////////////////
+        // Suggestion
+        'disable-enable-pair':      ['error'],
+        'no-aggregating-enable':    ['error'],
+        'no-restricted-disable':    'off',
+        'no-unlimited-disable':     ['error'],
+        'no-use':                   'off',
+        'require-description':      'off',
     },
     '@stylistic/eslint-plugin':
     {

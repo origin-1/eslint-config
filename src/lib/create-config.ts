@@ -323,8 +323,15 @@ async function importParser(parserName: string): Promise<Linter.ParserModule>
 
 async function importPlugin(pluginName: string): Promise<ESLint.Plugin>
 {
-    const pkgName =
-    pluginName.startsWith('@') ? `${pluginName}/eslint-plugin` : `eslint-plugin-${pluginName}`;
+    let pkgName: string;
+    const match = /^(?<scope>@.*?\/|)(?<name>[^@].*)$/.exec(pluginName);
+    if (match)
+    {
+        const { scope, name } = match.groups!;
+        pkgName = `${scope}eslint-plugin-${name}`;
+    }
+    else
+        pkgName = `${pluginName}/eslint-plugin`;
     const { default: plugin } = await import(pkgName) as { default: ESLint.Plugin; };
     return plugin;
 }

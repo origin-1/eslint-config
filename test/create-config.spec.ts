@@ -37,7 +37,17 @@ describe
                     (): void =>
                     {
                         const { plugins } = createBaseConfig({ jsVersion: 5, plugins: ['barbaz'] });
-                        assert.deepEqual(plugins, ['@origin-1', '@stylistic', 'n', 'barbaz']);
+                        assert.deepEqual
+                        (
+                            plugins,
+                            [
+                                '@origin-1',
+                                '@eslint-community/eslint-comments',
+                                '@stylistic',
+                                'n',
+                                'barbaz',
+                            ],
+                        );
                     },
                 );
 
@@ -49,7 +59,17 @@ describe
                         const { plugins } =
                         createBaseConfig({ plugins: ['barbaz'], tsVersion: 'latest' });
                         assert.deepEqual
-                        (plugins, ['@origin-1', '@stylistic', 'n', 'barbaz', '@typescript-eslint']);
+                        (
+                            plugins,
+                            [
+                                '@origin-1',
+                                '@eslint-community/eslint-comments',
+                                '@stylistic',
+                                'n',
+                                'barbaz',
+                                '@typescript-eslint',
+                            ],
+                        );
                     },
                 );
 
@@ -361,7 +381,16 @@ describe
                         await createConfig({ jsVersion: 5, plugins: { barbaz: { } } });
                         assert(plugins);
                         assert.deepEqual
-                        (Object.keys(plugins), ['@origin-1', '@stylistic', 'n', 'barbaz']);
+                        (
+                            Object.keys(plugins),
+                            [
+                                '@origin-1',
+                                '@eslint-community/eslint-comments',
+                                '@stylistic',
+                                'n',
+                                'barbaz',
+                            ],
+                        );
                     },
                 );
 
@@ -376,7 +405,14 @@ describe
                         assert.deepEqual
                         (
                             Object.keys(plugins),
-                            ['@origin-1', '@stylistic', 'n', '@typescript-eslint', 'barbaz'],
+                            [
+                                '@origin-1',
+                                '@eslint-community/eslint-comments',
+                                '@stylistic',
+                                'n',
+                                '@typescript-eslint',
+                                'barbaz',
+                            ],
                         );
                     },
                 );
