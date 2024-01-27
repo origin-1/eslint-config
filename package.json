@@ -17,7 +17,6 @@
     "semver": "7"
   },
   "devDependencies": {
-    "@eslint-community/eslint-plugin-eslint-comments": "latest",
     "@origin-1/eslint-config": "file:dist",
     "@types/mocha": "latest",
     "@types/semver": "latest",
@@ -30,6 +29,7 @@
     "typescript": "latest"
   },
   "peerDependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@origin-1/eslint-plugin": ">=0.14",
     "@stylistic/eslint-plugin": "^1.5",
     "@typescript-eslint/eslint-plugin": "^6.19",
