@@ -261,7 +261,6 @@ async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.Fl
         languageOptions.ecmaVersion = ecmaVersion;
         languageOptions.parser = parser;
         const linterOptions = { ...config.linterOptions };
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         linterOptions.reportUnusedDisableDirectives ??= true;
         const plugins: Record<string, ESLint.Plugin> = { };
         const { plugins: rulePrefixes, rules } = createCommonEntries();

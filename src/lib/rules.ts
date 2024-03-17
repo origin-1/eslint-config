@@ -140,7 +140,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'camelcase':                        'off',
         'capitalized-comments':             'off',
         'complexity':                       'off',
-        'consistent-return':                'off',
         'consistent-this':                  'off',
         'curly':                            ['error', 'multi-or-nest'],
         'default-case':                     'off',
@@ -281,6 +280,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////
         // Suggestion
         'class-methods-use-this':           'off',
+        'consistent-return':                'off',
         'default-param-last':               'off',
         'dot-notation':                     ['error'],
         'init-declarations':                'off',
@@ -387,6 +387,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'non-nullable-type-assertion-style':        ['error'],
         'prefer-as-const':                          ['error'],
         'prefer-enum-initializers':                 'off',
+        'prefer-find':                              'off',
         'prefer-for-of':                            ['error'],
         // https://github.com/typescript-eslint/typescript-eslint/issues/454
         'prefer-function-type':                     'off',
@@ -443,6 +444,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     '@stylistic/eslint-plugin':
     {
+        ////////////////////////////////////////////
+        // Suggestion
+        'jsx-pascal-case':                  'off',
+
         ////////////////////////////////////////////
         // Layout
         'array-bracket-newline':            'off',
