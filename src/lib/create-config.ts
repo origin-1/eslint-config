@@ -18,17 +18,6 @@ from './rules.js';
 import type { ESLint, Linter }  from 'eslint';
 import semver                   from 'semver';
 
-export interface BaseConfigData extends Linter.HasRules, LanguageConfigData
-{
-    env?: Linter.BaseConfig['env'];
-    extends?: string | string[] | undefined;
-    globals?: Linter.BaseConfig['globals'];
-    parser?: string | undefined;
-    parserOptions?: Linter.ParserOptions | undefined;
-    plugins?: string[] | undefined;
-    processor?: string | undefined;
-}
-
 export type ConfigData = Linter.FlatConfig & LanguageConfigData;
 
 export interface LanguageConfigData
@@ -121,80 +110,6 @@ void
 function cloneRuleEntry(ruleEntry: Linter.RuleEntry): Linter.RuleEntry
 {
     return structuredClone(ruleEntry);
-}
-
-export function createBaseConfig(configData: BaseConfigData): Linter.BaseConfig
-{
-    let plugins: string[];
-    let rules: Record<string, Linter.RuleEntry>;
-    const lang = getLanguage(configData);
-    if (lang != null)
-        ({ plugins, rules } = createCommonEntries());
-    else
-    {
-        plugins = [];
-        rules = { };
-    }
-    const { env, parser, parserOptions, plugins: overridePlugins, rules: overrideRules } =
-    createBaseOverride(configData);
-    plugins.push(...overridePlugins);
-    Object.assign(rules, overrideRules);
-    const { extends: extends_, globals, processor } = configData;
-    const baseConfig: Linter.BaseConfig =
-    {
-        env,
-        extends:                        extends_,
-        globals,
-        parserOptions,
-        plugins,
-        processor,
-        reportUnusedDisableDirectives:  true,
-        rules,
-    };
-    if (parser != null)
-        baseConfig.parser = parser;
-    return baseConfig;
-}
-
-function createBaseOverride(configData: BaseConfigData): Linter.BaseConfig & { plugins: string[]; }
-{
-    const configPlugins = configData.plugins;
-    const plugins = configPlugins == null ? [] : [...configPlugins];
-    const lang = getLanguage(configData);
-    let ecmaVersion: Linter.ParserOptions['ecmaVersion'];
-    let { parser } = configData;
-    let envKey: string | undefined;
-    const jsVersion = normalizeJSVersion(configData.jsVersion);
-    if (jsVersion === 2015)
-        envKey = 'es6';
-    else if (jsVersion > 2015)
-        envKey = `es${jsVersion}`;
-    const tsVersion = normalizeTSVersion(configData.tsVersion);
-    switch (lang)
-    {
-    case 'js':
-        ecmaVersion = jsVersion;
-        parser ??= 'espree';
-        break;
-    case 'ts':
-        ecmaVersion = 'latest';
-        parser ??= '@typescript-eslint/parser';
-        break;
-    default:
-        break;
-    }
-    const env = envKey ? { [envKey]: true } : { };
-    Object.assign(env, configData.env);
-    const parserOptions = { ecmaVersion, ...configData.parserOptions };
-    const rules: Record<string, Linter.RuleEntry> = { };
-    if (lang != null)
-        addLanguageRules(lang, jsVersion, tsVersion, rules, plugins);
-    const baseOverride: Linter.BaseConfig & { plugins: string[]; } =
-    { env, parserOptions, plugins, rules };
-    if (parser != null)
-        baseOverride.parser = parser;
-    Object.assign(rules, configData.rules);
-    return baseOverride;
 }
 
 function createCommonEntries(): { plugins: string[]; rules: Record<string, Linter.RuleEntry>; }

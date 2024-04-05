@@ -51,7 +51,6 @@ it
         (
             exportedNames,
             [
-                'createBaseConfig',
                 'createConfig',
                 'createFlatConfig',
                 'normalizeJSVersion',
