@@ -74,6 +74,11 @@ getWriteFile
 (
     ts.sys.writeFile,
     outDir,
-    ['index.d.ts', 'lib/create-config.d.ts', 'lib/normalize-version.d.ts'],
+    [
+        'index.d.ts',
+        'lib/create-config.d.ts',
+        'lib/no-parser-config.d.ts',
+        'lib/normalize-version.d.ts',
+    ],
 );
 await compileTS(pkgDir, rootDir, newOptions, writeFile);

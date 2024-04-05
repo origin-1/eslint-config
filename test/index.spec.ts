@@ -53,6 +53,7 @@ it
             [
                 'createConfig',
                 'createFlatConfig',
+                'noParserConfig',
                 'normalizeJSVersion',
                 'normalizeTSVersion',
             ],
