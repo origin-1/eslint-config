@@ -8,7 +8,7 @@
     "compile": "node dev/compile.js",
     "coverage": "node dev/coverage.js",
     "lint": "eslint . --format compact",
-    "release": "npm version -m \"Version %s\"",
+    "release": "npm version -m \"Release %s\"",
     "test": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));' node_modules/mocha/bin/mocha.js --check-leaks test/**/*.spec.ts",
     "update-dist": "node dev/update-dist.js"
   },
