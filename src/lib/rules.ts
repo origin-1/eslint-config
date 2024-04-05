@@ -108,7 +108,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-irregular-whitespace':          ['error'],
         'no-misleading-character-class':    ['error'],
         'no-new-native-nonconstructor':     ['error'],
-        'no-new-symbol':                    'off', // Replaced by no-new-native-nonconstructor.
+        'no-new-symbol':                    'off',
         'no-obj-calls':                     ['error'],
         'no-promise-executor-return':       ['error'],
         'no-prototype-builtins':            'off',
@@ -213,6 +213,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-sequences':                     ['error'],
         'no-shadow-restricted-names':       ['error'],
         'no-ternary':                       'off',
+        // Replaced by @typescript-eslint/only-throw-error in TypeScript.
+        'no-throw-literal':                 jsts(['error'], 'off'),
         'no-undef-init':                    ['error'],
         'no-undefined':                     'off',
         'no-underscore-dangle':             'off',
@@ -295,7 +297,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-redeclare':                     jsts(['error', { builtinGlobals: true }], 'off'),
         'no-restricted-imports':            'off',
         'no-shadow':                        'off',
-        'no-throw-literal':                 ['error'],
         'no-unused-expressions':            ['error'],
         'no-useless-constructor':           ['error'],
         'prefer-destructuring':             beforeJSOrElse(2015, 'off', ['error']),
@@ -339,6 +340,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsafe-return':                         ['error'],
         'no-unsafe-unary-minus':                    'off',
         'no-var-requires':                          ['error'],
+        'only-throw-error':                         ['error'],
         'parameter-properties':                     ['error', { prefer: 'parameter-property' }],
         'prefer-reduce-type-parameter':             ['error'],
         'prefer-ts-expect-error':                   ['error'],
@@ -409,6 +411,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'typedef':                                  ['error'],
         'unified-signatures':
         ['error', { ignoreDifferentlyNamedParameters: true }],
+        'use-unknown-in-catch-callback-variable':   ['error'],
     },
     '@origin-1/eslint-plugin':
     {

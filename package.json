@@ -22,6 +22,7 @@
     "@types/semver": "latest",
     "c8js": "latest",
     "eslint": "latest",
+    "eslint-formatter-compact": "latest",
     "fast-glob": "latest",
     "globals": "latest",
     "mocha": "latest",
@@ -31,10 +32,10 @@
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@origin-1/eslint-plugin": ">=0.14",
-    "@stylistic/eslint-plugin": "^1.6",
-    "@typescript-eslint/eslint-plugin": "^7.1",
-    "@typescript-eslint/parser": "^7.1",
-    "eslint": "^8.56",
+    "@stylistic/eslint-plugin": "^1.7",
+    "@typescript-eslint/eslint-plugin": "^7.5",
+    "@typescript-eslint/parser": "^7.5",
+    "eslint": "^8.57",
     "eslint-plugin-n": "16"
   },
   "engines": {
