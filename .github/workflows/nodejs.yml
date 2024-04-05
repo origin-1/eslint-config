@@ -14,7 +14,7 @@ jobs:
       with:
         node-version: ^20.8
     - run: |
-        npm install
+        npm install --force
         npm run update-dist
         npm run compile
         npm run lint
@@ -35,5 +35,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        npm install
+        npm install --force
         npm test

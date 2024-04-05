@@ -2,7 +2,7 @@
   "name": "@origin-1/eslint-config",
   "version": "0.22.2",
   "scripts": {
-    "build": "npm install && npm run build-no-install",
+    "build": "npm install --force && npm run build-no-install",
     "build-no-install": "node dev/clean.js && node dev/coverage.js && node dev/update-dist.js && node dev/compile.js && npm run lint",
     "clean": "node dev/clean.js",
     "compile": "node dev/compile.js",
@@ -21,7 +21,8 @@
     "@types/mocha": "latest",
     "@types/semver": "latest",
     "c8js": "latest",
-    "eslint": "latest",
+    "eslint": "9",
+    "eslint-formatter-compact": "latest",
     "fast-glob": "latest",
     "globals": "latest",
     "mocha": "latest",
@@ -31,10 +32,10 @@
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@origin-1/eslint-plugin": ">=0.14",
-    "@stylistic/eslint-plugin": "^1.6",
-    "@typescript-eslint/eslint-plugin": "^7.1",
-    "@typescript-eslint/parser": "^7.1",
-    "eslint": "^8.56",
+    "@stylistic/eslint-plugin": "^1.7",
+    "@typescript-eslint/eslint-plugin": "^7.5",
+    "@typescript-eslint/parser": "^7.5",
+    "eslint": "^9.0",
     "eslint-plugin-n": "16"
   },
   "engines": {
