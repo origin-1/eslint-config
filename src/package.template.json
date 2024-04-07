@@ -12,7 +12,7 @@
   "dependencies": null,
   "peerDependencies": null,
   "engines": {
-    "node": ">=20.8"
+    "node": ">=20.9"
   },
   "exports": {
     ".": "./index.js",

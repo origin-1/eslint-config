@@ -39,7 +39,7 @@
     "eslint-plugin-n": "16"
   },
   "engines": {
-    "node": ">=20.8"
+    "node": ">=20.9"
   },
   "private": true,
   "type": "module"
