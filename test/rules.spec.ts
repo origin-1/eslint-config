@@ -1,9 +1,11 @@
-import assert, { AssertionError }       from 'node:assert/strict';
-import { createRequire }                from 'node:module';
-import { pathToFileURL }                from 'node:url';
-import type { RuleType }                from '../src/lib/rules.js';
-import type { Rule }                    from 'eslint';
-import { describe, it }                 from 'mocha';
+import assert               from 'node:assert/strict';
+import { createRequire }    from 'node:module';
+import { pathToFileURL }    from 'node:url';
+import type { RuleType }    from '../src/lib/rules.js';
+import type { Rule }        from 'eslint';
+import { describe, it }     from 'mocha';
+
+const { AssertionError } = assert;
 
 function assertNoRulesMissing(missingRules: readonly string[]): void
 {
