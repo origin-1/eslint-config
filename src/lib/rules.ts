@@ -595,6 +595,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         ////////////////////////////////////////////
         // Problem
+        'hashbang':                                 'off',
         'no-callback-literal':                      'off',
         'no-deprecated-api':                        ['error'],
         'no-exports-assign':                        ['error'],
@@ -613,7 +614,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsupported-features/es-syntax':        'off',
         'no-unsupported-features/node-builtins':    'off',
         'process-exit-as-throw':                    ['error'],
-        'shebang':                                  'off',
 
         ////////////////////////////////////////////
         // Suggestion
@@ -637,6 +637,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-global/text-encoder':               ['error'],
         'prefer-global/url':                        ['error'],
         'prefer-global/url-search-params':          ['error'],
+        'prefer-node-protocol':                     beforeJSOrElse(2021, 'off', ['error']),
         'prefer-promises/dns':                      beforeJSOrElse(2015, 'off', ['error']),
         'prefer-promises/fs':                       beforeJSOrElse(2015, 'off', ['error']),
     },

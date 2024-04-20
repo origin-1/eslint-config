@@ -36,7 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^7.5",
     "@typescript-eslint/parser": "^7.5",
     "eslint": "^9.0",
-    "eslint-plugin-n": "16"
+    "eslint-plugin-n": "17"
   },
   "engines": {
     "node": ">=20.9"
