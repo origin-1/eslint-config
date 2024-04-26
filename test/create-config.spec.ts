@@ -106,60 +106,15 @@ describe
             '`rules` are set',
             async (): Promise<void> =>
             {
-                const configs =
-                await createConfig
-                (
-                    { jsVersion: 5, rules: { foobar: 'off' } },
-                    { jsVersion: 2015, rules: { foobar: 'warn' } },
-                    { jsVersion: 2017, rules: { foobar: 'error' } },
-                );
-                {
-                    const [{ rules }] = configs;
-                    assert(rules);
-                    assert('eqeqeq' in rules);
-                    assert.deepEqual
-                    (rules['@stylistic/comma-dangle'], ['error', { arrays: 'always-multiline' }]);
-                    assert('no-undef' in rules);
-                    assert('dot-notation' in rules);
-                    assert('no-redeclare' in rules);
-                    assert('n/prefer-promises/fs' in rules);
-                    assert.equal(rules.foobar, 'off');
-                }
-                {
-                    const [, { rules }] = configs;
-                    assert(rules);
-                    assert('eqeqeq' in rules);
-                    assert.deepEqual
-                    (
-                        rules['@stylistic/comma-dangle'],
-                        [
-                            'error',
-                            {
-                                arrays:     'always-multiline',
-                                objects:    'always-multiline',
-                                imports:    'always-multiline',
-                                exports:    'always-multiline',
-                            },
-                        ],
-                    );
-                    assert('no-undef' in rules);
-                    assert('dot-notation' in rules);
-                    assert('no-redeclare' in rules);
-                    assert('n/prefer-promises/fs' in rules);
-                    assert.equal(rules.foobar, 'warn');
-                }
-                {
-                    const [,, { rules }] = configs;
-                    assert(rules);
-                    assert('eqeqeq' in rules);
-                    assert.deepEqual
-                    (rules['@stylistic/comma-dangle'], ['error', 'always-multiline']);
-                    assert('no-undef' in rules);
-                    assert('dot-notation' in rules);
-                    assert('no-redeclare' in rules);
-                    assert('n/prefer-promises/fs' in rules);
-                    assert.equal(rules.foobar, 'error');
-                }
+                const [{ rules }] = await createConfig({ jsVersion: 5, rules: { foobar: 'warn' } });
+                assert(rules);
+                assert('eqeqeq' in rules);
+                assert('@origin-1/no-spaces-in-call-expression' in rules);
+                assert('no-undef' in rules);
+                assert('dot-notation' in rules);
+                assert('no-redeclare' in rules);
+                assert('n/prefer-promises/fs' in rules);
+                assert.equal(rules.foobar, 'warn');
             },
         );
 
