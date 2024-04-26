@@ -483,7 +483,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-dangle':
         beforeJSOrElse
         (
-            2015,
+            5,
             ['error', { arrays: 'always-multiline' }],
             2017,
             [
