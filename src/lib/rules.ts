@@ -293,6 +293,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unused-vars':
         beforeJSOrElse
         (
+            2018,
+            ['error', { vars: 'local' }],
             2019,
             ['error', { ignoreRestSiblings: true, vars: 'local' }],
             ['error', { caughtErrors: 'all', ignoreRestSiblings: true, vars: 'local' }],
@@ -480,23 +482,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'arrow-spacing':                    ['error'],
         'block-spacing':                    ['error'],
         'brace-style':                      'off',
-        'comma-dangle':
-        beforeJSOrElse
-        (
-            5,
-            ['error', { arrays: 'always-multiline' }],
-            2017,
-            [
-                'error',
-                {
-                    arrays:     'always-multiline',
-                    objects:    'always-multiline',
-                    imports:    'always-multiline',
-                    exports:    'always-multiline',
-                },
-            ],
-            ['error', 'always-multiline'],
-        ),
+        'comma-dangle':                     ['error', 'always-multiline'],
         'comma-spacing':                    ['error'],
         'comma-style':
         ['error', 'last', { exceptions: { ArrayExpression: true } }],
