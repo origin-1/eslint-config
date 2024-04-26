@@ -33,21 +33,41 @@ export const UNIQUE = Symbol('Unique built-in rules');
 export const HYBRID = Symbol('Hybrid rules');
 
 function beforeJSOrElse
-(version: JSVersion, before: Linter.RuleEntry, else_: Linter.RuleEntry):
-JSTSEntry
+(
+    version:        JSVersion,
+    before:         Linter.RuleEntry,
+    ...moreArgs:    ([Linter.RuleEntry] | [JSVersion, Linter.RuleEntry, Linter.RuleEntry])
+): JSTSEntry
 {
-    return jsts(beforeOrElse(version, before, else_), else_);
+    const else_ = moreArgs.at(-1) as Linter.RuleEntry;
+    return jsts(beforeOrElse(version, before, ...moreArgs), else_);
 }
 
 function beforeOrElse
 <VersionType extends JSVersion | TSVersion>
-(version: VersionType, before: Linter.RuleEntry, else_: Linter.RuleEntry):
+(
+    version:        VersionType,
+    before:         Linter.RuleEntry,
+    ...moreArgs:    ([Linter.RuleEntry] | [VersionType, Linter.RuleEntry, Linter.RuleEntry])
+):
 VersionedList<VersionType>
 {
     const beforeEntry = { minVersion: undefined, ruleEntry: before };
-    const elseEntry = { minVersion: version, ruleEntry: else_ };
-    const array: [VersionedEntry<undefined>, VersionedEntry<VersionType>] =
-    [beforeEntry, elseEntry];
+    const array: [VersionedEntry<undefined>, ...VersionedEntry<VersionType>[]] = [beforeEntry];
+    if (moreArgs.length < 3)
+    {
+        const elseEntry =
+        { minVersion: version, ruleEntry: moreArgs[0] } as VersionedEntry<VersionType>;
+        array.push(elseEntry);
+    }
+    else
+    {
+        const middleEntry =
+        { minVersion: version, ruleEntry: moreArgs[1] } as VersionedEntry<VersionType>;
+        const elseEntry =
+        { minVersion: moreArgs[0], ruleEntry: moreArgs[2] } as VersionedEntry<VersionType>;
+        array.push(middleEntry, elseEntry);
+    }
     const versionedList = Object.assign(array, { versioned: true } as const);
     return versionedList;
 }
@@ -460,7 +480,23 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'arrow-spacing':                    ['error'],
         'block-spacing':                    ['error'],
         'brace-style':                      'off',
-        'comma-dangle':                     ['error', 'always-multiline'],
+        'comma-dangle':
+        beforeJSOrElse
+        (
+            2015,
+            ['error', { arrays: 'always-multiline' }],
+            2017,
+            [
+                'error',
+                {
+                    arrays:     'always-multiline',
+                    objects:    'always-multiline',
+                    imports:    'always-multiline',
+                    exports:    'always-multiline',
+                },
+            ],
+            ['error', 'always-multiline'],
+        ),
         'comma-spacing':                    ['error'],
         'comma-style':
         ['error', 'last', { exceptions: { ArrayExpression: true } }],
