@@ -505,6 +505,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'jsx-curly-spacing':                'off',
         'jsx-equals-spacing':               ['error'],
         'jsx-first-prop-new-line':          'off',
+        'jsx-function-call-newline':        'off',
         'jsx-indent':                       'off',
         'jsx-indent-props':                 'off',
         'jsx-max-props-per-line':           'off',

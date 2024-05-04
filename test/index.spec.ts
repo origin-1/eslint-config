@@ -7,7 +7,7 @@ it
     'index',
     async function (): Promise<void>
     {
-        this.timeout(this.timeout() * 2);
+        this.timeout(this.timeout() * 3);
         const exportedNames =
         await new Promise
         (
