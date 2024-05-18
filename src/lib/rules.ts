@@ -389,7 +389,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-base-to-string':                        ['error'],
         'no-duplicate-type-constituents':           ['error'],
         'no-dynamic-delete':                        'off',
-        'no-empty-object-type':                     ['error'],
+        'no-empty-object-type':                     ['error', { allowObjectTypes: 'always' }],
         'no-explicit-any':                          'off',
         'no-extraneous-class':                      ['error', { allowConstructorOnly: true }],
         'no-inferrable-types':                      ['error'],
