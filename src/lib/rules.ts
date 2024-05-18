@@ -472,6 +472,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////
         // Suggestion
         'jsx-pascal-case':                  'off',
+        'multiline-comment-style':          'off',
 
         ////////////////////////////////////////////
         // Layout
@@ -520,6 +521,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'jsx-wrap-multilines':              'off',
         'key-spacing':                      'off',
         'keyword-spacing':                  ['error'],
+        'line-comment-position':            'off',
         'linebreak-style':                  ['error'],
         'lines-around-comment':
         jsts
