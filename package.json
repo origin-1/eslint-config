@@ -32,10 +32,10 @@
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@origin-1/eslint-plugin": ">=0.14",
-    "@stylistic/eslint-plugin": "^1.7",
-    "@typescript-eslint/eslint-plugin": "^7.5",
-    "@typescript-eslint/parser": "^7.5",
-    "eslint": "^9.0",
+    "@stylistic/eslint-plugin": "^2.1",
+    "@typescript-eslint/eslint-plugin": "^8.0.0-alpha",
+    "@typescript-eslint/parser": "^8.0.0-alpha",
+    "eslint": "^9.3",
     "eslint-plugin-n": "17"
   },
   "engines": {

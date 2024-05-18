@@ -126,7 +126,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-inner-declarations':            beforeJSOrElse(2015, ['error'], 'off'),
         'no-invalid-regexp':                ['error'],
         'no-irregular-whitespace':          ['error'],
-        'no-misleading-character-class':    ['error'],
+        'no-loss-of-precision':             ['error'],
+        'no-misleading-character-class':    ['error', { allowEscape: true }],
         'no-new-native-nonconstructor':     ['error'],
         'no-obj-calls':                     ['error'],
         'no-promise-executor-return':       ['error'],
@@ -181,7 +182,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'max-lines-per-function':           'off',
         'max-nested-callbacks':             'off',
         'max-statements':                   'off',
-        'multiline-comment-style':          'off',
         'new-cap':                          ['error', { capIsNew: false }],
         'no-alert':                         ['error'],
         'no-bitwise':                       'off',
@@ -198,7 +198,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-eval':                          'off',
         'no-extend-native':                 ['error'],
         'no-extra-bind':                    ['error'],
-        'no-extra-boolean-cast':            ['error'],
+        'no-extra-boolean-cast':            ['error', { enforceForInnerExpressions: true }],
         'no-extra-label':                   ['error'],
         'no-global-assign':                 ['error'],
         'no-implicit-coercion':             'off',
@@ -281,7 +281,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////
         // Layout
-        'line-comment-position':            'off',
         'unicode-bom':                      ['error'],
     },
     [HYBRID]:
@@ -289,7 +288,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////
         // Problem
         'no-dupe-class-members':            jsts(['error'], 'off'), // Not required in TypeScript.
-        'no-loss-of-precision':             ['error'],
         'no-unused-vars':
         beforeJSOrElse
         (
@@ -391,7 +389,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-base-to-string':                        ['error'],
         'no-duplicate-type-constituents':           ['error'],
         'no-dynamic-delete':                        'off',
-        'no-empty-interface':                       ['error', { allowSingleExtends: true }],
+        'no-empty-object-type':                     ['error'],
         'no-explicit-any':                          'off',
         'no-extraneous-class':                      ['error', { allowConstructorOnly: true }],
         'no-inferrable-types':                      ['error'],
@@ -472,6 +470,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////
         // Suggestion
         'jsx-pascal-case':                  'off',
+        'multiline-comment-style':          'off',
 
         ////////////////////////////////////////////
         // Layout
@@ -520,6 +519,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'jsx-wrap-multilines':              'off',
         'key-spacing':                      'off',
         'keyword-spacing':                  ['error'],
+        'line-comment-position':            'off',
         'linebreak-style':                  ['error'],
         'lines-around-comment':
         jsts
