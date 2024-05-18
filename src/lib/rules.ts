@@ -292,10 +292,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         beforeJSOrElse
         (
             2018,
-            ['error', { vars: 'local' }],
+            ['error', { caughtErrors: 'none', vars: 'local' }],
             2019,
+            ['error', { caughtErrors: 'none', ignoreRestSiblings: true, vars: 'local' }],
             ['error', { ignoreRestSiblings: true, vars: 'local' }],
-            ['error', { caughtErrors: 'all', ignoreRestSiblings: true, vars: 'local' }],
         ),
         'no-use-before-define':             'off',
 
