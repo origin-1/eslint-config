@@ -660,7 +660,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-global/text-encoder':               ['error'],
         'prefer-global/url':                        ['error'],
         'prefer-global/url-search-params':          ['error'],
-        'prefer-node-protocol':                     beforeJSOrElse(2021, 'off', ['error']),
+        'prefer-node-protocol':
+        jsts(beforeOrElse(2021, 'off', ['error']), beforeOrElse('3.9.0', 'off', ['error'])),
         'prefer-promises/dns':                      beforeJSOrElse(2015, 'off', ['error']),
         'prefer-promises/fs':                       beforeJSOrElse(2015, 'off', ['error']),
     },

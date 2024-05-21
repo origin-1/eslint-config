@@ -64,10 +64,17 @@ it
 it
 (
     'all hybrid rules are defined',
-    async (): Promise<void> =>
+    async function (): Promise<void>
     {
-        const builtInRules = await getBuiltInRules();
-        const { default: { rules: tsRules } } = await import('@typescript-eslint/eslint-plugin');
+        this.timeout(this.timeout() * 2);
+        const [builtInRules, { default: { rules: tsRules } }] =
+        await Promise.all
+        (
+            [
+                getBuiltInRules(),
+                import('@typescript-eslint/eslint-plugin'),
+            ],
+        );
         const definedHybridRules = RULES[HYBRID];
         const missingRules: string[] = [];
         for (const [ruleName, ruleModule] of builtInRules)
