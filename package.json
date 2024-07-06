@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@types/eslint": "8",
-    "semver": "7"
+    "semver": "^7.5.2"
   },
   "devDependencies": {
     "@origin-1/eslint-config": "file:dist",
