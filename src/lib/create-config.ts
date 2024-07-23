@@ -18,7 +18,7 @@ from './rules.js';
 import type { ESLint, Linter }  from 'eslint';
 import semver                   from 'semver';
 
-export type ConfigData = Linter.FlatConfig & LanguageConfigData;
+export type ConfigData = Linter.Config & LanguageConfigData;
 
 export interface LanguageConfigData
 {
@@ -140,7 +140,7 @@ function createCommonEntries(): { plugins: string[]; rules: Record<string, Linte
     return commonEntries;
 }
 
-export async function createConfig(...configDataList: ConfigData[]): Promise<Linter.FlatConfig[]>
+export async function createConfig(...configDataList: ConfigData[]): Promise<Linter.Config[]>
 {
     const promises = configDataList.map(createSingleFlatConfig);
     return Promise.all(promises);
@@ -148,7 +148,7 @@ export async function createConfig(...configDataList: ConfigData[]): Promise<Lin
 
 export { createConfig as createFlatConfig };
 
-async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.FlatConfig>
+async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.Config>
 {
     const { jsVersion: rawJSVersion, tsVersion: rawTSVersion, ...config } = configData;
     if (rawJSVersion != null && rawTSVersion != null)
@@ -191,7 +191,7 @@ async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.Fl
         );
         config.languageOptions = languageOptions;
         config.linterOptions = linterOptions;
-        config.plugins =  Object.assign(plugins, config.plugins);
+        config.plugins = Object.assign(plugins, config.plugins);
         config.rules = Object.assign(rules, config.rules);
     }
     return config;
@@ -229,9 +229,9 @@ function getLanguage(configData: LanguageConfigData): 'js' | 'ts' | undefined
         return 'js';
 }
 
-async function importParser(parserName: string): Promise<Linter.ParserModule>
+async function importParser(parserName: string): Promise<Linter.Parser>
 {
-    const parser = await import(parserName) as Linter.ParserModule;
+    const parser = await import(parserName) as Linter.Parser;
     return parser;
 }
 

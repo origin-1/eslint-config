@@ -185,8 +185,7 @@ describe
                             'defaults and merging',
                             async (): Promise<void> =>
                             {
-                                const espree =
-                                await import('espree' as string) as Linter.ParserModule;
+                                const espree = await import('espree' as string) as Linter.Parser;
                                 const [{ languageOptions, linterOptions }] =
                                 await createConfig
                                 (
@@ -211,7 +210,7 @@ describe
                             'overwriting',
                             async (): Promise<void> =>
                             {
-                                const parser = { } as Linter.ParserModule;
+                                const parser = { } as Linter.Parser;
                                 const [{ languageOptions, linterOptions }] =
                                 await createConfig
                                 (

@@ -93,7 +93,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 {
     [UNIQUE]:
     {
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Problem
         'array-callback-return':            'off',
         'constructor-super':                jsts(['error'], 'off'), // Not required in TypeScript.
@@ -153,7 +153,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'use-isnan':                        ['error', { enforceForSwitchCase: true }],
         'valid-typeof':                     ['error'],
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
         'accessor-pairs':                   ['error'],
         'arrow-body-style':                 ['error'],
@@ -279,13 +279,13 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'vars-on-top':                      'off',
         'yoda':                             ['error'],
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Layout
         'unicode-bom':                      ['error'],
     },
     [HYBRID]:
     {
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Problem
         'no-dupe-class-members':            jsts(['error'], 'off'), // Not required in TypeScript.
         'no-unused-vars':
@@ -299,7 +299,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ),
         'no-use-before-define':             'off',
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
         'class-methods-use-this':           'off',
         'consistent-return':                'off',
@@ -325,121 +325,122 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     '@typescript-eslint/eslint-plugin':
     {
-        [FOR_LANG]:                                 'ts',
+        [FOR_LANG]:                                     'ts',
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Problem
-        'await-thenable':                           ['error'],
-        'ban-ts-comment':                           'off',
-        'class-literal-property-style':             ['error', 'getters'],
+        'await-thenable':                               ['error'],
+        'ban-ts-comment':                               'off',
+        'class-literal-property-style':                 ['error', 'getters'],
         'explicit-function-return-type':
         ['error', { allowTypedFunctionExpressions: false }],
-        'explicit-member-accessibility':            ['error'],
-        'explicit-module-boundary-types':           ['error'],
-        'no-array-delete':                          ['error'],
-        'no-confusing-non-null-assertion':          ['error'],
-        'no-confusing-void-expression':             'off',
-        'no-duplicate-enum-values':                 'off',
-        'no-extra-non-null-assertion':              ['error'],
-        'no-floating-promises':                     ['error'],
-        'no-for-in-array':                          ['error'],
-        'no-import-type-side-effects':              'off',
-        'no-invalid-void-type':                     'off',
-        'no-misused-new':                           ['error'],
-        'no-misused-promises':                      ['error', { checksVoidReturn: false }],
-        'no-mixed-enums':                           ['error'],
-        'no-non-null-asserted-nullish-coalescing':  ['error'],
-        'no-non-null-asserted-optional-chain':      ['error'],
-        'no-non-null-assertion':                    'off',
-        'no-require-imports':                       ['error'],
-        'no-unnecessary-type-parameters':           ['error'],
-        'no-unsafe-argument':                       ['error'],
-        'no-unsafe-assignment':                     ['error'],
-        'no-unsafe-call':                           'off',
-        'no-unsafe-declaration-merging':            'off',
-        'no-unsafe-function-type':                  ['error'],
-        'no-unsafe-member-access':                  ['error'],
-        'no-unsafe-return':                         ['error'],
-        'no-unsafe-unary-minus':                    'off',
-        'no-wrapper-object-types':                  'off',
-        'only-throw-error':                         ['error'],
-        'parameter-properties':                     ['error', { prefer: 'parameter-property' }],
-        'prefer-reduce-type-parameter':             ['error'],
-        'require-array-sort-compare':               'off',
-        'restrict-plus-operands':                   'off',
-        'restrict-template-expressions':            'off',
-        'return-await':                             ['error'],
-        'unbound-method':                           'off',
+        'explicit-member-accessibility':                ['error'],
+        'explicit-module-boundary-types':               ['error'],
+        'no-array-delete':                              ['error'],
+        'no-confusing-non-null-assertion':              ['error'],
+        'no-confusing-void-expression':                 'off',
+        'no-duplicate-enum-values':                     'off',
+        'no-extra-non-null-assertion':                  ['error'],
+        'no-floating-promises':                         ['error'],
+        'no-for-in-array':                              ['error'],
+        'no-import-type-side-effects':                  'off',
+        'no-invalid-void-type':                         'off',
+        'no-misused-new':                               ['error'],
+        'no-misused-promises':                          ['error', { checksVoidReturn: false }],
+        'no-mixed-enums':                               ['error'],
+        'no-non-null-asserted-nullish-coalescing':      ['error'],
+        'no-non-null-asserted-optional-chain':          ['error'],
+        'no-non-null-assertion':                        'off',
+        'no-require-imports':                           ['error'],
+        'no-unnecessary-type-parameters':               ['error'],
+        'no-unsafe-argument':                           ['error'],
+        'no-unsafe-assignment':                         ['error'],
+        'no-unsafe-call':                               'off',
+        'no-unsafe-declaration-merging':                'off',
+        'no-unsafe-function-type':                      ['error'],
+        'no-unsafe-member-access':                      ['error'],
+        'no-unsafe-return':                             ['error'],
+        'no-unsafe-unary-minus':                        'off',
+        'no-wrapper-object-types':                      'off',
+        'only-throw-error':                             ['error'],
+        'parameter-properties':                         ['error', { prefer: 'parameter-property' }],
+        'prefer-reduce-type-parameter':                 ['error'],
+        'require-array-sort-compare':                   'off',
+        'restrict-plus-operands':                       'off',
+        'restrict-template-expressions':                'off',
+        'return-await':                                 ['error'],
+        'unbound-method':                               'off',
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
-        'adjacent-overload-signatures':             ['error'],
-        'array-type':                               ['error'],
-        'ban-tslint-comment':                       ['error'],
-        'consistent-generic-constructors':          ['error'],
-        'consistent-indexed-object-style':          ['error'],
-        'consistent-type-assertions':               ['error'],
-        'consistent-type-definitions':              ['error', 'interface'],
-        'consistent-type-exports':                  ['error'],
+        'adjacent-overload-signatures':                 ['error'],
+        'array-type':                                   ['error'],
+        'ban-tslint-comment':                           ['error'],
+        'consistent-generic-constructors':              ['error'],
+        'consistent-indexed-object-style':              ['error'],
+        'consistent-type-assertions':                   ['error'],
+        'consistent-type-definitions':                  ['error', 'interface'],
+        'consistent-type-exports':                      ['error'],
         'consistent-type-imports':
         beforeOrElse('3.8.0', ['error', { prefer: 'no-type-imports' }], ['error']),
-        'member-ordering':                          ['error'],
-        'method-signature-style':                   'off',
-        'naming-convention':                        'off',
-        'no-base-to-string':                        ['error'],
-        'no-duplicate-type-constituents':           ['error'],
-        'no-dynamic-delete':                        'off',
-        'no-empty-object-type':                     ['error', { allowObjectTypes: 'always' }],
-        'no-explicit-any':                          'off',
-        'no-extraneous-class':                      ['error', { allowConstructorOnly: true }],
-        'no-inferrable-types':                      ['error'],
-        'no-meaningless-void-operator':             ['error', { checkNever: true }],
-        'no-namespace':                             'off',
-        'no-redundant-type-constituents':           ['error'],
-        'no-restricted-types':                      'off',
-        'no-this-alias':                            'off',
-        'no-unnecessary-boolean-literal-compare':   ['error'],
-        'no-unnecessary-condition':                 ['error'],
-        'no-unnecessary-qualifier':                 ['error'],
-        'no-unnecessary-template-expression':       ['error'],
-        'no-unnecessary-type-arguments':            ['error'],
-        'no-unnecessary-type-assertion':            ['error'],
-        'no-unnecessary-type-constraint':           ['error'],
-        'no-unsafe-enum-comparison':                ['error'],
-        'no-useless-empty-export':                  ['error'],
-        'non-nullable-type-assertion-style':        ['error'],
-        'prefer-as-const':                          ['error'],
-        'prefer-enum-initializers':                 'off',
-        'prefer-find':                              'off',
-        'prefer-for-of':                            ['error'],
+        'member-ordering':                              ['error'],
+        'method-signature-style':                       'off',
+        'naming-convention':                            'off',
+        'no-base-to-string':                            ['error'],
+        'no-duplicate-type-constituents':               ['error'],
+        'no-dynamic-delete':                            'off',
+        'no-empty-object-type':                         ['error', { allowObjectTypes: 'always' }],
+        'no-explicit-any':                              'off',
+        'no-extraneous-class':                          ['error', { allowConstructorOnly: true }],
+        'no-inferrable-types':                          ['error'],
+        'no-meaningless-void-operator':                 ['error', { checkNever: true }],
+        'no-namespace':                                 'off',
+        'no-redundant-type-constituents':               ['error'],
+        'no-restricted-types':                          'off',
+        'no-this-alias':                                'off',
+        'no-unnecessary-boolean-literal-compare':       ['error'],
+        'no-unnecessary-condition':                     ['error'],
+        'no-unnecessary-parameter-property-assignment': ['error'],
+        'no-unnecessary-qualifier':                     ['error'],
+        'no-unnecessary-template-expression':           ['error'],
+        'no-unnecessary-type-arguments':                ['error'],
+        'no-unnecessary-type-assertion':                ['error'],
+        'no-unnecessary-type-constraint':               ['error'],
+        'no-unsafe-enum-comparison':                    ['error'],
+        'no-useless-empty-export':                      ['error'],
+        'non-nullable-type-assertion-style':            ['error'],
+        'prefer-as-const':                              ['error'],
+        'prefer-enum-initializers':                     'off',
+        'prefer-find':                                  'off',
+        'prefer-for-of':                                ['error'],
         // https://github.com/typescript-eslint/typescript-eslint/issues/454
-        'prefer-function-type':                     'off',
-        'prefer-includes':                          'off',
-        'prefer-literal-enum-member':               'off',
-        'prefer-namespace-keyword':                 'off',
-        'prefer-nullish-coalescing':                ['error'],
-        'prefer-optional-chain':                    ['error'],
-        'prefer-readonly':                          ['error'],
-        'prefer-readonly-parameter-types':          'off',
-        'prefer-regexp-exec':                       ['error'],
-        'prefer-return-this-type':                  ['error'],
-        'prefer-string-starts-ends-with':           ['error'],
-        'promise-function-async':                   ['error', { allowAny: true }],
-        'strict-boolean-expressions':               'off',
-        'switch-exhaustiveness-check':              ['error'],
-        'triple-slash-reference':                   ['error', { lib: 'never' }],
-        'typedef':                                  ['error'],
+        'prefer-function-type':                         'off',
+        'prefer-includes':                              'off',
+        'prefer-literal-enum-member':                   'off',
+        'prefer-namespace-keyword':                     'off',
+        'prefer-nullish-coalescing':                    ['error'],
+        'prefer-optional-chain':                        ['error'],
+        'prefer-readonly':                              ['error'],
+        'prefer-readonly-parameter-types':              'off',
+        'prefer-regexp-exec':                           ['error'],
+        'prefer-return-this-type':                      ['error'],
+        'prefer-string-starts-ends-with':               ['error'],
+        'promise-function-async':                       ['error', { allowAny: true }],
+        'strict-boolean-expressions':                   'off',
+        'switch-exhaustiveness-check':                  ['error'],
+        'triple-slash-reference':                       ['error', { lib: 'never' }],
+        'typedef':                                      ['error'],
         'unified-signatures':
         ['error', { ignoreDifferentlyNamedParameters: true }],
-        'use-unknown-in-catch-callback-variable':   ['error'],
+        'use-unknown-in-catch-callback-variable':       ['error'],
     },
     '@origin-1/eslint-plugin':
     {
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
         'no-extra-new':                     ['error'],
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Layout
         'bracket-layout':                   ['error'],
         'indent':                           ['error'],
@@ -450,13 +451,13 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     '@eslint-community/eslint-plugin-eslint-comments':
     {
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Problem
         'no-duplicate-disable':     ['error'],
         'no-unused-disable':        ['error'],
         'no-unused-enable':         ['error'],
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
         'disable-enable-pair':      ['error'],
         'no-aggregating-enable':    ['error'],
@@ -467,12 +468,12 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     '@stylistic/eslint-plugin':
     {
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
         'jsx-pascal-case':                  'off',
         'multiline-comment-style':          'off',
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Layout
         'array-bracket-newline':            'off',
         'array-bracket-spacing':            ['error'],
@@ -615,7 +616,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     },
     'eslint-plugin-n':
     {
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Problem
         'hashbang':                                 'off',
         'no-callback-literal':                      'off',
@@ -637,7 +638,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsupported-features/node-builtins':    'off',
         'process-exit-as-throw':                    ['error'],
 
-        ////////////////////////////////////////////
+        ////////////////////////////////////////////////
         // Suggestion
         'callback-return':                          'off',
         'exports-style':                            'off',
