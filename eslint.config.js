@@ -3,9 +3,7 @@ import globals          from 'globals';
 
 export default createConfig
 (
-    {
-        ignores: ['**/.*', 'coverage', 'dist'],
-    },
+    { ignores: ['**/.*', 'coverage', 'dist'] },
     {
         files:              ['**/*.{js,ts}'],
         languageOptions:    { globals: globals.node },
@@ -18,6 +16,5 @@ export default createConfig
     {
         files:              ['**/*.ts'],
         tsVersion:          'latest',
-        languageOptions:    { parserOptions: { project: 'tsconfig.json' } },
     },
 );

@@ -157,7 +157,7 @@ async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.Co
     if (lang != null)
     {
         const languageOptions = { ...config.languageOptions };
-        let { ecmaVersion, parser } = languageOptions;
+        let { ecmaVersion, parser, parserOptions } = languageOptions;
         let jsVersion: JSVersion | undefined;
         let tsVersion: TSVersion | undefined;
         switch (lang)
@@ -171,10 +171,12 @@ async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.Co
             tsVersion = normalizeTSVersion(rawTSVersion);
             ecmaVersion ??= 'latest';
             parser ??= await importParser('@typescript-eslint/parser');
+            parserOptions = { projectService: true, ...parserOptions };
             break;
         }
-        languageOptions.ecmaVersion = ecmaVersion;
-        languageOptions.parser = parser;
+        languageOptions.ecmaVersion     = ecmaVersion;
+        languageOptions.parser          = parser;
+        languageOptions.parserOptions   = parserOptions;
         const linterOptions = { ...config.linterOptions };
         linterOptions.reportUnusedDisableDirectives ??= true;
         const plugins: Record<string, ESLint.Plugin> = { };
@@ -183,12 +185,7 @@ async function createSingleFlatConfig(configData: ConfigData): Promise<Linter.Co
         const pluginPromises = rulePrefixes.map(importPlugin);
         const pluginList = await Promise.all(pluginPromises);
         rulePrefixes.forEach
-        (
-            (rulePrefix, index): void =>
-            {
-                plugins[rulePrefix] = pluginList[index];
-            },
-        );
+        ((rulePrefix, index): void => { plugins[rulePrefix] = pluginList[index]; });
         config.languageOptions = languageOptions;
         config.linterOptions = linterOptions;
         config.plugins = Object.assign(plugins, config.plugins);

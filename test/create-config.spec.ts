@@ -242,12 +242,11 @@ describe
                             async (): Promise<void> =>
                             {
                                 const parser = await import('@typescript-eslint/parser');
-                                const parserOptions = { project: 'tsconfig.json' };
                                 const [{ languageOptions, linterOptions }] =
                                 await createConfig
                                 (
                                     {
-                                        languageOptions:    { parserOptions },
+                                        languageOptions:    { parserOptions: { project: true } },
                                         linterOptions:      { noInlineConfig: false },
                                         tsVersion:          'latest',
                                     },
@@ -255,7 +254,11 @@ describe
                                 assert(languageOptions);
                                 assert.equal(languageOptions.ecmaVersion, 'latest');
                                 assert.equal(languageOptions.parser, parser);
-                                assert.equal(languageOptions.parserOptions, parserOptions);
+                                assert.deepEqual
+                                (
+                                    languageOptions.parserOptions,
+                                    { project: true, projectService: true },
+                                );
                                 assert(linterOptions);
                                 assert.equal(linterOptions.noInlineConfig, false);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, true);
@@ -268,19 +271,31 @@ describe
                             async (): Promise<void> =>
                             {
                                 const parser = await import('@typescript-eslint/parser');
+                                const projectService =
+                                {
+                                    allowDefaultProject:    ['./*.js'],
+                                    defaultProject:         './tsconfig.json',
+                                };
                                 const [{ languageOptions, linterOptions }] =
                                 await createConfig
                                 (
                                     {
-                                        languageOptions:    { ecmaVersion: 2019 },
+                                        languageOptions:
+                                        {
+                                            ecmaVersion:    2019,
+                                            parserOptions:  { projectService },
+                                        },
                                         linterOptions:
                                         { reportUnusedDisableDirectives: false },
-                                        tsVersion:          'latest',
+                                        tsVersion: 'latest',
                                     },
                                 );
                                 assert(languageOptions);
                                 assert.equal(languageOptions.ecmaVersion, 2019);
                                 assert.equal(languageOptions.parser, parser);
+                                assert.deepEqual(languageOptions.parserOptions, { projectService });
+                                assert.equal
+                                (languageOptions.parserOptions.projectService, projectService);
                                 assert(linterOptions);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, false);
                             },
