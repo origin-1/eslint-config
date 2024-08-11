@@ -352,7 +352,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-non-null-asserted-optional-chain':          ['error'],
         'no-non-null-assertion':                        'off',
         'no-require-imports':                           ['error'],
-        'no-unnecessary-type-parameters':               ['error'],
+        'no-unnecessary-type-parameters':               'off',
         'no-unsafe-argument':                           ['error'],
         'no-unsafe-assignment':                         ['error'],
         'no-unsafe-call':                               'off',
