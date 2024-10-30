@@ -339,6 +339,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-array-delete':                              ['error'],
         'no-confusing-non-null-assertion':              ['error'],
         'no-confusing-void-expression':                 'off',
+        'no-deprecated':                                'off',
         'no-duplicate-enum-values':                     'off',
         'no-extra-non-null-assertion':                  ['error'],
         'no-floating-promises':                         ['error'],
@@ -427,7 +428,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-string-starts-ends-with':               ['error'],
         'promise-function-async':                       ['error', { allowAny: true }],
         'strict-boolean-expressions':                   'off',
-        'switch-exhaustiveness-check':                  ['error'],
+        'switch-exhaustiveness-check':
+        ['error', { considerDefaultExhaustiveForUnions: true }],
         'triple-slash-reference':                       ['error', { lib: 'never' }],
         'typedef':                                      ['error'],
         'unified-signatures':
@@ -487,6 +489,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-style':
         ['error', 'last', { exceptions: { ArrayExpression: true } }],
         'computed-property-spacing':        ['error'],
+        'curly-newline':                    ['off'],
         'dot-location':                     ['error', 'property'],
         'eol-last':                         ['error'],
         'func-call-spacing':                'off',
