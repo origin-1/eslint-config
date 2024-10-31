@@ -7,7 +7,8 @@
     "clean": "node dev/clean.js",
     "compile": "node dev/compile.js",
     "coverage": "node dev/coverage.js",
-    "lint": "eslint . --format compact",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "release": "npm version -m \"Release %s\"",
     "test": "node --import \"data:text/javascript,import { register } from 'node:module'; import { pathToFileURL } from 'node:url'; register('ts-node/esm', pathToFileURL('./'));\" node_modules/mocha/bin/mocha.js --check-leaks test/**/*.spec.ts",
     "update-dist": "node dev/update-dist.js"
@@ -22,7 +23,6 @@
     "@types/semver": "latest",
     "c8js": "latest",
     "eslint": "9",
-    "eslint-formatter-compact": "latest",
     "fast-glob": "latest",
     "globals": "latest",
     "mocha": "latest",
