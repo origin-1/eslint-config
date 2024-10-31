@@ -633,7 +633,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-missing-import':                        'off',
         // Does not handle package.json "exports" and "imports".
         'no-missing-require':                       'off',
-        'no-unpublished-bin':                       ['error'],
+        // `bin` files are always published.
+        'no-unpublished-bin':                       'off',
         'no-unpublished-import':                    ['error'],
         'no-unpublished-require':                   ['error'],
         'no-unsupported-features/es-builtins':      'off',
