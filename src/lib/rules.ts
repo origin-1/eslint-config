@@ -348,6 +348,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-invalid-void-type':                         'off',
         'no-misused-new':                               ['error'],
         'no-misused-promises':                          ['error', { checksVoidReturn: false }],
+        'no-misused-spread':                            ['error'],
         'no-mixed-enums':                               ['error'],
         'no-non-null-asserted-nullish-coalescing':      ['error'],
         'no-non-null-asserted-optional-chain':          ['error'],
