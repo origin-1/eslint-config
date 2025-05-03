@@ -111,6 +111,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-control-regex':                 'off',
         'no-debugger':                      ['error'],
         'no-dupe-args':                     ['error'],
+        'no-dupe-class-members':            jsts(['error'], 'off'), // Not required in TypeScript.
         'no-dupe-else-if':                  ['error'],
         'no-dupe-keys':                     ['error'],
         'no-duplicate-case':                ['error'],
@@ -160,11 +161,13 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'block-scoped-var':                 'off',
         'camelcase':                        'off',
         'capitalized-comments':             'off',
+        'class-methods-use-this':           'off',
         'complexity':                       'off',
         'consistent-this':                  'off',
         'curly':                            ['error', 'multi-or-nest'],
         'default-case':                     'off',
         'default-case-last':                'off',
+        'default-param-last':               ['error'],
         'eqeqeq':                           ['error', 'allow-null'],
         'func-name-matching':               'off',
         'func-names':                       ['error', 'never'],
@@ -174,6 +177,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'id-denylist':                      'off',
         'id-length':                        'off',
         'id-match':                         'off',
+        'init-declarations':                'off',
         'logical-assignment-operators':
         beforeJSOrElse(2021, 'off', ['error', 'always', { enforceForIfStatements: true }]),
         'max-classes-per-file':             'off',
@@ -184,6 +188,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'max-statements':                   'off',
         'new-cap':                          ['error', { capIsNew: false }],
         'no-alert':                         ['error'],
+        'no-array-constructor':             ['error'],
         'no-bitwise':                       'off',
         'no-caller':                        ['error'],
         'no-case-declarations':             ['error'],
@@ -193,6 +198,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-div-regex':                     ['error'],
         'no-else-return':                   ['error'],
         'no-empty':                         ['error', { allowEmptyCatch: true }],
+        'no-empty-function':                'off',
         'no-empty-static-block':            ['error'],
         'no-eq-null':                       'off',
         'no-eval':                          'off',
@@ -204,11 +210,13 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-implicit-coercion':             'off',
         'no-implicit-globals':              'off',
         'no-inline-comments':               'off',
+        'no-invalid-this':                  'off',
         'no-iterator':                      ['error'],
         'no-label-var':                     ['error'],
         'no-labels':                        ['error', { allowLoop: true, allowSwitch: true }],
         'no-lone-blocks':                   beforeJSOrElse(2015, ['error'], 'off'),
         'no-lonely-if':                     'off',
+        'no-loop-func':                     ['error'],
         'no-multi-assign':                  'off',
         'no-multi-str':                     ['error'],
         'no-negated-condition':             'off',
@@ -231,7 +239,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-return-assign':                 ['error', 'always'],
         'no-script-url':                    ['error'],
         'no-sequences':                     ['error'],
-        'no-shadow-restricted-names':       ['error'],
+        'no-shadow-restricted-names':       ['error', { reportGlobalThis: true }],
         'no-ternary':                       'off',
         // Replaced by @typescript-eslint/only-throw-error in TypeScript.
         'no-throw-literal':                 jsts(['error'], 'off'),
@@ -239,11 +247,13 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-undefined':                     'off',
         'no-underscore-dangle':             'off',
         'no-unneeded-ternary':              ['error'],
+        'no-unused-expressions':            ['error'],
         'no-unused-labels':                 ['error'],
         'no-useless-call':                  ['error'],
         'no-useless-catch':                 ['error'],
-        'no-useless-computed-key':          ['error', { enforceForClassMembers: true }],
+        'no-useless-computed-key':          ['error'],
         'no-useless-concat':                ['error'],
+        'no-useless-constructor':           ['error'],
         'no-useless-escape':                ['error'],
         'no-useless-rename':                ['error'],
         'no-useless-return':                ['error'],
@@ -251,8 +261,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-void':                          'off',
         'no-warning-comments':              'off',
         'no-with':                          ['error'],
-        'object-shorthand':
-        beforeJSOrElse(2015, 'off', ['error', 'always', { avoidQuotes: true }]),
+        'object-shorthand':                 beforeJSOrElse(2015, 'off', ['error']),
         'one-var':                          ['error', 'never'],
         'operator-assignment':              ['error'],
         'prefer-arrow-callback':            beforeJSOrElse(2015, 'off', ['error']),
@@ -287,7 +296,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         ////////////////////////////////////////////////
         // Problem
-        'no-dupe-class-members':            jsts(['error'], 'off'), // Not required in TypeScript.
         'no-unused-vars':
         beforeJSOrElse
         (
@@ -301,24 +309,15 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
 
         ////////////////////////////////////////////////
         // Suggestion
-        'class-methods-use-this':           'off',
         'consistent-return':                'off',
-        'default-param-last':               'off',
         'dot-notation':                     ['error'],
-        'init-declarations':                'off',
         'max-params':                       'off',
-        'no-array-constructor':             ['error'],
-        'no-empty-function':                'off',
         'no-implied-eval':                  'off',
-        'no-invalid-this':                  'off',
-        'no-loop-func':                     ['error'],
         'no-magic-numbers':                 'off',
         // Redeclarations are acceptable in TypeScript.
         'no-redeclare':                     jsts(['error', { builtinGlobals: true }], 'off'),
         'no-restricted-imports':            'off',
         'no-shadow':                        'off',
-        'no-unused-expressions':            ['error'],
-        'no-useless-constructor':           ['error'],
         'prefer-destructuring':             beforeJSOrElse(2015, 'off', ['error']),
         'prefer-promise-reject-errors':     'off',
         'require-await':                    ['error'],

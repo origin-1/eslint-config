@@ -63,40 +63,11 @@ it
 
 it
 (
-    'all hybrid rules are defined',
-    async function (): Promise<void>
-    {
-        this.timeout(this.timeout() * 2);
-        const [builtInRules, { default: { rules: tsRules } }] =
-        await Promise.all
-        (
-            [
-                getBuiltInRules(),
-                import('@typescript-eslint/eslint-plugin'),
-            ],
-        );
-        const definedHybridRules = RULES[HYBRID];
-        const missingRules: string[] = [];
-        for (const [ruleName, ruleModule] of builtInRules)
-        {
-            if
-            (
-                !ruleModule.meta!.deprecated &&
-                (Object.hasOwn(tsRules, ruleName) && !tsRules[ruleName].meta.deprecated) &&
-                !Object.hasOwn(definedHybridRules, ruleName)
-            )
-                missingRules.push(ruleName);
-        }
-        assertNoRulesMissing(missingRules);
-    },
-);
-
-it
-(
     'all plugin rules are defined',
     async (): Promise<void> =>
     {
         const definedHybridRules = RULES[HYBRID];
+        const definedUniqueRules = RULES[UNIQUE];
         const missingRules: string[] = [];
         for (const [pluginName, definedPluginRules] of Object.entries(RULES))
         {
@@ -109,7 +80,10 @@ it
                     !ruleModule.meta!.deprecated &&
                     !(
                         pluginName === '@typescript-eslint/eslint-plugin' &&
-                        Object.hasOwn(definedHybridRules, ruleName)
+                        (
+                            Object.hasOwn(definedHybridRules, ruleName) ||
+                            Object.hasOwn(definedUniqueRules, ruleName)
+                        )
                     ) &&
                     !Object.hasOwn(definedPluginRules, ruleName)
                 )
