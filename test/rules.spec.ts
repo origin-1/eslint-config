@@ -202,15 +202,22 @@ describe
 
         async function getRuleType(key: string | symbol, ruleName: string): Promise<RuleType>
         {
-            let ruleType: RuleType;
+            let rule: Rule.RuleModule | undefined;
             if (typeof key === 'symbol')
-                ruleType = builtInRules.get(ruleName)!.meta!.type!;
+            {
+                rule = builtInRules.get(ruleName);
+                if (!rule)
+                    throw Error(`Built-in rule "${ruleName}" not found`);
+            }
             else
             {
                 const pluginName = key;
                 const pluginRules = await getPluginRules(pluginName);
-                ruleType = pluginRules[ruleName].meta!.type!;
+                rule = pluginRules[ruleName] as Rule.RuleModule | undefined;
+                if (!rule)
+                    throw Error(`Rule "${ruleName}" not found in plugin "${pluginName}"`);
             }
+            const ruleType = rule.meta!.type!;
             return ruleType;
         }
 

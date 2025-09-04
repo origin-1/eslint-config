@@ -14,8 +14,7 @@
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {
-    "@types/eslint": "9",
-    "semver": "^7.5.2"
+    "semver": "^7.7.2"
   },
   "devDependencies": {
     "@origin-1/eslint-config": "file:dist",
@@ -32,11 +31,11 @@
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@origin-1/eslint-plugin": ">=0.16",
-    "@stylistic/eslint-plugin": "^4.0",
+    "@stylistic/eslint-plugin": "^5.0",
     "@typescript-eslint/eslint-plugin": "^8.32",
     "@typescript-eslint/parser": "^8.32",
     "eslint": "^9.28",
-    "eslint-plugin-n": "17"
+    "eslint-plugin-n": "^17.19"
   },
   "engines": {
     "node": ">=20.9"

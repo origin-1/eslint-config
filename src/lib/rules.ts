@@ -11,8 +11,8 @@ export const FOR_LANG: unique symbol = Symbol('For one language only');
 
 export type PluginSettingsAny       = Record<string, RuleSettingsAny>;
 export type PluginSettingsForLang   =
-(Record<string, RuleSettingsJS> & { [FOR_LANG]: 'js'; }) |
-(Record<string, RuleSettingsTS> & { [FOR_LANG]: 'ts'; });
+Record<string, RuleSettingsJS> & { [FOR_LANG]: 'js'; } |
+Record<string, RuleSettingsTS> & { [FOR_LANG]: 'ts'; };
 
 export type RuleSettingsAny = Linter.RuleEntry | JSTSEntry;
 export type RuleSettingsJS  = VersionedList<JSVersion> | Linter.RuleEntry;
@@ -36,7 +36,7 @@ function beforeJSOrElse
 (
     version:        JSVersion,
     before:         Linter.RuleEntry,
-    ...moreArgs:    ([Linter.RuleEntry] | [JSVersion, Linter.RuleEntry, Linter.RuleEntry])
+    ...moreArgs:    [Linter.RuleEntry] | [JSVersion, Linter.RuleEntry, Linter.RuleEntry]
 ): JSTSEntry
 {
     const else_ = moreArgs.at(-1) as Linter.RuleEntry;
@@ -48,7 +48,7 @@ function beforeOrElse
 (
     version:        VersionType,
     before:         Linter.RuleEntry,
-    ...moreArgs:    ([Linter.RuleEntry] | [VersionType, Linter.RuleEntry, Linter.RuleEntry])
+    ...moreArgs:    [Linter.RuleEntry] | [VersionType, Linter.RuleEntry, Linter.RuleEntry]
 ):
 VersionedList<VersionType>
 {
@@ -496,7 +496,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'curly-newline':                    ['off'],
         'dot-location':                     ['error', 'property'],
         'eol-last':                         ['error'],
-        'func-call-spacing':                'off',
         'function-call-argument-newline':   ['error', 'consistent'],
         'function-call-spacing':            'off',
         'function-paren-newline':           ['error', 'consistent'],
@@ -517,7 +516,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'jsx-max-props-per-line':           'off',
         'jsx-newline':                      'off',
         'jsx-one-expression-per-line':      'off',
-        'jsx-props-no-multi-spaces':        'off',
         'jsx-quotes':                       ['error'],
         'jsx-self-closing-comp':            'off',
         'jsx-sort-props':                   'off',
@@ -573,7 +571,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'nonblock-statement-body-position': 'off',
         'object-curly-newline':             'off',
         'object-curly-spacing':             ['error', 'always'],
-        'object-property-newline':          ['error', { allowMultiplePropertiesPerLine: true }],
+        'object-property-newline':          ['error', { allowAllPropertiesOnSameLine: true }],
         'one-var-declaration-per-line':     ['error'],
         'operator-linebreak':               ['error', 'after'],
         'padded-blocks':                    ['error', 'never'],
@@ -637,6 +635,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-missing-import':                        'off',
         // Does not handle package.json "exports" and "imports".
         'no-missing-require':                       'off',
+        'no-top-level-await':                       'off',
         // `bin` files are always published.
         'no-unpublished-bin':                       'off',
         'no-unpublished-import':                    ['error'],
