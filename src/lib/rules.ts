@@ -451,6 +451,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'bracket-layout':                   ['error'],
         'indent':                           ['error'],
         'nice-space-before-function-paren': ['error'],
+        'no-leading-binary-operator':       ['error'],
         'no-spaces-in-call-expression':     ['error'],
         'no-spaces-in-tagged-template':     ['error'],
         'property-colon-spacing':           ['error'],
@@ -573,7 +574,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'object-curly-spacing':             ['error', 'always'],
         'object-property-newline':          ['error', { allowAllPropertiesOnSameLine: true }],
         'one-var-declaration-per-line':     ['error'],
-        'operator-linebreak':               ['error', 'after'],
+        'operator-linebreak':               'off',
         'padded-blocks':                    ['error', 'never'],
         'padding-line-between-statements':
         [

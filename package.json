@@ -30,7 +30,7 @@
   },
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
-    "@origin-1/eslint-plugin": ">=0.16",
+    "@origin-1/eslint-plugin": ">=0.17",
     "@stylistic/eslint-plugin": "^5.0",
     "@typescript-eslint/eslint-plugin": "^8.32",
     "@typescript-eslint/parser": "^8.32",
