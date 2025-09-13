@@ -34,7 +34,7 @@
     "@stylistic/eslint-plugin": "^5.0",
     "@typescript-eslint/eslint-plugin": "^8.32",
     "@typescript-eslint/parser": "^8.32",
-    "eslint": "^9.28",
+    "eslint": "^9.35",
     "eslint-plugin-n": "^17.19"
   },
   "engines": {

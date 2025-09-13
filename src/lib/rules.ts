@@ -283,6 +283,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-rest-params':               beforeJSOrElse(2015, 'off', ['error']),
         'prefer-spread':                    beforeJSOrElse(2015, 'off', ['error']),
         'prefer-template':                  beforeJSOrElse(2015, 'off', ['error']),
+        'preserve-caught-error':            ['error'],
         'radix':                            ['error'],
         'require-unicode-regexp':           'off',
         'require-yield':                    ['error'],
