@@ -11,8 +11,8 @@ export const FOR_LANG: unique symbol = Symbol('For one language only');
 
 export type PluginSettingsAny       = Record<string, RuleSettingsAny>;
 export type PluginSettingsForLang   =
-Record<string, RuleSettingsJS> & { [FOR_LANG]: 'js'; } |
-Record<string, RuleSettingsTS> & { [FOR_LANG]: 'ts'; };
+| Record<string, RuleSettingsJS> & { [FOR_LANG]: 'js'; }
+| Record<string, RuleSettingsTS> & { [FOR_LANG]: 'ts'; };
 
 export type RuleSettingsAny = Linter.RuleEntry | JSTSEntry;
 export type RuleSettingsJS  = VersionedList<JSVersion> | Linter.RuleEntry;
