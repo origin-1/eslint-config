@@ -52,7 +52,6 @@ it
             exportedNames,
             [
                 'createConfig',
-                'createFlatConfig',
                 'noParserConfig',
                 'normalizeJSONVersion',
                 'normalizeJSVersion',

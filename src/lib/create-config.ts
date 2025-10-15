@@ -73,8 +73,6 @@ export async function createConfig(...configDataList: ConfigData[]): Promise<Lin
     return await Promise.all(promises);
 }
 
-export { createConfig as createFlatConfig };
-
 function createJSTSEntries
 (
     lang: 'js' | 'ts',
