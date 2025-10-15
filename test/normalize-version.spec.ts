@@ -1,8 +1,50 @@
-import assert                           from 'node:assert/strict';
-import type { JSVersion, TSVersion }    from '../src/lib/normalize-version.js';
-import { describe, it }                 from 'mocha';
+import assert           from 'node:assert/strict';
+import { describe, it } from 'mocha';
 
-const { normalizeJSVersion, normalizeTSVersion } = await import('../src/lib/normalize-version.js');
+const { normalizeJSONVersion, normalizeJSVersion, normalizeTSVersion } =
+await import('../src/lib/normalize-version.js');
+
+describe
+(
+    'normalizeJSONVersion',
+    (): void =>
+    {
+        it
+        (
+            'defaults to "standard"',
+            (): void =>
+            {
+                assert.equal(normalizeJSONVersion(undefined), 'standard');
+            },
+        );
+
+        it
+        (
+            'returns a supported value unchanged',
+            (): void =>
+            {
+                assert.equal(normalizeJSONVersion('standard'), 'standard');
+            },
+        );
+
+        it
+        (
+            'fails for an unsupported value',
+            (): void =>
+            {
+                assert.throws
+                (
+                    (): void => void normalizeJSONVersion('latest'),
+                    {
+                        constructor: TypeError,
+                        message:
+                        'jsonVersion \'latest\' is not supported. Only \'standard\' is supported',
+                    },
+                );
+            },
+        );
+    },
+);
 
 describe
 (
@@ -34,7 +76,7 @@ describe
             {
                 assert.throws
                 (
-                    (): void => void normalizeJSVersion(6 as JSVersion),
+                    (): void => void normalizeJSVersion(6),
                     {
                         constructor: TypeError,
                         message:
@@ -77,7 +119,7 @@ describe
             {
                 assert.throws
                 (
-                    (): void => void normalizeTSVersion('4.0' as TSVersion),
+                    (): void => void normalizeTSVersion('4.0'),
                     {
                         constructor:    TypeError,
                         message:        'tsVersion \'4.0\' is not supported',

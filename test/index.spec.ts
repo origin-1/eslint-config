@@ -54,6 +54,7 @@ it
                 'createConfig',
                 'createFlatConfig',
                 'noParserConfig',
+                'normalizeJSONVersion',
                 'normalizeJSVersion',
                 'normalizeTSVersion',
             ],

@@ -17,4 +17,13 @@ export default createConfig
         files:              ['**/*.ts'],
         tsVersion:          'latest',
     },
+    {
+        files:              ['**/*.json'],
+        jsonVersion:        'standard',
+    },
+    {
+        files:              ['**/tsconfig.json'],
+        language:           'json/jsonc',
+        languageOptions:    { allowTrailingCommas: true },
+    },
 );

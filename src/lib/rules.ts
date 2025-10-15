@@ -1,5 +1,5 @@
-import type { JSVersion, TSVersion }    from './normalize-version.js';
-import type { Linter }                  from 'eslint';
+import type { JSONVersion, JSVersion, TSVersion }   from './normalize-version.js';
+import type { Linter }                              from 'eslint';
 
 export interface JSTSEntry
 {
@@ -11,22 +11,25 @@ export const FOR_LANG: unique symbol = Symbol('For one language only');
 
 export type PluginSettingsAny       = Record<string, RuleSettingsAny>;
 export type PluginSettingsForLang   =
-| Record<string, RuleSettingsJS> & { [FOR_LANG]: 'js'; }
-| Record<string, RuleSettingsTS> & { [FOR_LANG]: 'ts'; };
+| Record<string, RuleSettingsJS>    & { [FOR_LANG]: 'js';   }
+| Record<string, RuleSettingsJSON>  & { [FOR_LANG]: 'json'; }
+| Record<string, RuleSettingsTS>    & { [FOR_LANG]: 'ts';   };
 
-export type RuleSettingsAny = Linter.RuleEntry | JSTSEntry;
-export type RuleSettingsJS  = VersionedList<JSVersion> | Linter.RuleEntry;
-export type RuleSettingsTS  = VersionedList<TSVersion> | Linter.RuleEntry;
+export type RuleSettingsAny     = Linter.RuleEntry | JSTSEntry;
+export type RuleSettingsJS      = VersionedList<JSVersion>      | Linter.RuleEntry;
+export type RuleSettingsJSON    = VersionedList<JSONVersion>    | Linter.RuleEntry;
+export type RuleSettingsTS      = VersionedList<TSVersion>      | Linter.RuleEntry;
 
 export type RuleType = 'problem' | 'suggestion' | 'layout';
 
-interface VersionedEntry<VersionType extends JSVersion | TSVersion | undefined>
+interface VersionedEntry<VersionType extends JSONVersion | JSVersion | TSVersion | undefined>
 {
     minVersion: VersionType;
     ruleEntry: Linter.RuleEntry;
 }
 
-export type VersionedList<VersionType extends JSVersion | TSVersion = JSVersion | TSVersion> =
+export type VersionedList
+<VersionType extends JSONVersion | JSVersion | TSVersion = JSONVersion | JSVersion | TSVersion> =
 [VersionedEntry<undefined>, ...VersionedEntry<VersionType>[]] & { versioned: true; };
 
 export const UNIQUE = Symbol('Unique built-in rules');
@@ -79,7 +82,8 @@ export function getRuleKey(rulePrefix: string, ruleName: string): string
 
 export function getRulePrefix(pluginName: string): string
 {
-    const rulePrefix = pluginName.replace(/(?<=^|\/)eslint-plugin-|\/eslint-plugin$/, '');
+    const rulePrefix =
+    pluginName.replace(/^@eslint\/|(?<=^|\/)eslint-plugin-|\/eslint-plugin$/, '');
     return rulePrefix;
 }
 
@@ -374,7 +378,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'require-array-sort-compare':                   'off',
         'restrict-plus-operands':                       'off',
         'restrict-template-expressions':                'off',
-        'return-await':                                 'error',
+        'return-await':                                 'off',
         'unbound-method':                               'off',
 
         ////////////////////////////////////////////////
@@ -440,6 +444,22 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'unified-signatures':
         ['error', { ignoreDifferentlyNamedParameters: true }],
         'use-unknown-in-catch-callback-variable':       'error',
+    },
+    '@eslint/json':
+    {
+        [FOR_LANG]:             'json',
+
+        ////////////////////////////////////////////////
+        // Problem
+        'no-duplicate-keys':    'error',
+        'no-empty-keys':        'off',
+        'no-unnormalized-keys': 'off',
+        'no-unsafe-values':     'error',
+        'top-level-interop':    'off',
+
+        ////////////////////////////////////////////////
+        // Suggestion
+        'sort-keys':            'off',
     },
     '@origin-1/eslint-plugin':
     {

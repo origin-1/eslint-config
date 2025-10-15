@@ -59,7 +59,8 @@ describe
                     {
                         constructor: TypeError,
                         message:
-                        '`jsVersion` and `tsVersion` cannot be specified at the same time',
+                        'Only one of `jsonVersion`, `jsVersion`, and `tsVersion` can be ' +
+                        'specified at the same time',
                     },
                 );
             },
@@ -87,6 +88,16 @@ describe
             async (): Promise<void> =>
             {
                 const [config] = await createConfig({ jsVersion: 5 });
+                assert(!('jsVersion' in config));
+            },
+        );
+
+        it
+        (
+            '`jsonVersion` is not set',
+            async (): Promise<void> =>
+            {
+                const [config] = await createConfig({ jsonVersion: 'standard' });
                 assert(!('jsVersion' in config));
             },
         );
@@ -165,6 +176,18 @@ describe
                                 'barbaz',
                             ],
                         );
+                    },
+                );
+
+                it
+                (
+                    'for JSON',
+                    async (): Promise<void> =>
+                    {
+                        const [{ plugins }] =
+                        await createConfig({ plugins: { barbaz: { } }, jsonVersion: 'standard' });
+                        assert(plugins);
+                        assert.deepEqual(Object.keys(plugins), ['json', 'barbaz']);
                     },
                 );
             },
@@ -296,6 +319,60 @@ describe
                                 assert.deepEqual(languageOptions.parserOptions, { projectService });
                                 assert.equal
                                 (languageOptions.parserOptions.projectService, projectService);
+                                assert(linterOptions);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, false);
+                            },
+                        );
+                    },
+                );
+
+                describe
+                (
+                    'for JSON',
+                    (): void =>
+                    {
+                        it
+                        (
+                            'defaults and merging',
+                            async (): Promise<void> =>
+                            {
+                                const { default: json } = await import('@eslint/json');
+                                const [{ language, languageOptions, linterOptions, plugins }] =
+                                await createConfig
+                                (
+                                    {
+                                        jsonVersion:        'standard',
+                                        languageOptions:    { allowTrailingCommas: true },
+                                        linterOptions:      { noInlineConfig: false },
+                                    },
+                                );
+                                assert.equal(language, 'json/json');
+                                assert.deepEqual(languageOptions, { allowTrailingCommas: true });
+                                assert(linterOptions);
+                                assert.equal(linterOptions.noInlineConfig, false);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, true);
+                                assert(plugins);
+                                assert.deepEqual(Object.keys(plugins), ['json']);
+                                assert.equal(plugins.json, json);
+                            },
+                        );
+
+                        it
+                        (
+                            'overwriting',
+                            async (): Promise<void> =>
+                            {
+                                const [{ language, linterOptions }] =
+                                await createConfig
+                                (
+                                    {
+                                        jsonVersion:    'standard',
+                                        language:       'json/jsonc',
+                                        linterOptions:
+                                        { reportUnusedDisableDirectives: false },
+                                    },
+                                );
+                                assert.equal(language, 'json/jsonc');
                                 assert(linterOptions);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, false);
                             },
