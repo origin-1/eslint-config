@@ -195,7 +195,10 @@ async function createSingleConfigObject(configData: ConfigData): Promise<Linter.
                 languageOptions.ecmaVersion ??= 'latest';
                 languageOptions.parser ??= await importParser('@typescript-eslint/parser');
                 languageOptions.parserOptions =
-                { projectService: true, ...languageOptions.parserOptions };
+                {
+                    projectService: true,
+                    ...(languageOptions.parserOptions as Linter.ParserOptions),
+                };
                 createJSTSEntries(lang, { tsVersion }, rules, rulePrefixMap);
                 break;
             }

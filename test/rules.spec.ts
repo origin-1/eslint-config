@@ -36,6 +36,16 @@ async function getPluginRules(pluginName: string): Promise<Record<string, Rule.R
     return rules;
 }
 
+function isRuleDeprecated(rule: Rule.RuleModule): boolean
+{
+    return Boolean(rule.meta!.deprecated);
+}
+
+function isRuleExperimental(rule: Rule.RuleModule): boolean
+{
+    return Boolean((rule.meta!.docs as { experimental?: boolean; }).experimental);
+}
+
 const { HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix } = await import('../src/lib/rules.js');
 
 it
@@ -51,7 +61,7 @@ it
         {
             if
             (
-                !ruleModule.meta!.deprecated &&
+                !isRuleDeprecated(ruleModule) &&
                 !Object.hasOwn(definedHybridRules, ruleName) &&
                 !Object.hasOwn(definedUniqueRules, ruleName)
             )
@@ -77,7 +87,7 @@ it
             {
                 if
                 (
-                    !ruleModule.meta!.deprecated &&
+                    !isRuleDeprecated(ruleModule) && !isRuleExperimental(ruleModule) &&
                     !(
                         pluginName === '@typescript-eslint/eslint-plugin' &&
                         (
@@ -154,8 +164,13 @@ it
                 );
                 assert
                 (
-                    !pluginRules[ruleName].meta!.deprecated,
+                    !isRuleDeprecated(pluginRules[ruleName]),
                     `Rule ${getRuleKey(rulePrefix, ruleName)} is deprecated`,
+                );
+                assert
+                (
+                    !isRuleExperimental(pluginRules[ruleName]),
+                    `Rule ${getRuleKey(rulePrefix, ruleName)} is experimental`,
                 );
             }
         }

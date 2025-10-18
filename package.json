@@ -32,7 +32,7 @@
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@eslint/json": ">=0.13.2",
     "@origin-1/eslint-plugin": ">=0.17",
-    "@stylistic/eslint-plugin": "^5.0",
+    "@stylistic/eslint-plugin": "^5.5",
     "@typescript-eslint/eslint-plugin": "^8.32",
     "@typescript-eslint/parser": "^8.32",
     "eslint": "^9.35",
