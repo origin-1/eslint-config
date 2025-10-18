@@ -592,7 +592,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-whitespace-before-property':    'error',
         'nonblock-statement-body-position': 'off',
         'object-curly-newline':             'off',
-        'object-curly-spacing':             ['error', 'always'],
+        'object-curly-spacing':             ['error', 'always', { emptyObjects: 'always' }],
         'object-property-newline':          ['error', { allowAllPropertiesOnSameLine: true }],
         'one-var-declaration-per-line':     'error',
         'operator-linebreak':               'off',
