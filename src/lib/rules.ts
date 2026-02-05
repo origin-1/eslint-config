@@ -270,8 +270,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-void':                          'off',
         'no-warning-comments':              'off',
         'no-with':                          'error',
-        'object-shorthand':
-        beforeJSOrElse(2015, 'off', ['error', 'always', { avoidQuotes: true }]),
+        'object-shorthand':                 beforeJSOrElse(2015, 'off', 'error'),
         'one-var':                          ['error', 'never'],
         'operator-assignment':              'error',
         'prefer-arrow-callback':            beforeJSOrElse(2015, 'off', 'error'),
@@ -379,6 +378,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'restrict-plus-operands':                       'off',
         'restrict-template-expressions':                'off',
         'return-await':                                 'off',
+        'strict-void-return':                           'off',
         'unbound-method':                               'off',
 
         ////////////////////////////////////////////////
@@ -418,6 +418,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unnecessary-type-constraint':               'error',
         'no-unnecessary-type-conversion':               'error',
         'no-unsafe-enum-comparison':                    'error',
+        'no-useless-default-assignment':                'error',
         'no-useless-empty-export':                      'error',
         'non-nullable-type-assertion-style':            'error',
         'prefer-as-const':                              'error',
@@ -540,7 +541,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'jsx-one-expression-per-line':      'off',
         'jsx-quotes':                       'error',
         'jsx-self-closing-comp':            'off',
-        'jsx-sort-props':                   'off',
         'jsx-tag-spacing':
         ['error', { beforeClosing: 'allow', beforeSelfClosing: 'always' }],
         'jsx-wrap-multilines':              'off',

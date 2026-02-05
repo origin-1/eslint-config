@@ -5,6 +5,7 @@
     "forceConsistentCasingInFileNames": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "noUncheckedSideEffectImports": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
