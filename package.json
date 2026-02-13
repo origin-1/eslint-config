@@ -14,14 +14,14 @@
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {
-    "semver": "^7.7.2"
+    "semver": "^7.7.4"
   },
   "devDependencies": {
     "@origin-1/eslint-config": "file:dist",
     "@types/mocha": "latest",
     "@types/semver": "latest",
     "c8js": "latest",
-    "eslint": "9",
+    "eslint": "9 || 10",
     "fast-glob": "latest",
     "globals": "latest",
     "mocha": "latest",
@@ -31,7 +31,7 @@
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
     "@eslint/json": ">=0.13.2",
-    "@origin-1/eslint-plugin": ">=0.17",
+    "@origin-1/eslint-plugin": ">=0.18",
     "@stylistic/eslint-plugin": "^5.5",
     "@typescript-eslint/eslint-plugin": "^8.53",
     "@typescript-eslint/parser": "^8.53",

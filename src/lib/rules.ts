@@ -270,7 +270,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-void':                          'off',
         'no-warning-comments':              'off',
         'no-with':                          'error',
-        'object-shorthand':                 beforeJSOrElse(2015, 'off', 'error'),
+        'object-shorthand':                 beforeJSOrElse(2015, 'off', ['error', 'methods']),
         'one-var':                          ['error', 'never'],
         'operator-assignment':              'error',
         'prefer-arrow-callback':            beforeJSOrElse(2015, 'off', 'error'),
@@ -467,6 +467,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////////
         // Suggestion
         'no-extra-new':                     'error',
+        'property-shorthand':               beforeJSOrElse(2015, 'off', 'error'),
 
         ////////////////////////////////////////////////
         // Layout
