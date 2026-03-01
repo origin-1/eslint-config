@@ -484,7 +484,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////////
         // Problem
         'no-duplicate-disable':     'error',
-        'no-unused-disable':        'error',
         'no-unused-enable':         'error',
 
         ////////////////////////////////////////////////
@@ -685,9 +684,11 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-sync':                                  'off',
         'prefer-global/buffer':                     'error',
         'prefer-global/console':                    'error',
+        'prefer-global/crypto':                     'error',
         'prefer-global/process':                    'error',
         'prefer-global/text-decoder':               'error',
         'prefer-global/text-encoder':               'error',
+        'prefer-global/timers':                     'error',
         'prefer-global/url':                        'error',
         'prefer-global/url-search-params':          'error',
         'prefer-node-protocol':

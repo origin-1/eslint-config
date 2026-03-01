@@ -21,7 +21,7 @@
     "@types/mocha": "latest",
     "@types/semver": "latest",
     "c8js": "latest",
-    "eslint": "9 || 10",
+    "eslint": "latest",
     "fast-glob": "latest",
     "globals": "latest",
     "mocha": "latest",
@@ -29,17 +29,17 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@eslint-community/eslint-plugin-eslint-comments": ">=4.1",
-    "@eslint/json": ">=0.13.2",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.3",
+    "@eslint/json": "^1.0",
     "@origin-1/eslint-plugin": ">=0.18",
     "@stylistic/eslint-plugin": "^5.5",
-    "@typescript-eslint/eslint-plugin": "^8.53",
-    "@typescript-eslint/parser": "^8.53",
-    "eslint": "^9.35",
-    "eslint-plugin-n": "^17.19"
+    "@typescript-eslint/eslint-plugin": "^8.56",
+    "@typescript-eslint/parser": "^8.56",
+    "eslint": "^10.0",
+    "eslint-plugin-n": "^17.24"
   },
   "engines": {
-    "node": ">=20.9"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "private": true,
   "type": "module"
