@@ -414,7 +414,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unnecessary-qualifier':                     'error',
         'no-unnecessary-template-expression':           'error',
         'no-unnecessary-type-arguments':                'error',
-        'no-unnecessary-type-assertion':                'error',
+        'no-unnecessary-type-assertion':                'off',
         'no-unnecessary-type-constraint':               'error',
         'no-unnecessary-type-conversion':               'error',
         'no-unsafe-enum-comparison':                    'error',

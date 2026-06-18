@@ -63,6 +63,7 @@ const newOptions =
 {
     declaration:        true,
     declarationDir:     outDir,
+    ignoreDeprecations: '6.0',
     module:             ts.ModuleKind.CommonJS,
     moduleResolution:   ts.ModuleResolutionKind.Node10,
     outDir,
