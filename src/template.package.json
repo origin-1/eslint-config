@@ -5,6 +5,11 @@
   "homepage": "https://github.com/origin-1/eslint-config#readme",
   "license": "ISC",
   "author": "Francesco Trotta <ft@fasttime.org> (https://github.com/fasttime)",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/origin-1/eslint-config.git"
@@ -13,9 +18,5 @@
   "peerDependencies": null,
   "engines": {
     "node": ">=20.9"
-  },
-  "exports": {
-    ".": "./index.js",
-    "./package.json": "./package.json"
   }
 }

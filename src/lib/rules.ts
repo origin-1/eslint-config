@@ -9,13 +9,15 @@ export interface JSTSEntry
 
 export const FOR_LANG: unique symbol = Symbol('For one language only');
 
+export const IGNORED: unique symbol = Symbol('Ignored rule');
+
 export type PluginSettingsAny       = Record<string, RuleSettingsAny>;
 export type PluginSettingsForLang   =
 | Record<string, RuleSettingsJS>    & { [FOR_LANG]: 'js';   }
 | Record<string, RuleSettingsJSON>  & { [FOR_LANG]: 'json'; }
 | Record<string, RuleSettingsTS>    & { [FOR_LANG]: 'ts';   };
 
-export type RuleSettingsAny     = Linter.RuleEntry | JSTSEntry;
+export type RuleSettingsAny     = Linter.RuleEntry | JSTSEntry | typeof IGNORED;
 export type RuleSettingsJS      = VersionedList<JSVersion>      | Linter.RuleEntry;
 export type RuleSettingsJSON    = VersionedList<JSONVersion>    | Linter.RuleEntry;
 export type RuleSettingsTS      = VersionedList<TSVersion>      | Linter.RuleEntry;
@@ -242,6 +244,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-regex-spaces':                  'off',
         'no-restricted-exports':            'off',
         'no-restricted-globals':            'off',
+        'no-restricted-imports':            'off',
         'no-restricted-properties':         'off',
         'no-restricted-syntax':             'off',
         'no-return-assign':                 ['error', 'always'],
@@ -323,7 +326,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-implied-eval':                  'off',
         // Redeclarations are acceptable in TypeScript.
         'no-redeclare':                     jsts(['error', { builtinGlobals: true }], 'off'),
-        'no-restricted-imports':            'off',
         'prefer-destructuring':             beforeJSOrElse(2015, 'off', 'error'),
         'prefer-promise-reject-errors':     'off',
         'require-await':                    'error',
@@ -467,6 +469,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////////
         // Suggestion
         'no-extra-new':                     'error',
+        'package-json-fields':              IGNORED,
         'property-shorthand':               beforeJSOrElse(2015, 'off', 'error'),
 
         ////////////////////////////////////////////////
@@ -691,8 +694,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-global/timers':                     'error',
         'prefer-global/url':                        'error',
         'prefer-global/url-search-params':          'error',
+        'prefer-import/assert-strict':              'error',
         'prefer-node-protocol':
         jsts(beforeOrElse(2021, 'off', 'error'), beforeOrElse('3.9.0', 'off', 'error')),
+        'prefer-process-get-builtin-module':        'off',
         'prefer-promises/dns':                      beforeJSOrElse(2015, 'off', 'error'),
         'prefer-promises/fs':                       beforeJSOrElse(2015, 'off', 'error'),
     },

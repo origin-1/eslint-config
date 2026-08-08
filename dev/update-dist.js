@@ -12,7 +12,7 @@ async function readJSON(url)
 async function updatePackage()
 {
     const referencePkgURL   = makeURL('package.json');
-    const templatePkgURL    = makeURL('src/package.template.json');
+    const templatePkgURL    = makeURL('src/template.package.json');
     const targetPkgURL      = makeURL('dist/package.json');
     const [{ name, version, dependencies, peerDependencies }, pkg] =
     await Promise.all([referencePkgURL, templatePkgURL].map(readJSON));

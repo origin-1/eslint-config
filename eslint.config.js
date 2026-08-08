@@ -1,4 +1,5 @@
 import { createConfig } from './dist/index.js';
+import origin1          from '@origin-1/eslint-plugin';
 import globals          from 'globals';
 
 export default createConfig
@@ -25,5 +26,10 @@ export default createConfig
         files:              ['**/tsconfig.json'],
         language:           'json/jsonc',
         languageOptions:    { allowTrailingCommas: true },
+    },
+    {
+        files:              ['**/{,*.}package.json'],
+        plugins:            { '@origin-1': origin1 },
+        rules:              { '@origin-1/package-json-fields': 'error' },
     },
 );

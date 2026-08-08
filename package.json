@@ -1,6 +1,7 @@
 {
   "name": "@origin-1/eslint-config",
   "version": "1.16.0",
+  "type": "module",
   "scripts": {
     "build": "npm install && npm run build-no-install",
     "build-no-install": "node dev/clean.js && node dev/coverage.js && node dev/update-dist.js && node dev/compile.js && npm run lint",
@@ -14,7 +15,7 @@
     "update-dist": "node dev/update-dist.js"
   },
   "dependencies": {
-    "semver": "^7.7.4"
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@origin-1/eslint-config": "file:dist",
@@ -32,16 +33,15 @@
   "peerDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.3",
     "@eslint/json": "^2.0",
-    "@origin-1/eslint-plugin": ">=0.18",
+    "@origin-1/eslint-plugin": ">=1.0",
     "@stylistic/eslint-plugin": "^5.5",
     "@typescript-eslint/eslint-plugin": "^8.56",
     "@typescript-eslint/parser": "^8.56",
     "eslint": "^10.0",
-    "eslint-plugin-n": "^18.1.0"
+    "eslint-plugin-n": "^18.3.0"
   },
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
-  "private": true,
-  "type": "module"
+  "private": true
 }

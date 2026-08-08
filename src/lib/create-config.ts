@@ -82,17 +82,20 @@ function createJSTSEntries
 ):
 { rulePrefixMap: Map<string, string>; rules: Record<string, Linter.RuleEntry>; }
 {
-    const setOverrideRule = createSetOverrideRule(langConfig, rules);
-    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
+    function applyRuleSettings(ruleKey: string, ruleSettings: RuleSettingsAny): void
     {
         if (isRuleEntry(ruleSettings))
-            rules[ruleName] = cloneRuleEntry(ruleSettings);
+            rules[ruleKey] = cloneRuleEntry(ruleSettings);
         if (isJSTSEntry(ruleSettings))
         {
             const ruleLangSettings = ruleSettings[lang];
-            setOverrideRule(ruleName, ruleLangSettings);
+            setOverrideRule(ruleKey, ruleLangSettings);
         }
     }
+
+    const setOverrideRule = createSetOverrideRule(langConfig, rules);
+    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
+        applyRuleSettings(ruleName, ruleSettings);
     for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[HYBRID] as PluginSettingsAny))
     {
         if (isRuleEntry(ruleSettings))
@@ -125,15 +128,11 @@ function createJSTSEntries
         const rulePrefix = getRulePrefix(pluginName);
         for (const [ruleName, ruleSettings] of ruleSettingsFor(pluginSettings))
         {
+            if (typeof ruleSettings === 'symbol')
+                continue;
             rulePrefixMap.set(rulePrefix, pluginName);
             const ruleKey = getRuleKey(rulePrefix, ruleName);
-            if (isRuleEntry(ruleSettings))
-                rules[ruleKey] = cloneRuleEntry(ruleSettings);
-            if (isJSTSEntry(ruleSettings))
-            {
-                const ruleLangSettings = ruleSettings[lang];
-                setOverrideRule(ruleKey, ruleLangSettings);
-            }
+            applyRuleSettings(ruleKey, ruleSettings);
         }
     }
     return { rulePrefixMap, rules };

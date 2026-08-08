@@ -121,6 +121,7 @@ describe
                 assert(rules);
                 assert('eqeqeq' in rules);
                 assert('@origin-1/no-spaces-in-call-expression' in rules);
+                assert(!('@origin-1/package-json-fields' in rules));
                 assert('no-undef' in rules);
                 assert('dot-notation' in rules);
                 assert('no-redeclare' in rules);
