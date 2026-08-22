@@ -1,6 +1,6 @@
 {
   "name": "@origin-1/eslint-config",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "type": "module",
   "scripts": {
     "build": "npm install && npm run build-no-install",
