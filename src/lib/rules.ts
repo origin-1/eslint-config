@@ -476,6 +476,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         // Layout
         'bracket-layout':                   'error',
         'indent':                           'error',
+        'multiline-node-layout':            'error',
         'nice-space-before-function-paren': 'error',
         'no-leading-binary-operator':       'error',
         'no-spaces-in-call-expression':     'error',
