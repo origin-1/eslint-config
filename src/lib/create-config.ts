@@ -172,7 +172,6 @@ async function createSingleConfigObject(configData: ConfigData): Promise<Linter.
             let tsVersion:      TSVersion   | undefined;
             const languageOptions = { ...config.languageOptions };
             const linterOptions = { ...config.linterOptions };
-            const plugins: Record<string, ESLint.Plugin> = { };
             const rules: Record<string, Linter.RuleEntry> = { };
             const rulePrefixMap: Map<string, string> = new Map<string, string>();
             const lang = getLanguage(configData)!;
@@ -203,18 +202,19 @@ async function createSingleConfigObject(configData: ConfigData): Promise<Linter.
             }
             addLanguageRules(lang, { jsVersion, jsonVersion, tsVersion }, rules, rulePrefixMap);
             linterOptions.reportUnusedDisableDirectives ??= true;
-            const promises: Promise<void>[] = [];
-            for (const [rulePrefix, pluginName] of rulePrefixMap)
-            {
-                const fn =
-                async (): Promise<void> =>
+            const promises =
+            Array.from(rulePrefixMap)
+            .map
+            (
+                async ([rulePrefix, pluginName]): Promise<readonly [string, ESLint.Plugin]> =>
                 {
                     const plugin = await importPlugin(pluginName);
-                    plugins[rulePrefix] = plugin;
-                };
-                promises.push(fn());
-            }
-            await Promise.all(promises);
+                    const entry = [rulePrefix, plugin] as const;
+                    return entry;
+                },
+            );
+            const entries = await Promise.all(promises);
+            const plugins = Object.fromEntries(entries);
             config.languageOptions = languageOptions;
             config.linterOptions = linterOptions;
             config.plugins = Object.assign(plugins, config.plugins);
