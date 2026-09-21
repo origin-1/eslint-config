@@ -351,6 +351,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-extra-non-null-assertion':                  'error',
         'no-floating-promises':                         'error',
         'no-for-in-array':                              'error',
+        'no-generated-empty-object-type':               'error',
         'no-import-type-side-effects':                  'off',
         'no-invalid-void-type':                         'off',
         'no-misused-new':                               'error',
@@ -471,6 +472,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-extra-new':                     'error',
         'package-json-fields':              IGNORED,
         'property-shorthand':               beforeJSOrElse(2015, 'off', 'error'),
+        'update-expression-style':          'error',
 
         ////////////////////////////////////////////////
         // Layout
