@@ -313,10 +313,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         beforeJSOrElse
         (
             2018,
-            ['error', { caughtErrors: 'none', vars: 'local' }],
+            ['error', { caughtErrors: 'none' }],
             2019,
-            ['error', { caughtErrors: 'none', ignoreRestSiblings: true, vars: 'local' }],
-            ['error', { ignoreRestSiblings: true, vars: 'local' }],
+            ['error', { caughtErrors: 'none', ignoreRestSiblings: true }],
+            ['error', { ignoreRestSiblings: true }],
         ),
 
         ////////////////////////////////////////////////
@@ -367,6 +367,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsafe-assignment':                         'error',
         'no-unsafe-call':                               'off',
         'no-unsafe-declaration-merging':                'off',
+        'no-unsafe-enum-assignment':                    'error',
         'no-unsafe-function-type':                      'error',
         'no-unsafe-member-access':                      'error',
         'no-unsafe-return':                             'error',
@@ -507,13 +508,12 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         ////////////////////////////////////////////////
         // Suggestion
         'jsx-pascal-case':                  'off',
+        'jsx-shorthand-boolean':            'error',
+        'jsx-shorthand-fragment':           'error',
         'multiline-comment-style':          'off',
 
         ////////////////////////////////////////////////
         // Layout
-        'array-bracket-newline':            'off',
-        'array-bracket-spacing':            'error',
-        'array-element-newline':            'off',
         'arrow-parens':                     ['error', 'as-needed'],
         'arrow-spacing':                    'error',
         'block-spacing':                    'error',
@@ -526,9 +526,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'curly-newline':                    ['off'],
         'dot-location':                     ['error', 'property'],
         'eol-last':                         'error',
-        'function-call-argument-newline':   ['error', 'consistent'],
         'function-call-spacing':            'off',
-        'function-paren-newline':           ['error', 'consistent'],
         'generator-star-spacing':           ['error', 'both'],
         'implicit-arrow-linebreak':         'off',
         'indent':                           'off',
@@ -580,6 +578,8 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
             ],
         ),
         'lines-between-class-members':      'off',
+        'list-style':
+        ['error', { empty: 'never', overrides: { '{}': { empty: 'always' } } }],
         'max-len':                          ['error', { code: 100 }],
         'max-statements-per-line':          'error',
         'member-delimiter-style':           ['error', { singleline: { requireLast: true } }],
@@ -598,9 +598,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-trailing-spaces':               'error',
         'no-whitespace-before-property':    'error',
         'nonblock-statement-body-position': 'off',
-        'object-curly-newline':             'off',
-        'object-curly-spacing':             ['error', 'always', { emptyObjects: 'always' }],
-        'object-property-newline':          ['error', { allowAllPropertiesOnSameLine: true }],
         'one-var-declaration-per-line':     'error',
         'operator-linebreak':               'off',
         'padded-blocks':                    ['error', 'never'],

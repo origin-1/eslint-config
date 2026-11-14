@@ -1,6 +1,7 @@
-import assert           from 'node:assert/strict';
-import type { Linter }  from 'eslint';
-import { describe, it } from 'mocha';
+import assert               from 'node:assert/strict';
+import { createRequire }    from 'node:module';
+import type { Linter }      from 'eslint';
+import { describe, it }     from 'mocha';
 
 const { createConfig } = await import('../src/lib/create-config.js');
 
@@ -98,7 +99,7 @@ describe
             async (): Promise<void> =>
             {
                 const [config] = await createConfig({ jsonVersion: 'standard' });
-                assert(!('jsVersion' in config));
+                assert(!('jsonVersion' in config));
             },
         );
 
@@ -209,7 +210,9 @@ describe
                             'defaults and merging',
                             async (): Promise<void> =>
                             {
-                                const espree = await import('espree' as string) as Linter.Parser;
+                                const { resolve } = createRequire(import.meta.url);
+                                const requireAsESLint = createRequire(resolve('eslint'));
+                                const espree = requireAsESLint('espree') as Linter.ESTreeParser;
                                 const [{ languageOptions, linterOptions }] =
                                 await createConfig
                                 (
@@ -270,8 +273,8 @@ describe
                                 await createConfig
                                 (
                                     {
-                                        languageOptions:    { parserOptions: { project: true } },
-                                        linterOptions:      { noInlineConfig: false },
+                                        languageOptions:    { parserOptions: { project: false } },
+                                        linterOptions:      { noInlineConfig: true },
                                         tsVersion:          'latest',
                                     },
                                 );
@@ -281,10 +284,10 @@ describe
                                 assert.deepEqual
                                 (
                                     languageOptions.parserOptions,
-                                    { project: true, projectService: true },
+                                    { project: false, projectService: true },
                                 );
                                 assert(linterOptions);
-                                assert.equal(linterOptions.noInlineConfig, false);
+                                assert.equal(linterOptions.noInlineConfig, true);
                                 assert.equal(linterOptions.reportUnusedDisableDirectives, true);
                             },
                         );

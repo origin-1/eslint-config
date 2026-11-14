@@ -80,7 +80,7 @@ function createJSTSEntries
     rules: Record<string, Linter.RuleEntry>,
     rulePrefixMap: Map<string, string>,
 ):
-{ rulePrefixMap: Map<string, string>; rules: Record<string, Linter.RuleEntry>; }
+void
 {
     function applyRuleSettings(ruleKey: string, ruleSettings: RuleSettingsAny): void
     {
@@ -135,14 +135,13 @@ function createJSTSEntries
             applyRuleSettings(ruleKey, ruleSettings);
         }
     }
-    return { rulePrefixMap, rules };
 }
 
 function createSetOverrideRule
 (langConfig: LanguageConfigData, rules: Record<string, Linter.RuleEntry>): SetOverrideRule
 {
-    const setOverrideRule =
-    (ruleKey: string, ruleLangSettings: VersionedList | Linter.RuleEntry): void =>
+    const setOverrideRule: SetOverrideRule =
+    (ruleKey, ruleLangSettings): void =>
     {
         const ruleEntry =
         isVersionedList(ruleLangSettings) ?
@@ -180,12 +179,11 @@ async function createSingleConfigObject(configData: ConfigData): Promise<Linter.
             case 'js':
                 jsVersion = normalizeJSVersion(rawJSVersion);
                 languageOptions.ecmaVersion ??= jsVersion;
-                languageOptions.parser ??= await importParser('espree');
+                languageOptions.parser ??= await importDefaultParser();
                 createJSTSEntries(lang, { jsVersion }, rules, rulePrefixMap);
                 break;
             case 'json':
                 jsonVersion = normalizeJSONVersion(rawJSONVersion);
-                void jsonVersion;
                 config.language ??= 'json/json';
                 break;
             case 'ts':
@@ -249,7 +247,7 @@ Linter.RuleEntry | undefined
         else if (jsonVersion != null) /* c8 ignore next */ return ruleEntry;
         else if (tsVersion != null)
         {
-            if (tsVersion === 'latest' || semver.gte(tsVersion, (minVersion as string)))
+            if (tsVersion === 'latest' || semver.gte(tsVersion, minVersion as string))
                 return ruleEntry;
         }
     }
@@ -263,6 +261,15 @@ function getLanguage(langConfig: LanguageConfigData): 'js' | 'json' | 'ts' | und
         return 'json';
     if (langConfig.tsVersion    != null)
         return 'ts';
+}
+
+async function importDefaultParser(): Promise<Linter.ESTreeParser>
+{
+    const { ESLint: { defaultConfig } } = await import('eslint');
+    let plugins: Record<string, ESLint.Plugin> | undefined;
+    for ({ plugins } of defaultConfig)
+        if (plugins) break;
+    return plugins?.['@'].languages?.js.defaultLanguageOptions?.parser as Linter.ESTreeParser;
 }
 
 async function importParser(parserName: string): Promise<Linter.Parser>
