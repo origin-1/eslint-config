@@ -16,7 +16,5 @@
   },
   "dependencies": null,
   "peerDependencies": null,
-  "engines": {
-    "node": ">=20.9"
-  }
+  "engines": null
 }
