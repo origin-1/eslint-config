@@ -363,6 +363,7 @@ export const RULES =
         'no-unsafe-argument':                           'error',
         'no-unsafe-assignment':                         'error',
         'no-unsafe-call':                               'off',
+        'no-unsafe-class-instance-assignment':          'error',
         'no-unsafe-declaration-merging':                'off',
         'no-unsafe-enum-assignment':                    'error',
         'no-unsafe-function-type':                      'error',
