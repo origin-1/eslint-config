@@ -94,9 +94,9 @@ void
     }
 
     const setOverrideRule = createSetOverrideRule(langConfig, rules);
-    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE] as PluginSettingsAny))
+    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[UNIQUE]))
         applyRuleSettings(ruleName, ruleSettings);
-    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[HYBRID] as PluginSettingsAny))
+    for (const [ruleName, ruleSettings] of ruleSettingsFor(RULES[HYBRID]))
     {
         if (isRuleEntry(ruleSettings))
         {
@@ -245,11 +245,13 @@ Linter.RuleEntry | undefined
                 return ruleEntry;
         }
         else if (jsonVersion != null) /* c8 ignore next */ return ruleEntry;
+        /* c8 ignore start */
         else if (tsVersion != null)
         {
             if (tsVersion === 'latest' || semver.gte(tsVersion, minVersion as string))
                 return ruleEntry;
         }
+        /* c8 ignore stop */
     }
 }
 

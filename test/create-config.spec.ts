@@ -1,9 +1,23 @@
 import assert               from 'node:assert/strict';
 import { createRequire }    from 'node:module';
+import type { ConfigData }  from '../src/lib/create-config.js';
+import type { JSVersion }   from '../src/lib/normalize-version.js';
 import type { Linter }      from 'eslint';
 import { describe, it }     from 'mocha';
 
 const { createConfig } = await import('../src/lib/create-config.js');
+
+async function assertRules
+(configData: ConfigData, expectedRules: Record<string, Linter.RuleEntry | undefined>):
+Promise<void>
+{
+    const [{ rules }] = await createConfig(configData);
+    assert(rules);
+    const actualRules: Record<string, Linter.RuleEntry | undefined> = { };
+    for (const ruleKey of Object.keys(expectedRules))
+        actualRules[ruleKey] = rules[ruleKey];
+    assert.deepEqual(actualRules, expectedRules);
+}
 
 describe
 (
@@ -108,7 +122,7 @@ describe
             '`tsVersion` is not set',
             async (): Promise<void> =>
             {
-                const [config] = await createConfig({ tsVersion: '4.0.0' });
+                const [config] = await createConfig({ tsVersion: '6.0.0' });
                 assert(!('tsVersion' in config));
             },
         );
@@ -128,6 +142,78 @@ describe
                 assert('no-redeclare' in rules);
                 assert('n/prefer-promises/fs' in rules);
                 assert.equal(rules.foobar, 'warn');
+            },
+        );
+
+        describe
+        (
+            'versioned `rules` are set for JavaScript',
+            (): void =>
+            {
+                it
+                (
+                    'unique rule',
+                    async (): Promise<void> =>
+                    {
+                        const ruleKey = 'no-var';
+                        await assertRules({ jsVersion: 5 }, { [ruleKey]: 'off' });
+                        await assertRules({ jsVersion: 2015 }, { [ruleKey]: 'error' });
+                        await assertRules({ jsVersion: 2026 }, { [ruleKey]: 'error' });
+                    },
+                );
+
+                it
+                (
+                    'hybrid rule',
+                    async (): Promise<void> =>
+                    {
+                        const ruleKey = 'prefer-destructuring';
+                        await assertRules({ jsVersion: 5 }, { [ruleKey]: 'off' });
+                        await assertRules({ jsVersion: 2015 }, { [ruleKey]: 'error' });
+                        await assertRules({ jsVersion: 2026 }, { [ruleKey]: 'error' });
+                    },
+                );
+
+                it
+                (
+                    'plugin rule',
+                    async (): Promise<void> =>
+                    {
+                        const ruleKey = 'n/prefer-node-protocol';
+                        await assertRules({ jsVersion: 2020 }, { [ruleKey]: 'off' });
+                        await assertRules({ jsVersion: 2021 }, { [ruleKey]: 'error' });
+                        await assertRules({ jsVersion: 2026 }, { [ruleKey]: 'error' });
+                    },
+                );
+
+                it
+                (
+                    'rule with multiple version thresholds',
+                    async (): Promise<void> =>
+                    {
+                        const expectedRuleEntries: [JSVersion, Linter.RuleEntry][] =
+                        [
+                            [5,     ['error', { caughtErrors: 'none' }]],
+                            [2017,  ['error', { caughtErrors: 'none' }]],
+                            [2018,  ['error', { caughtErrors: 'none', ignoreRestSiblings: true }]],
+                            [2019,  ['error', { ignoreRestSiblings: true }]],
+                            [2026,  ['error', { ignoreRestSiblings: true }]],
+                        ];
+                        for (const [jsVersion, ruleEntry] of expectedRuleEntries)
+                            await assertRules({ jsVersion }, { 'no-unused-vars': ruleEntry });
+                    },
+                );
+
+                it
+                (
+                    'rule versioned for TypeScript only',
+                    async (): Promise<void> =>
+                    {
+                        const ruleKey = 'no-duplicate-imports';
+                        await assertRules({ jsVersion: 5 }, { [ruleKey]: 'error' });
+                        await assertRules({ jsVersion: 2026 }, { [ruleKey]: 'error' });
+                    },
+                );
             },
         );
 

@@ -46,7 +46,9 @@ function isRuleExperimental(rule: Rule.RuleModule): boolean
     return Boolean((rule.meta!.docs as { experimental?: boolean; }).experimental);
 }
 
-const { HYBRID, RULES, UNIQUE, getRuleKey, getRulePrefix } = await import('../src/lib/rules.js');
+const rulesModule = await import('../src/lib/rules.js');
+const { HYBRID, UNIQUE, getRuleKey, getRulePrefix } = rulesModule;
+const RULES: Record<string | symbol, object> = rulesModule.RULES;
 
 it
 (

@@ -105,26 +105,43 @@ describe
 
         it
         (
-            'returns a supported value unchanged',
+            'returns a normalized value unchanged',
             (): void =>
             {
+                assert.equal(normalizeTSVersion('5.0.3'), '5.0.3');
                 assert.equal(normalizeTSVersion('4.6.0-beta'), '4.6.0-beta');
             },
         );
 
         it
         (
-            'fails for an unsupported value',
+            'normalizes a value',
             (): void =>
             {
-                assert.throws
-                (
-                    (): void => void normalizeTSVersion('4.0'),
-                    {
-                        constructor:    TypeError,
-                        message:        'tsVersion \'4.0\' is not supported',
-                    },
-                );
+                assert.equal(normalizeTSVersion(' v5.0.3 '), '5.0.3');
+                assert.equal(normalizeTSVersion('=5.0.3'), '5.0.3');
+                assert.equal(normalizeTSVersion('4.6.0-beta+build.1'), '4.6.0-beta');
+            },
+        );
+
+        it
+        (
+            'fails for a malformed value',
+            (): void =>
+            {
+                const tsVersions =
+                ['5', '5.0', '5.0.3.0', '4.6-beta', '4.6.0beta', '4.6.0-', '4.6.0-beta.01'];
+                for (const tsVersion of tsVersions)
+                {
+                    assert.throws
+                    (
+                        (): void => void normalizeTSVersion(tsVersion),
+                        {
+                            constructor:    TypeError,
+                            message:        `tsVersion '${tsVersion}' is not supported`,
+                        },
+                    );
+                }
             },
         );
     },

@@ -94,8 +94,7 @@ function jsts(jsEntry: RuleSettingsJS, tsEntry: RuleSettingsTS): JSTSEntry
     return { js: jsEntry, ts: tsEntry };
 }
 
-export const RULES:
-Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
+export const RULES =
 {
     [UNIQUE]:
     {
@@ -121,9 +120,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-dupe-else-if':                  'error',
         'no-dupe-keys':                     'error',
         'no-duplicate-case':                'error',
-        // TypeScript < 4.5 permits no type modifiers on import names and no mixed imports.
-        'no-duplicate-imports':
-        jsts('error', beforeOrElse('4.5.0', 'off', 'error')),
+        'no-duplicate-imports':             'error',
         'no-empty-character-class':         'error',
         'no-empty-pattern':                 'error',
         'no-ex-assign':                     'error',
@@ -154,7 +151,6 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'no-unsafe-finally':                'error',
         'no-unsafe-negation':               'error',
         'no-unsafe-optional-chaining':      'error',
-        'no-unused-private-class-members':  'error',
         'no-use-before-define':             'off',
         'no-useless-assignment':            'error',
         'no-useless-backreference':         'error',
@@ -176,7 +172,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'default-case':                     'off',
         'default-case-last':                'off',
         'default-param-last':               'error',
-        'eqeqeq':                           ['error', 'allow-null'],
+        'eqeqeq':                           ['error', 'always', { null: 'ignore' }],
         'func-name-matching':               'off',
         'func-names':                       ['error', 'never'],
         'func-style':                       'off',
@@ -309,6 +305,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
     {
         ////////////////////////////////////////////////
         // Problem
+        'no-unused-private-class-members':  'error',
         'no-unused-vars':
         beforeJSOrElse
         (
@@ -396,7 +393,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'consistent-type-definitions':                  ['error', 'interface'],
         'consistent-type-exports':                      'error',
         'consistent-type-imports':
-        beforeOrElse('3.8.0', ['error', { prefer: 'no-type-imports' }], 'error'),
+        ['error', { fixStyle: 'inline-type-imports' }],
         'member-ordering':                              'error',
         'method-signature-style':                       'off',
         'naming-convention':                            'off',
@@ -523,7 +520,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'comma-style':
         ['error', 'last', { exceptions: { ArrayExpression: true } }],
         'computed-property-spacing':        'error',
-        'curly-newline':                    ['off'],
+        'curly-newline':                    'off',
         'dot-location':                     ['error', 'property'],
         'eol-last':                         'error',
         'function-call-spacing':            'off',
@@ -562,6 +559,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
                     allowBlockStart:            true,
                     allowObjectStart:           true,
                     applyDefaultIgnorePatterns: false,
+                    ignorePattern:              '^\\s*(?:c8\\s+ignore|eslint)(?!\\S)',
                 },
             ],
             [
@@ -574,6 +572,7 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
                     allowObjectStart:           true,
                     allowTypeStart:             true,
                     applyDefaultIgnorePatterns: false,
+                    ignorePattern:              '^\\s*(?:c8\\s+ignore|eslint)(?!\\S)',
                 },
             ],
         ),
@@ -697,9 +696,10 @@ Record<string | symbol, PluginSettingsAny | PluginSettingsForLang> =
         'prefer-global/url-search-params':          'error',
         'prefer-import/assert-strict':              'error',
         'prefer-node-protocol':
-        jsts(beforeOrElse(2021, 'off', 'error'), beforeOrElse('3.9.0', 'off', 'error')),
+        jsts(beforeOrElse(2021, 'off', 'error'), 'error'),
         'prefer-process-get-builtin-module':        'off',
         'prefer-promises/dns':                      beforeJSOrElse(2015, 'off', 'error'),
         'prefer-promises/fs':                       beforeJSOrElse(2015, 'off', 'error'),
     },
-};
+} satisfies
+Record<string | symbol, PluginSettingsAny | PluginSettingsForLang>;
