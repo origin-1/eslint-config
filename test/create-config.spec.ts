@@ -314,7 +314,7 @@ describe
                                 assert.equal(languageOptions.sourceType, 'module');
                                 assert(linterOptions);
                                 assert.equal(linterOptions.noInlineConfig, false);
-                                assert.equal(linterOptions.reportUnusedDisableDirectives, true);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, 'error');
                             },
                         );
 
@@ -374,7 +374,7 @@ describe
                                 );
                                 assert(linterOptions);
                                 assert.equal(linterOptions.noInlineConfig, true);
-                                assert.equal(linterOptions.reportUnusedDisableDirectives, true);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, 'error');
                             },
                         );
 
@@ -440,7 +440,7 @@ describe
                                 assert.deepEqual(languageOptions, { allowTrailingCommas: true });
                                 assert(linterOptions);
                                 assert.equal(linterOptions.noInlineConfig, false);
-                                assert.equal(linterOptions.reportUnusedDisableDirectives, true);
+                                assert.equal(linterOptions.reportUnusedDisableDirectives, 'error');
                                 assert(plugins);
                                 assert.deepEqual(Object.keys(plugins), ['json']);
                                 assert.equal(plugins.json, json);

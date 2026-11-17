@@ -199,7 +199,7 @@ async function createSingleConfigObject(configData: ConfigData): Promise<Linter.
                 break;
             }
             addLanguageRules(lang, { jsVersion, jsonVersion, tsVersion }, rules, rulePrefixMap);
-            linterOptions.reportUnusedDisableDirectives ??= true;
+            linterOptions.reportUnusedDisableDirectives ??= 'error';
             const promises =
             Array.from(rulePrefixMap)
             .map
